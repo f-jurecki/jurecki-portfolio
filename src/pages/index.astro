@@ -53,37 +53,40 @@ const tools = [
 	<main class="home">
 		<section class="hero-grid" aria-label="Профиль и проекты">
 			<div class="profile-pane" id="about">
-				<div class="profile-heading">
-					<h1>Федор<br /><span>Юрецкий</span></h1>
-					<Image class="personal-mark" src={personalMark} alt="Монограмма Федора Юрецкого" width={64} height={64} loading="eager" />
-				</div>
+				<div class="profile-intro">
+					<div class="profile-heading">
+						<h1>Федор<br /><span>Юрецкий</span></h1>
+						<Image class="personal-mark" src={personalMark} alt="Монограмма Федора Юрецкого" width={64} height={64} loading="eager" />
+					</div>
 
-				<ul class="role-list" aria-label="Профессиональные роли">
-					{roles.map((role) => <li>{role}</li>)}
-				</ul>
-
-				<div class="profile-summary">
-					<p>Дизайнер-генералист с экспертизой в многостраничной вёрстке и разработке упаковки. Оптимизирую производство макетов с помощью вайбкодинга и AI-инструментов.</p>
-				</div>
-
-				<div class="profile-meta">
-					<div><span>Локация</span><strong>Астана, Казахстан<br />Офис · гибрид · ремоут · релокация</strong></div>
-					<div><span>Языки</span><strong>Русский — родной<br />Английский — C2</strong></div>
-				</div>
-
-				<div class="capabilities" aria-label="Ключевые компетенции">
-					{capabilities.map((item) => (
-						<article><h2>{item.title[0]}<br />{item.title[1]}</h2><p>{item.text}</p></article>
-					))}
-				</div>
-
-				<div class="tools-panel">
-					<p>Рабочие инструменты</p>
-					<ul aria-label="Программы и инструменты">
-						{tools.map((tool) => <li title={tool.name}><img src={tool.src.src} alt={tool.name} width="38" height="38" loading="lazy" /></li>)}
+					<ul class="role-list" aria-label="Профессиональные роли">
+						{roles.map((role) => <li>{role}</li>)}
 					</ul>
+
+					<div class="profile-summary">
+						<p>Дизайнер-генералист с экспертизой в многостраничной вёрстке и разработке упаковки. Оптимизирую производство макетов с помощью вайбкодинга и AI-инструментов.</p>
+					</div>
 				</div>
 
+				<div class="profile-details">
+					<div class="profile-meta">
+						<div><span>Локация</span><strong>Астана, Казахстан<br />Офис · гибрид · ремоут · релокация</strong></div>
+						<div><span>Языки</span><strong>Русский — родной<br />Английский — C2</strong></div>
+					</div>
+
+					<div class="capabilities" aria-label="Ключевые компетенции">
+						{capabilities.map((item) => (
+							<article><h2>{item.title[0]}<br />{item.title[1]}</h2><p>{item.text}</p></article>
+						))}
+					</div>
+
+					<div class="tools-panel">
+						<p>Рабочие инструменты</p>
+						<ul aria-label="Программы и инструменты">
+							{tools.map((tool) => <li title={tool.name}><img src={tool.src.src} alt={tool.name} width="38" height="38" loading="lazy" /></li>)}
+						</ul>
+					</div>
+				</div>
 			</div>
 
 			<section class="projects-grid" id="work" aria-label="Направления портфолио">
@@ -154,7 +157,12 @@ const tools = [
 	}
 	@media (max-width: 680px) {
 		.home { padding: .75rem; }
-		.profile-pane { padding: 1rem; }
+		.profile-pane { display: contents; }
+		.profile-intro, .profile-details { padding: 1rem; background: rgba(8,8,8,.88); border: 1px solid var(--color-border); }
+		.profile-intro { order: 1; }
+		.projects-grid { order: 2; }
+		.profile-details { order: 3; }
+		.profile-meta { margin-top: 0; }
 		.profile-meta { grid-template-columns: 1fr; }
 		.capabilities { grid-template-columns: 1fr; }
 		.capabilities article, .capabilities article:first-child, .capabilities article:nth-child(2n) { padding: .75rem 0; border-left: 0; border-right: 0; border-bottom: 1px solid var(--color-border); }
