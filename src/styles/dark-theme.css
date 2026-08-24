@@ -1,0 +1,340 @@
+:root {
+	color-scheme: dark;
+}
+
+::selection {
+	color: #050505;
+	background: #ffffff;
+}
+
+body,
+main {
+	color: var(--color-text) !important;
+	background: var(--color-surface) !important;
+}
+
+.site-header {
+	color: var(--color-text) !important;
+	background: rgba(5, 5, 5, .94) !important;
+	border-bottom-color: var(--color-border) !important;
+	box-shadow: none !important;
+}
+
+.site-brand {
+	letter-spacing: -.04em !important;
+}
+
+.site-nav-links a,
+.site-nav-links button,
+.site-status,
+.footer-contacts a,
+.footer-contacts button,
+.project-footer,
+.case-pagination-link {
+	color: var(--color-text) !important;
+}
+
+.mobile-nav a,
+.mobile-nav button,
+.case-index-select {
+	color: var(--color-text) !important;
+	background: var(--color-panel) !important;
+	border-color: var(--color-border) !important;
+	border-radius: var(--radius-thumb) !important;
+}
+
+.mobile-nav .mobile-whatsapp,
+.button-primary,
+.project-cta a,
+.gallery-more {
+	color: #050505 !important;
+	background: #ffffff !important;
+	border: 1px solid #ffffff !important;
+	border-radius: var(--radius-thumb) !important;
+	box-shadow: none !important;
+}
+
+.button-primary .button-icon,
+.project-cta a span {
+	color: #ffffff !important;
+	background: #050505 !important;
+	border-radius: var(--radius-thumb) !important;
+}
+
+.button-primary:hover,
+.project-cta a:hover,
+.gallery-more:hover {
+	color: #050505 !important;
+	background: #d8d8d8 !important;
+	box-shadow: none !important;
+}
+
+.copy-toast,
+.mobile-contact-panel {
+	color: var(--color-text) !important;
+	background: var(--color-panel) !important;
+	border-color: var(--color-border) !important;
+	border-radius: var(--radius-card) !important;
+	box-shadow: none !important;
+}
+
+.hero {
+	background-image:
+		linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px) !important;
+	background-size: 4rem 4rem !important;
+}
+
+.eyebrow,
+.section-label,
+.section-kicker,
+.showcase-head > span,
+.showcase-head > p,
+.project-cta-title span,
+.case-gallery-label {
+	color: #ffffff !important;
+}
+
+.lead,
+.summary,
+.intro p,
+.rich-text p,
+.statement p,
+.showcase-head p,
+.nda-text p,
+.sample-copy p,
+.case-gallery-description,
+.case-gallery-item figcaption,
+.project-bottom p,
+.proof > p,
+.benefit-card p,
+.solution-row p,
+.case-results span,
+.project-cta p,
+.footer-copy small,
+.tools-note,
+.sample-description,
+.page-count {
+	color: var(--color-muted) !important;
+}
+
+.proof-facts,
+.process,
+.experience-evidence,
+.capabilities,
+.tools-grid,
+.case-pagination,
+.project-footer,
+.gallery-toolbar {
+	border-color: var(--color-border) !important;
+}
+
+.proof-facts div,
+.process div,
+.evidence-stats div,
+.evidence-details,
+.capabilities article,
+.tools-grid div,
+.solution-row,
+.case-pagination-link + .case-pagination-link,
+.mobile-contact-panel a,
+.mobile-contact-panel button {
+	border-color: var(--color-border) !important;
+}
+
+.portfolio-card,
+.benefit-card,
+.project,
+.sample-group,
+.case-results div,
+.case-facts,
+.project-cta,
+.showcase,
+.showcase-dark,
+.showcase-black,
+.tools-section,
+.nda-stage,
+.cover-stage,
+.legal-stage,
+.analytics-section,
+.covers-section,
+.news-section,
+.science,
+.spread-frame,
+.case-gallery-trigger {
+	border: 1px solid var(--color-border) !important;
+	border-radius: var(--radius-card) !important;
+	box-shadow: none !important;
+}
+
+.publications,
+.presentations,
+.infographics,
+.benefit-card,
+.project-featured,
+.project-linked,
+.project-empty,
+.sample-layout,
+.sample-data,
+.case-results div,
+.project-cta,
+.showcase,
+.showcase-dark,
+.showcase-black,
+.tools-section,
+.nda-stage,
+.cover-stage,
+.legal-stage,
+.analytics-section,
+.covers-section,
+.news-section,
+.science,
+.spread-frame,
+.spread-frame-white,
+.case-gallery-trigger,
+.case-gallery-numbered .case-gallery-trigger {
+	color: var(--color-text) !important;
+	background: var(--color-panel) !important;
+}
+
+.portfolio-card:hover,
+.project:hover,
+.sample-group:hover,
+.case-gallery-trigger:hover {
+	box-shadow: none !important;
+}
+
+.card-arrow,
+.project-top b,
+.sample-action,
+.sample-action i,
+.footer-home i,
+.back span,
+.case-lightbox-close,
+.empty-visual span,
+.back-to-top {
+	border-radius: var(--radius-thumb) !important;
+	box-shadow: none !important;
+}
+
+.card-arrow,
+.project-top b,
+.sample-action,
+.back span,
+.empty-visual > div {
+	border-color: #454545 !important;
+}
+
+.title-accent,
+.proof-facts dt,
+.solution-row small,
+.process dt,
+.evidence-details strong,
+.capabilities span,
+.tools-grid span,
+.case-results strong {
+	color: #ffffff !important;
+}
+
+.section-kicker > span,
+.site-status > span {
+	background: #ffffff !important;
+	box-shadow: none !important;
+}
+
+.solutions-section {
+	color: var(--color-text) !important;
+	background: var(--color-panel) !important;
+	border: 1px solid var(--color-border) !important;
+	border-radius: var(--radius-card) !important;
+}
+
+.case-index {
+	color: var(--color-text) !important;
+	background: rgba(9, 9, 9, .96) !important;
+	border-color: var(--color-border) !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+}
+
+.case-index-back,
+.case-index-back-label-mobile,
+.case-index li a:hover,
+.case-index li a[aria-current="location"] {
+	color: var(--color-text) !important;
+}
+
+.case-index-title,
+.case-index li a,
+.case-index li a span {
+	color: #858585 !important;
+}
+
+.case-facts {
+	background: var(--color-panel) !important;
+}
+
+.case-facts div,
+.case-facts div:nth-child(-n+2) {
+	border-color: var(--color-border) !important;
+}
+
+.case-pagination-link:hover {
+	color: #050505 !important;
+	background: #ffffff !important;
+}
+
+.case-pagination-link:hover span {
+	color: #4a4a4a !important;
+}
+
+.format-filter {
+	color: var(--color-text) !important;
+	background: var(--color-panel) !important;
+	border-color: var(--color-border) !important;
+	border-radius: var(--radius-thumb) !important;
+}
+
+.format-filter:hover {
+	border-color: #ffffff !important;
+}
+
+.format-filter.active {
+	color: #050505 !important;
+	background: #ffffff !important;
+	border-color: #ffffff !important;
+}
+
+.story-grid figure,
+.science-grid figure,
+.meaning-grid figure,
+.identity-pages figure,
+.legal-spread,
+.citizenship-grid figure {
+	background: var(--color-panel-high) !important;
+	border-color: var(--color-border) !important;
+	border-radius: var(--radius-thumb) !important;
+	box-shadow: none !important;
+}
+
+.project-visual::before,
+.cover-preview::before,
+.nda-mark,
+.nda-mark::before,
+.sample-stage::before,
+.cover-stage::before,
+.cover-stage::after {
+	border-radius: var(--radius-thumb) !important;
+}
+
+.back-to-top {
+	color: #050505 !important;
+	background: #ffffff !important;
+	border-color: #ffffff !important;
+}
+
+@media (max-width: 620px) {
+	.hero {
+		background-size: 2rem 2rem !important;
+	}
+}

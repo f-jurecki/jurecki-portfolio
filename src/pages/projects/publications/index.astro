@@ -1,0 +1,34 @@
+---
+import CategoryCatalog from '../../../components/CategoryCatalog.astro';
+---
+
+<CategoryCatalog
+	title="Инфографика и вёрстка"
+	description="Многостраничные издания, отчёты, исследования и инфографика. Выстраиваю структуру, навигацию и визуальную логику материала — от первого макета до файлов для публикации."
+	projects={[
+		{
+			title: 'IOFS',
+			description: 'Годовые отчёты и международные публикации',
+			href: '/projects/publications/iofs',
+			images: ['/portfolio/iofs/fsh22-cover.webp', '/portfolio/iofs/annual-cover.webp', '/portfolio/iofs/fsh23-cover.webp'],
+		},
+		{
+			title: 'КИОР',
+			description: 'Исследования и аналитические доклады',
+			href: '/projects/publications/kipd',
+			images: ['/portfolio/kipd/identity-cover.webp', '/portfolio/kipd/legal-cover.webp', '/portfolio/kipd/citizenship-cover.webp'],
+		},
+		{
+			title: 'UNESCO',
+			description: 'Диагностические материалы и приложения',
+			href: '/projects/publications/unesco',
+			images: ['/portfolio/unesco/appendix-1-cover.webp', '/portfolio/unesco/diagnostic-cover.webp', '/portfolio/unesco/appendix-4-cover.webp'],
+		},
+		{
+			title: 'Инфографика',
+			description: 'Исследования, отчёты и социальные данные',
+			href: '/projects/infographics',
+			images: ['/portfolio/infographics/graphic-017.webp', '/portfolio/infographics/graphic-040.webp', '/portfolio/infographics/graphic-083.webp'],
+		},
+	]}
+/>

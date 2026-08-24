@@ -1,0 +1,38 @@
+---
+import SeoHead from '../components/SeoHead.astro';
+import '../styles/dark-theme.css';
+
+interface Props {
+	title: string;
+	description: string;
+	image?: string;
+	imageAlt?: string;
+}
+
+const { title, description, image, imageAlt } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ru">
+	<head>
+		<SeoHead title={title} description={description} image={image} imageAlt={imageAlt} />
+	</head>
+	<body id="top">
+		<slot />
+	</body>
+</html>
+
+<style is:global>
+	:root {
+		font-family: Inter, "Segoe UI", Arial, sans-serif;
+		color: var(--color-text);
+		background: var(--color-surface);
+		font-synthesis: none;
+	}
+
+	* { box-sizing: border-box; }
+	html { scroll-behavior: smooth; }
+	body { margin: 0; min-width: 0; overflow-x: clip; background: var(--color-surface); }
+	a { color: inherit; }
+	button { font: inherit; }
+</style>

@@ -1,0 +1,103 @@
+---
+interface Props {
+	id: string;
+	variant?: 'single' | 'spread';
+	label: string;
+}
+
+const { id, variant = 'single', label } = Astro.props;
+---
+
+<dialog id={id} class:list={['case-lightbox', `case-lightbox-${variant}`]} data-case-lightbox={variant} aria-label={label}>
+	<button class="case-lightbox-close" type="button" aria-label="Закрыть"><span aria-hidden="true"></span></button>
+	{variant === 'spread' ? (
+		<>
+			<div class="case-lightbox-pages"><img alt="" width="1000" height="1414" /><img alt="" width="1000" height="1414" /></div>
+			<p class="case-lightbox-caption"></p>
+		</>
+	) : (
+		<figure><img alt="" width="1440" height="1080" /><figcaption></figcaption></figure>
+	)}
+</dialog>
+
+<script>
+	if (!document.documentElement.dataset.caseLightboxReady) {
+		document.documentElement.dataset.caseLightboxReady = 'true';
+
+		document.addEventListener('click', (event) => {
+			const target = event.target;
+			if (!(target instanceof Element)) return;
+
+			const close = target.closest<HTMLButtonElement>('.case-lightbox-close');
+			if (close) {
+				close.closest<HTMLDialogElement>('[data-case-lightbox]')?.close();
+				return;
+			}
+
+			const trigger = target.closest<HTMLElement>('[data-lightbox-target]');
+			if (!trigger) return;
+			const dialog = document.getElementById(trigger.dataset.lightboxTarget ?? '');
+			if (!(dialog instanceof HTMLDialogElement)) return;
+
+			if (dialog.dataset.caseLightbox === 'spread') {
+				const sources = trigger.querySelectorAll<HTMLImageElement>('img');
+				const targets = dialog.querySelectorAll<HTMLImageElement>('.case-lightbox-pages img');
+				if (sources.length !== 2 || targets.length !== 2) return;
+				targets.forEach((image, index) => {
+					image.src = sources[index].dataset.fullSrc || sources[index].currentSrc || sources[index].src;
+					image.alt = sources[index].alt;
+				});
+			} else {
+				const source = trigger.matches('img') ? trigger as HTMLImageElement : trigger.querySelector<HTMLImageElement>('img');
+				const image = dialog.querySelector<HTMLImageElement>('figure img');
+				if (!source || !image) return;
+				image.src = source.dataset.fullSrc || trigger.dataset.src || source.currentSrc || source.src;
+				image.alt = source.alt;
+			}
+
+			const caption = trigger.dataset.caption ?? trigger.closest('figure')?.querySelector('figcaption')?.textContent?.trim() ?? '';
+			const captionNode = dialog.querySelector<HTMLElement>('.case-lightbox-caption, figcaption');
+			if (captionNode) {
+				captionNode.textContent = caption;
+				captionNode.hidden = !caption;
+			}
+			dialog.showModal();
+		});
+
+		document.addEventListener('click', (event) => {
+			if (!(event.target instanceof Element)) return;
+			const dialog = event.target.closest<HTMLDialogElement>('[data-case-lightbox]');
+			if (dialog?.open) dialog.close();
+		});
+	}
+</script>
+
+<style>
+	.case-lightbox {
+		max-width: none;
+		max-height: none;
+		margin: auto;
+		border: 0;
+		border-radius: var(--radius-shell);
+		box-shadow: 0 2rem 6rem rgba(0,0,0,.5);
+	}
+
+	.case-lightbox::backdrop { background: rgba(0,0,0,.8); backdrop-filter: blur(6px); }
+	.case-lightbox-single { width: min(96vw,100rem); height: 94dvh; padding: 3.5rem 1rem 1rem; color: #fff; background: rgba(11,11,11,.97); }
+	.case-lightbox-single figure { width: 100%; height: 100%; margin: 0; display: grid; grid-template-rows: minmax(0,1fr) auto; justify-items: center; gap: .8rem; }
+	.case-lightbox-single img { display: block; max-width: 100%; width: auto; height: 100%; min-height: 0; object-fit: contain; }
+	.case-lightbox-single figcaption { color: #bbb; font-size: var(--text-caption); font-weight: 750; letter-spacing: var(--tracking-caption); line-height: var(--leading-caption); text-align: center; text-transform: uppercase; }
+	.case-lightbox-spread { width: min(92vw,88rem); padding: clamp(1rem,2vw,2rem); color: #111; background: #eeeeea; }
+	.case-lightbox-pages { max-height: 80dvh; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .35rem; }
+	.case-lightbox-pages img { width: 100%; height: 100%; max-height: 80dvh; display: block; object-fit: contain; }
+	.case-lightbox-caption { margin: 1rem 0 0; color: #666; font-size: var(--text-caption); font-weight: 750; line-height: var(--leading-caption); letter-spacing: var(--tracking-caption); text-transform: uppercase; }
+	.case-lightbox-close { position: fixed; top: max(1rem,3vh); right: max(1rem,3vw); z-index: 2; width: 3rem; height: 3rem; display: grid; place-items: center; background: #050505; border: 1px solid #fff; border-radius: var(--radius-thumb); cursor: pointer; }
+	.case-lightbox-close span { width: 1.2rem; height: 1.2rem; position: relative; display: block; }
+	.case-lightbox-close span::before,.case-lightbox-close span::after { content: ''; width: 1.2rem; height: 1px; position: absolute; left: 0; top: 50%; background: #fff; }
+	.case-lightbox-close span::before { transform: rotate(45deg); }
+	.case-lightbox-close span::after { transform: rotate(-45deg); }
+	.case-lightbox-close:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
+
+	@media (max-width: 620px) {
+	}
+</style>

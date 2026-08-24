@@ -1,0 +1,57 @@
+---
+import SiteHeader from '../../../components/SiteHeader.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const projects = [
+	{ title: 'Скрипты для Adobe', href: '/projects/vibecoding/adobe-scripts' },
+	{ title: 'Dataforge', href: '/projects/vibecoding/dataforge' },
+];
+---
+
+<BaseLayout
+	title="Вайбкодинг — Федор Юрецкий"
+	description="Скрипты для Adobe и браузерное приложение Dataforge."
+>
+	<SiteHeader />
+
+	<main class="vibecoding-page">
+		<div class="vibecoding-shell">
+			<header><h1>Вайбкодинг</h1></header>
+
+			<nav aria-label="Проекты по вайбкодингу">
+				{projects.map((project, index) => (
+					<a href={project.href} aria-label={`Открыть проект: ${project.title}`}>
+						<span>{String(index + 1).padStart(2, '0')}</span>
+						<h2>{project.title}</h2>
+						<b aria-hidden="true">↗</b>
+					</a>
+				))}
+			</nav>
+		</div>
+	</main>
+</BaseLayout>
+
+<style>
+	.vibecoding-page { min-height: calc(100svh - 6rem); padding: clamp(1rem,2vw,1.75rem) clamp(1rem,3vw,3rem); display: grid; align-items: center; }
+	.vibecoding-shell { width: min(100%,72rem); margin-inline: auto; display: grid; grid-template-columns: minmax(16rem,.72fr) minmax(28rem,1.28fr); gap: .8rem; }
+	header,nav { min-width: 0; background: var(--color-panel); border: 1px solid var(--color-border); }
+	header { min-height: 16rem; padding: clamp(1.25rem,2.2vw,2rem); display: flex; align-items: flex-end; }
+	h1 { margin: 0; font-size: var(--text-page-title); font-weight: var(--weight-page-title); line-height: var(--leading-page-title); letter-spacing: var(--tracking-page-title); }
+	nav { display: grid; }
+	nav a { min-height: 8rem; padding: clamp(1rem,1.7vw,1.5rem); display: grid; grid-template-columns: 2rem minmax(0,1fr) 2.4rem; align-items: center; gap: clamp(.8rem,2vw,1.5rem); color: #fff; border-bottom: 1px solid var(--color-border); text-decoration: none; transition: background-color .2s ease; }
+	nav a:last-child { border-bottom: 0; }
+	nav a:hover { background: #151515; }
+	nav span { color: var(--color-muted); font-size: .58rem; font-weight: 650; letter-spacing: .08em; }
+	nav h2 { margin: 0; font-size: clamp(1.55rem,2.5vw,2.5rem); font-weight: 600; line-height: .95; letter-spacing: -.055em; }
+	nav b { width: 2.4rem; height: 2.4rem; display: grid; place-items: center; justify-self: end; border: 1px solid var(--color-border); font-size: .72rem; font-weight: 500; transition: transform .2s ease,background-color .2s ease,color .2s ease; }
+	nav a:hover b { color: #050505; background: #fff; transform: rotate(45deg); }
+	:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
+
+	@media (max-width: 760px) {
+		.vibecoding-page { min-height: calc(100svh - 4.75rem); padding: .75rem; align-items: start; }
+		.vibecoding-shell { grid-template-columns: 1fr; }
+		header { min-height: 16rem; }
+		nav a { min-height: 7rem; grid-template-columns: 1.7rem minmax(0,1fr) 2.4rem; }
+	}
+	@media (prefers-reduced-motion: reduce) { * { transition-duration: .01ms !important; } }
+</style>

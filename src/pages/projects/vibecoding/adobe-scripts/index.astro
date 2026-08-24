@@ -1,0 +1,265 @@
+---
+import SiteHeader from '../../../../components/SiteHeader.astro';
+import ResponsiveImage from '../../../../components/ResponsiveImage.astro';
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+
+const contents = [
+	{ number: '01', title: 'Gridster', href: '#gridster' },
+	{ number: '02', title: 'ColorProofer', href: '#colorproofer' },
+	{ number: '03', title: 'FrameSplitter', href: '#framesplitter' },
+	{ number: '04', title: 'Book Styles', href: '#book-styles' },
+];
+
+const gridsterImages = [
+	{ src: 'gridster-columns.webp', alt: 'Колонная сетка, созданная Gridster' },
+	{ src: 'gridster-grid.webp', alt: 'Модульная сетка, созданная Gridster' },
+	{ src: 'gridster-frames.webp', alt: 'Сетка для фреймов, созданная Gridster' },
+	{ src: 'gridster-modular.webp', alt: 'Зелёная модульная сетка, созданная Gridster' },
+	{ src: 'gridster-radial.webp', alt: 'Радиальная сетка, созданная Gridster' },
+	{ src: 'gridster-margins.webp', alt: 'Сетка с полями, созданная Gridster' },
+];
+---
+
+<BaseLayout
+	title="Скрипты для Adobe — Федор Юрецкий"
+	description="Скрипты для Adobe Illustrator и InDesign: Gridster, ColorProofer, FrameSplitter и Book Styles."
+>
+	<SiteHeader />
+
+	<main class="scripts-page">
+		<section class="contents" id="contents" aria-labelledby="page-title">
+			<h1 id="page-title">Скрипты<br />для Adobe</h1>
+			<nav aria-label="Оглавление скриптов">
+				{contents.map((item) => (
+					<a href={item.href}>
+						<span>{item.number}</span>
+						<strong>{item.title}</strong>
+						<i aria-hidden="true">↓</i>
+					</a>
+				))}
+			</nav>
+		</section>
+
+		<section class="script script-gridster" id="gridster" aria-labelledby="gridster-title">
+			<div class="script-copy">
+				<h2 id="gridster-title">Gridster</h2>
+				<div class="body-copy">
+					<p>Инструмент для иллюстратора и индизайна, который позволяет накладывать разные пресеты сеток.</p>
+					<p>В иллюстраторе выносится на отдельный слой, блокируется и не мешает в работе. В индизайне — ставится на мастер слой.</p>
+					<p>Одним кликом удаляется без ущерба макету. Адаптируется под разные размеры, можно настраивать отступы от границ страницы и между самими направляющими.</p>
+				</div>
+				<p class="note">*Толщины линий увеличены для репрезентации</p>
+			</div>
+
+			<div class="gridster-gallery">
+				{gridsterImages.map((image) => (
+					<ResponsiveImage src={`/portfolio/adobe-scripts/${image.src}`} alt={image.alt} sizes="(max-width: 700px) 50vw, (max-width: 1100px) 33vw, 18vw" />
+				))}
+			</div>
+			<a class="contents-link" href="#contents">Вернуться в оглавление ↑</a>
+		</section>
+
+		<section class="script script-colorproofer" id="colorproofer" aria-labelledby="colorproofer-title">
+			<div class="script-copy">
+				<h2 id="colorproofer-title">ColorProofer</h2>
+				<div class="body-copy">
+					<p>Скрипт для индизайна, который делает цветопробу автоматически. Создает 7 рядов пронумерованных образцов цвета, чтобы подобрать при печати самый близкий к оригиналу на экране.</p>
+				</div>
+			</div>
+
+			<figure class="color-dialog">
+				<ResponsiveImage src="/portfolio/adobe-scripts/colorproofer-dialog.webp" alt="Окно настроек ColorProofer" sizes="(max-width: 700px) 80vw, (max-width: 1100px) 50vw, 25vw" />
+			</figure>
+
+			<figure class="color-proof">
+				<ResponsiveImage src="/portfolio/adobe-scripts/colorproofer-proof.webp" alt="Лист цветопробы, созданный ColorProofer" sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 36vw" />
+			</figure>
+
+			<div class="color-vectors">
+				<article><h3>1. Cyan <i class="cyan" aria-hidden="true"></i></h3><p>Вектор c 1, m 0, y 0, k 0.<br />Скрипт прибавляет или отнимает проценты только у канала Cyan</p></article>
+				<article><h3>2. Magenta <i class="magenta" aria-hidden="true"></i></h3><p>Вектор c 0, m 1, y 0, k 0.<br />Изолированно меняет только канал Magenta</p></article>
+				<article><h3>3. Yellow <i class="yellow" aria-hidden="true"></i></h3><p>Вектор c 0, m 0, y 1, k 0.<br />Изолированно меняет только канал Yellow</p></article>
+				<article><h3>4. Black <i class="black" aria-hidden="true"></i></h3><p>Вектор c 0, m 0, y 0, k 1.<br />Добавляет или убирает только черную краску</p></article>
+				<article><h3>5. Warmth <i class="warmth" aria-hidden="true"></i></h3><p>Вектор c 0, m 1, y 1, k 0.<br />Меняет одновременно Magenta и Yellow на одинаковый шаг. Добавление этих красок делает итоговый цвет визуально теплее</p></article>
+				<article><h3>6. Coolness <i class="coolness" aria-hidden="true"></i></h3><p>Вектор c 1, m 0, y 0, k 0.<br />Добавление этих красок делает итоговый цвет визуально холоднее</p></article>
+				<article><h3>7. Darkness <i class="darkness" aria-hidden="true"></i></h3><p>Вектор c 1, m 1, y 1, k 1.<br />Меняет сразу все четыре канала. Шаги в плюс пропорционально заливают цвет всеми красками, уводя его в глубокую тень. Шаги в минус пропорционально вымывают цвет, делая его прозрачнее и ближе к цвету бумаги</p></article>
+			</div>
+			<a class="contents-link" href="#contents">Вернуться в оглавление ↑</a>
+		</section>
+
+		<section class="script script-framesplitter" id="framesplitter" aria-labelledby="framesplitter-title">
+			<div class="script-copy">
+				<h2 id="framesplitter-title">FrameSplitter</h2>
+				<div class="body-copy">
+					<p>Маленький инструмент для индизайна, который разбивает текстовые фреймы — на строки, слова, буквы.</p>
+					<p>Увидел такую фичу в кореле и решил реализовать в индизайне. Ай-яй-яй адобам, что за столько лет не сделали это сами.</p>
+				</div>
+				<ResponsiveImage class="framesplitter-dialog" src="/portfolio/adobe-scripts/framesplitter-dialog.webp" alt="Окно настроек FrameSplitter" sizes="(max-width: 700px) 70vw, (max-width: 1100px) 45vw, 18vw" />
+			</div>
+
+			<ResponsiveImage class="framesplitter-result" src="/portfolio/adobe-scripts/framesplitter-result.webp" alt="Текст, разбитый FrameSplitter на абзацы, строки, слова и буквы" sizes="(max-width: 700px) 100vw, (max-width: 1100px) 75vw, 47vw" />
+			<a class="contents-link" href="#contents">Вернуться в оглавление ↑</a>
+		</section>
+
+		<section class="script script-book" id="book-styles" aria-labelledby="book-styles-title">
+			<div class="book-intro script-copy">
+				<h2 id="book-styles-title">Book Styles</h2>
+				<div class="body-copy">
+					<p>Создаёт готовую систему абзацных и символьных стилей. Скрипт определяет формат первой страницы (A5, A4 или A3), предлагает выбрать шрифтовую пару, профиль документа и язык текста, после чего рассчитывает кегли, интерлиньяж, отбивки и отступы.</p>
+					<h3>Что настраивается</h3>
+					<ul>
+						<li>шрифтовая пара из пресета или вручную;</li>
+						<li>профиль: Report, Magazine, Brochure или Modern Web;</li>
+						<li>язык текста; по умолчанию выбран Russian;</li>
+						<li>baseline grid;</li>
+						<li>тестовые страницы со всеми стилями;</li>
+						<li>поля и колонки документа — опционально, по умолчанию выключены</li>
+					</ul>
+					<p>Есть отдельная версия для верстки на казахском языке — с шрифтами, поддерживающими казахскую кириллицу</p>
+				</div>
+			</div>
+
+			<div class="book-visuals">
+				<ResponsiveImage class="book-specimen" src="/portfolio/adobe-scripts/book-styles-specimen.webp" alt="Тестовая страница со стилями, созданная Book Styles" sizes="(max-width: 700px) 70vw, (max-width: 1100px) 62vw, 38vw" />
+				<ResponsiveImage class="book-dialog" src="/portfolio/adobe-scripts/book-styles-dialog.webp" alt="Окно настройки Book Styles" sizes="(max-width: 700px) 60vw, (max-width: 1100px) 54vw, 33vw" />
+			</div>
+
+			<div class="book-details">
+				<h3>Профили</h3>
+				<div class="profile-grid">
+					<article><h4>Report</h4><p>Для длинного последовательного текста. Основной рекомендуемый стиль — Body First Indent: красная строка 4 мм на A5, 4,5 мм на A4 или 5 мм на A3, без межабзацной отбивки. Body Spaced получает наиболее компактный Space After — 0,32 базовой строки.</p></article>
+					<article><h4>Magazine</h4><p>Для редакционной и журнальной вёрстки. Рекомендуется Body Spaced: без красной строки, с заметной межабзацной отбивкой 0,4 базовой строки.</p></article>
+					<article><h4>Brochure</h4><p>Для коротких рекламных и презентационных блоков. Использует Body Spaced с более открытой отбивкой — 0,52 базовой строки.</p></article>
+					<article><h4>Modern Web</h4><p>Display-first профиль с крупными заголовками и большим количеством капса. `H1`, `H2` и `H3` переводятся в ALL CAPS и получают специальный tracking. Размер `H1`: 72/63 pt на A5, 112/98 pt на A4 и 156/136 pt на A3.</p></article>
+				</div>
+
+				<div class="font-presets">
+					<h3>Шрифтовые пресеты</h3>
+					<p>Основные пары: Source Serif 4 + Source Sans 3, PT Serif + PT Sans, Literata + Commissioner, Lora + IBM Plex Sans, Spectral + Montserrat и Noto Serif + Noto Sans. Отдельно доступны `Helvetica Solo` и `EB Garamond + Helvetica`.</p>
+				</div>
+			</div>
+			<a class="contents-link" href="#contents">Вернуться в оглавление ↑</a>
+		</section>
+	</main>
+</BaseLayout>
+
+<style>
+	.scripts-page { --page-gutter: clamp(1rem, 3.7vw, 4.5rem); width: 100%; }
+	.contents,
+	.script { position: relative; min-height: calc(100svh - 6rem); padding: clamp(3rem, 7vw, 7rem) var(--page-gutter); border-bottom: 1px solid var(--color-border); scroll-margin-top: 6rem; }
+
+	.contents { display: grid; grid-template-columns: minmax(18rem, .85fr) minmax(30rem, 1.15fr); align-items: end; gap: clamp(3rem, 8vw, 10rem); }
+	h1 { margin: 0; font-size: var(--text-page-title); font-weight: var(--weight-page-title); line-height: var(--leading-page-title); letter-spacing: var(--tracking-page-title); }
+	.contents nav { border-top: 1px solid var(--color-border); }
+	.contents nav a { min-height: clamp(5.5rem, 8vw, 7.5rem); display: grid; grid-template-columns: 2.25rem minmax(0, 1fr) 2rem; align-items: center; gap: 1rem; color: var(--color-text); border-bottom: 1px solid var(--color-border); text-decoration: none; }
+	.contents nav span { color: var(--color-muted); font-size: var(--text-card-meta); font-weight: 650; letter-spacing: .08em; }
+	.contents nav strong { font-size: clamp(1.35rem, 2.5vw, 2.35rem); font-weight: 560; line-height: 1; letter-spacing: -.055em; }
+	.contents nav i { justify-self: end; font-size: 1rem; font-style: normal; transition: transform .2s ease; }
+	.contents nav a:hover i { transform: translateY(.3rem); }
+
+	.script { display: grid; gap: clamp(2rem, 4vw, 4rem); }
+	.script-copy { min-width: 0; }
+	h2 { margin: 0 0 clamp(3rem, 6vw, 6rem); font-size: var(--text-display-section); font-weight: 500; line-height: var(--leading-display-section); letter-spacing: var(--tracking-display-section); }
+	.body-copy { max-width: 31rem; color: var(--color-text); font-size: var(--text-lead); line-height: 1.45; }
+	.body-copy p { margin: 0 0 1.55em; }
+	.body-copy p:last-child { margin-bottom: 0; }
+	.note { margin: clamp(3rem, 7vw, 7rem) 0 0; max-width: 17rem; color: var(--color-muted); font-size: var(--text-body-sm); line-height: var(--leading-body-sm); }
+	.contents-link { position: absolute; right: var(--page-gutter); bottom: 1.75rem; color: var(--color-muted); font-size: var(--text-navigation); text-underline-offset: .3rem; }
+	.contents-link:hover { color: var(--color-text); }
+
+	.script-gridster { grid-template-columns: minmax(16rem, .62fr) minmax(36rem, 1.38fr); align-items: start; }
+	.gridster-gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1rem, 2.5vw, 2.75rem); }
+	.gridster-gallery img { width: 100%; height: auto; aspect-ratio: .71; display: block; object-fit: cover; background: #fff; }
+
+	.script-colorproofer { grid-template-columns: minmax(17rem, .72fr) minmax(17rem, .7fr) minmax(25rem, 1.25fr); grid-template-rows: auto 1fr; align-items: start; }
+	.script-colorproofer .script-copy { grid-column: 1; grid-row: 1; }
+	.color-dialog { grid-column: 2; grid-row: 1; margin: 2rem 0 0; }
+	.color-proof { grid-column: 3; grid-row: 1 / span 2; margin: 0; }
+	.color-dialog img,
+	.color-proof img { width: 100%; height: auto; display: block; }
+	.color-vectors { grid-column: 1 / span 2; grid-row: 2; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem clamp(1.5rem, 3vw, 3.5rem); align-self: end; }
+	.color-vectors article { min-width: 0; }
+	.color-vectors h3 { margin: 0 0 .25rem; font-size: var(--text-body-sm); line-height: 1.2; }
+	.color-vectors p { margin: 0; color: var(--color-muted); font-size: clamp(.68rem, .85vw, .82rem); line-height: 1.38; }
+	.color-vectors i { width: .68rem; height: .68rem; margin-left: .25rem; display: inline-block; border: 1px solid #fff; vertical-align: -.05rem; }
+	.color-vectors .cyan { background: #00ffff; }
+	.color-vectors .magenta { background: #ff00e5; }
+	.color-vectors .yellow { background: #fff500; }
+	.color-vectors .black { background: #000; }
+	.color-vectors .warmth { background: #ff8600; }
+	.color-vectors .coolness { background: #008bdc; }
+	.color-vectors .darkness { background: #111; }
+
+	.script-framesplitter { grid-template-columns: minmax(18rem, .78fr) minmax(34rem, 1.22fr); align-items: center; }
+	.framesplitter-dialog { width: min(58%, 19rem); height: auto; margin: clamp(3rem, 7vw, 7rem) 0 0 clamp(2rem, 8vw, 7rem); display: block; }
+	.framesplitter-result { width: min(100%, 47rem); max-height: 72vh; justify-self: center; object-fit: contain; }
+
+	.script-book { grid-template-columns: minmax(18rem, .68fr) minmax(40rem, 1.32fr); align-items: start; }
+	.book-intro { grid-column: 1; }
+	.book-intro .body-copy { font-size: var(--text-body-lg); }
+	.book-intro h3 { margin: clamp(2.25rem, 4vw, 4rem) 0 1.25rem; font-size: var(--text-lead); }
+	.book-intro ul { margin: 0; padding: 0; list-style: none; }
+	.book-intro li { padding-left: .9rem; }
+	.book-intro li::before { content: '•'; margin-left: -.9rem; margin-right: .4rem; }
+	.book-visuals { grid-column: 2; position: relative; min-height: min(72vw, 50rem); }
+	.book-specimen { position: absolute; left: 0; top: 0; width: 62%; height: auto; }
+	.book-dialog { position: absolute; right: 0; top: 1.5rem; width: 54%; height: auto; }
+	.book-details { grid-column: 1 / -1; margin-top: clamp(1.5rem, 3vw, 3.5rem); }
+	.book-details > h3,
+	.font-presets h3 { margin: 0 0 1.4rem; font-size: var(--text-lead); }
+	.profile-grid { width: min(100%, 86rem); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(1.25rem, 2vw, 2.5rem); }
+	.profile-grid h4 { margin: 0 0 1.25rem; font-size: var(--text-lead); font-weight: 500; }
+	.profile-grid p,
+	.font-presets p { margin: 0; color: var(--color-text); font-size: var(--text-body-lg); line-height: 1.45; }
+	.font-presets { max-width: 43rem; margin-top: clamp(4rem, 7vw, 7rem); }
+
+	:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
+
+	@media (max-width: 1100px) {
+		.contents { grid-template-columns: 1fr; align-content: center; }
+		.script-gridster,
+		.script-framesplitter,
+		.script-book { grid-template-columns: 1fr; }
+		.script-gridster .script-copy,
+		.script-framesplitter .script-copy,
+		.book-intro { max-width: 40rem; }
+		.gridster-gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+		.script-colorproofer { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+		.script-colorproofer .script-copy { grid-column: 1; }
+		.color-dialog { grid-column: 2; }
+		.color-proof { grid-column: 2; grid-row: 2; }
+		.color-vectors { grid-column: 1; grid-row: 2; grid-template-columns: 1fr; }
+		.framesplitter-result { max-height: none; }
+		.book-visuals { grid-column: 1; min-height: 72vw; }
+		.book-details { grid-column: 1; }
+		.profile-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	}
+
+	@media (max-width: 700px) {
+		.contents,
+		.script { min-height: 0; padding-top: 4rem; padding-bottom: 5.5rem; scroll-margin-top: 4.75rem; }
+		.contents { min-height: calc(100svh - 4.75rem); align-content: space-between; }
+		h1 { font-size: clamp(3rem, 14vw, 4rem); }
+		h2 { margin-bottom: 2.5rem; }
+		.body-copy { font-size: 1rem; }
+		.gridster-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+		.script-colorproofer { grid-template-columns: 1fr; }
+		.script-colorproofer .script-copy,
+		.color-dialog,
+		.color-proof,
+		.color-vectors { grid-column: 1; grid-row: auto; }
+		.color-dialog { width: 80%; margin: 0 auto; }
+		.color-proof { width: 100%; max-width: 32rem; margin-inline: auto; }
+		.color-vectors { grid-template-columns: 1fr; }
+		.framesplitter-dialog { width: min(70%, 17rem); margin-left: auto; margin-right: auto; }
+		.book-visuals { min-height: 118vw; }
+		.book-specimen { width: 70%; }
+		.book-dialog { top: 2rem; width: 60%; }
+		.profile-grid { grid-template-columns: 1fr; }
+		.contents-link { bottom: 1.5rem; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.contents nav i { transition-duration: .01ms; }
+	}
+</style>

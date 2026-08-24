@@ -1,0 +1,109 @@
+---
+import ResponsiveImage from './ResponsiveImage.astro';
+import SiteHeader from './SiteHeader.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+interface CatalogProject {
+	title: string;
+	description: string;
+	href: string;
+	images: string[];
+}
+
+interface Props {
+	title: string;
+	description: string;
+	projects: CatalogProject[];
+}
+
+const { title, description, projects } = Astro.props;
+---
+
+<BaseLayout
+	title={`${title} — Федор Юрецкий`}
+	description={`${title}: проекты Федора Юрецкого.`}
+>
+	<SiteHeader />
+
+	<main class="catalog-page">
+		<div class="catalog-shell">
+			<header class="catalog-head">
+				<h1>{title}</h1>
+				<p class="catalog-intro">{description}</p>
+			</header>
+
+			<section class="projects" aria-label="Проекты по инфографике и вёрстке">
+				{projects.map((project, index) => (
+					<a class="project" href={project.href} aria-label={`Открыть проект: ${project.title}`}>
+						<div class="project-visual" aria-hidden="true">
+							{project.images.map((src, imageIndex) => (
+								<ResponsiveImage
+									src={src}
+									alt=""
+									sizes="(max-width: 620px) 34vw, (max-width: 1080px) 16vw, 9vw"
+									loading={index === 0 && imageIndex === 1 ? 'eager' : 'lazy'}
+									fetchpriority={index === 0 && imageIndex === 1 ? 'high' : 'auto'}
+								/>
+							))}
+						</div>
+						<footer class="project-bottom">
+							<div><h2>{project.title}</h2><p>{project.description}</p></div>
+							<b aria-hidden="true">↗</b>
+						</footer>
+					</a>
+				))}
+			</section>
+
+			<nav class="catalog-footer" aria-label="Навигация по странице">
+				<a href="/">← На главную</a>
+				<a href="#top">Наверх ↑</a>
+			</nav>
+		</div>
+	</main>
+</BaseLayout>
+
+<style>
+	.catalog-page { min-height: calc(100svh - 6rem); padding: clamp(1rem,2vw,1.75rem) clamp(1rem,3vw,3rem) clamp(2rem,4vw,4rem); }
+	.catalog-shell { width: min(100%,96rem); margin-inline: auto; }
+	.catalog-head { min-height: clamp(11.5rem,14vw,13.5rem); padding: clamp(1.25rem,2.2vw,2rem); display: grid; grid-template-columns: minmax(0,1fr) minmax(18rem,.46fr); align-items: end; gap: clamp(1.25rem,3vw,3rem); background: var(--color-panel); border: 1px solid var(--color-border); }
+	.catalog-head > *,.project > *,.project-bottom > * { min-width: 0; }
+	h1 { margin: 0; max-width: 48rem; font-size: var(--text-page-title); font-weight: var(--weight-page-title); line-height: var(--leading-page-title); letter-spacing: var(--tracking-page-title); }
+	.catalog-intro { margin: 0; color: var(--color-muted); font-size: var(--text-page-intro); font-weight: var(--weight-page-intro); line-height: var(--leading-page-intro); }
+	.projects { margin-top: .8rem; display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: .8rem; }
+	.project { min-width: 0; min-height: clamp(24rem,28vw,28rem); padding: clamp(.9rem,1.2vw,1.1rem); display: grid; grid-template-rows: minmax(0,1fr) auto; color: #fff; background: var(--color-panel); border: 1px solid var(--color-border); overflow: hidden; text-decoration: none; transition: background-color .2s ease,border-color .2s ease; }
+	.project:hover { background: #121212; border-color: #4a4a4a; }
+	.project-visual { min-height: 14rem; display: grid; place-items: center; position: relative; isolation: isolate; }
+	.project-visual::before { content: ''; width: 78%; height: 1px; position: absolute; background: var(--color-border); }
+	.project-visual :global(img) { width: 31%; max-width: 7.5rem; height: auto; position: absolute; left: 50%; top: 50%; display: block; object-fit: contain; border: 1px solid #333; box-shadow: 0 1.3rem 2.5rem #000a; transition: transform .35s cubic-bezier(.2,.8,.2,1); }
+	.project-visual :global(img:first-child) { z-index: 1; transform: translate(-112%,-44%) rotate(-7deg); }
+	.project-visual :global(img:nth-child(2)) { z-index: 3; width: 38%; transform: translate(-50%,-52%); }
+	.project-visual :global(img:last-child) { z-index: 2; transform: translate(12%,-44%) rotate(7deg); }
+	.project:hover .project-visual :global(img:first-child) { transform: translate(-116%,-47%) rotate(-3deg); }
+	.project:hover .project-visual :global(img:nth-child(2)) { transform: translate(-50%,-55%) scale(1.025); }
+	.project:hover .project-visual :global(img:last-child) { transform: translate(16%,-47%) rotate(3deg); }
+	.project-bottom { display: grid; grid-template-columns: minmax(0,1fr) 2.35rem; align-items: end; gap: 1rem; }
+	.project-bottom h2 { margin: 0; font-size: clamp(1.35rem,1.8vw,1.8rem); font-weight: 650; line-height: .95; letter-spacing: -.045em; }
+	.project-bottom p { margin: .55rem 0 0; color: var(--color-muted); font-size: .62rem; font-weight: 430; line-height: 1.4; }
+	.project-bottom b { width: 2.35rem; height: 2.35rem; display: grid; place-items: center; justify-self: end; color: #fff; background: transparent; border: 1px solid var(--color-border); font-size: .74rem; font-weight: 500; transition: transform .2s ease,background-color .2s ease,color .2s ease,border-color .2s ease; }
+	.project:hover .project-bottom b { color: #050505; background: #fff; border-color: #fff; transform: rotate(45deg); }
+	.catalog-footer { margin-top: .8rem; padding: 1rem 0; display: flex; justify-content: space-between; gap: 1rem; border-top: 1px solid var(--color-border); }
+	.catalog-footer a { color: var(--color-muted); font-size: .68rem; font-weight: 650; text-decoration: none; }
+	.catalog-footer a:hover { color: #fff; }
+
+	@media (max-width: 1080px) {
+		.catalog-head { grid-template-columns: minmax(0,1fr) minmax(18rem,.55fr); }
+		.projects { grid-template-columns: repeat(2,minmax(0,1fr)); }
+		.project { min-height: 30rem; }
+	}
+	@media (max-width: 620px) {
+		.catalog-page { min-height: calc(100svh - 4.75rem); padding: .75rem; }
+		.catalog-head { min-height: 20rem; padding: 1rem; grid-template-columns: 1fr; align-content: space-between; gap: 1.5rem; }
+		.projects { grid-template-columns: 1fr; gap: .5rem; }
+		.project { min-height: 28rem; padding: 1rem; }
+		.project-visual { min-height: 18rem; }
+		.project-visual :global(img) { width: 28%; }
+		.project-visual :global(img:nth-child(2)) { width: 35%; }
+	}
+	@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; } }
+	:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
+</style>

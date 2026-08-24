@@ -1,0 +1,250 @@
+---
+import '../styles/tokens.css';
+import personalMark from '../../links/my logo miniature white.png';
+interface Props {
+	brandHref?: string;
+	whatsappMessage?: string;
+}
+
+const {
+	brandHref = '/',
+	whatsappMessage = 'Здравствуйте!\n\nПишу по поводу разработки многостраничного издания.',
+} = Astro.props;
+
+const whatsappUrl = `https://api.whatsapp.com/send/?phone=77084251518&text=${encodeURIComponent(whatsappMessage)}&type=phone_number&app_absent=0`;
+const email = 'fedorjurecki@gmail.com';
+const linkedinUrl = 'https://www.linkedin.com/in/jurecki';
+const telegramUrl = 'https://t.me/jurecki';
+const instagramUrl = 'https://www.instagram.com/jurecki.things/';
+---
+
+<div class="site-header">
+	<nav class="site-header-inner" aria-label="Контакты Федора Юрецкого">
+		<a class="site-brand" href={brandHref} aria-label={brandHref.startsWith('#') ? 'Федор Юрецкий — наверх страницы' : 'Федор Юрецкий — на главную'}>
+			<img src={personalMark.src} alt="" width="24" height="24" aria-hidden="true" />
+			<span>Федор Юрецкий</span>
+		</a>
+
+		<div class="site-nav-links">
+			<button type="button" data-copy-value={email} data-copy-message="Почта скопирована" aria-label={`Скопировать почту ${email}`}>Почта</button>
+			<a href={linkedinUrl} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+			<a href={telegramUrl} target="_blank" rel="noopener noreferrer">Telegram</a>
+			<a href={instagramUrl} target="_blank" rel="noopener noreferrer">Instagram</a>
+		</div>
+
+		<div class="site-header-actions">
+			<a class="site-status" href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+				<span aria-hidden="true"></span>Открыт для новых проектов
+			</a>
+		</div>
+
+		<div class="mobile-nav">
+			<button class="mobile-contacts-toggle" type="button" aria-expanded="false" aria-controls="mobile-contact-panel">
+				Контакты <span aria-hidden="true">+</span>
+			</button>
+		</div>
+
+		<div class="mobile-contact-panel" id="mobile-contact-panel" hidden>
+			<button type="button" data-copy-value={email} data-copy-message="Почта скопирована" aria-label={`Скопировать почту ${email}`}><strong>Почта</strong><i aria-hidden="true">⎘</i></button>
+			<a href={telegramUrl} target="_blank" rel="noopener noreferrer"><strong>Telegram</strong><i aria-hidden="true">↗&#xfe0e;</i></a>
+			<a href={linkedinUrl} target="_blank" rel="noopener noreferrer"><strong>LinkedIn</strong><i aria-hidden="true">↗&#xfe0e;</i></a>
+			<a href={instagramUrl} target="_blank" rel="noopener noreferrer"><strong>Instagram</strong><i aria-hidden="true">↗&#xfe0e;</i></a>
+		</div>
+	</nav>
+</div>
+
+<div class="copy-toast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+
+<script>
+	const copyToast = document.querySelector<HTMLElement>('.copy-toast');
+	let copyToastTimer = 0;
+
+	document.querySelectorAll<HTMLButtonElement>('[data-copy-value]').forEach((button) => {
+		button.addEventListener('click', async () => {
+			try {
+				await navigator.clipboard.writeText(button.dataset.copyValue ?? '');
+				if (!copyToast) return;
+				copyToast.textContent = button.dataset.copyMessage ?? 'Скопировано';
+				copyToast.hidden = false;
+				window.clearTimeout(copyToastTimer);
+				copyToastTimer = window.setTimeout(() => { copyToast.hidden = true; }, 3000);
+			} catch {
+				if (!copyToast) return;
+				copyToast.textContent = 'Не удалось скопировать';
+				copyToast.hidden = false;
+			}
+		});
+	});
+
+	const contactToggle = document.querySelector<HTMLButtonElement>('.mobile-contacts-toggle');
+	const contactPanel = document.querySelector<HTMLElement>('#mobile-contact-panel');
+
+	const setContactPanel = (open: boolean) => {
+		if (!contactToggle || !contactPanel) return;
+		contactToggle.setAttribute('aria-expanded', String(open));
+		contactToggle.querySelector('span')!.textContent = open ? '×' : '+';
+		contactPanel.hidden = !open;
+	};
+
+	contactToggle?.addEventListener('click', () => {
+		setContactPanel(contactToggle.getAttribute('aria-expanded') !== 'true');
+	});
+
+	document.addEventListener('click', (event) => {
+		if (contactPanel?.hidden || (event.target instanceof Node && document.querySelector('.site-header')?.contains(event.target))) return;
+		setContactPanel(false);
+	});
+
+	document.addEventListener('keydown', (event) => {
+		if (event.key !== 'Escape' || contactPanel?.hidden) return;
+		setContactPanel(false);
+		contactToggle?.focus();
+	});
+
+	const shortWordPattern = /(^|[\s([{"«„—–])(из-за|из-под|без|для|вне|над|обо|под|при|про|во|до|за|из|ко|на|не|ни|но|об|от|по|со|а|в|и|к|о|с|у) (?=[А-ЯЁа-яё0-9«„])/gi;
+	const bindTextNode = (textNode: Node) => {
+		if (textNode.parentElement?.closest('script, style, pre, code')) return;
+		let formatted = textNode.nodeValue ?? '';
+		let previous = '';
+		do {
+			previous = formatted;
+			formatted = formatted.replace(shortWordPattern, '$1$2\u00a0');
+		} while (formatted !== previous);
+		if (formatted !== textNode.nodeValue) textNode.nodeValue = formatted;
+	};
+	const bindShortWords = (root: Node) => {
+		if (root.nodeType === Node.TEXT_NODE) return bindTextNode(root);
+		const textNodes = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+		let textNode: Node | null;
+		while ((textNode = textNodes.nextNode())) bindTextNode(textNode);
+	};
+
+	// ponytail: клиентский проход не требует размечать каждый текст; для no-JS понадобится сборочный HTML-трансформер.
+	bindShortWords(document.body);
+	new MutationObserver((mutations) => {
+		for (const mutation of mutations) {
+			if (mutation.type === 'characterData') bindTextNode(mutation.target);
+			else mutation.addedNodes.forEach(bindShortWords);
+		}
+	}).observe(document.body, { childList: true, characterData: true, subtree: true });
+</script>
+
+<style>
+	.site-header,
+	.site-header * { box-sizing: border-box; }
+
+	.site-header {
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		min-height: 6rem;
+		padding: 1.25rem clamp(1.25rem,4vw,4.5rem);
+		display: grid;
+		align-items: center;
+		color: #111;
+		background: rgba(255,255,255,.94);
+		border-bottom: 1px solid rgba(17,17,17,.08);
+		backdrop-filter: blur(16px);
+	}
+
+	.site-header-inner { display: grid; grid-template-columns: auto minmax(0,1fr) auto; align-items: center; }
+	.site-header-inner > * { min-width: 0; }
+	.site-brand { display: flex; width: max-content; align-items: center; gap: .5rem; color: inherit; font-size: clamp(.86rem,1vw,1rem); font-weight: 820; line-height: 1; letter-spacing: -.055em; text-decoration: none; text-transform: uppercase; white-space: nowrap; }
+	.site-brand span { display: block; }
+	.site-brand img { width: 1.25rem; height: 1.25rem; flex: 0 0 auto; object-fit: contain; image-rendering: pixelated; }
+	.site-nav-links { grid-column: 3; display: flex; align-items: center; justify-self: end; gap: clamp(1.25rem,3vw,3.2rem); }
+	.site-nav-links a,.site-nav-links button,.site-status { color: inherit; font: inherit; font-size: .78rem; font-weight: 650; letter-spacing: .03em; text-decoration: none; }
+	.site-nav-links a,.site-nav-links button { position: relative; white-space: nowrap; }
+	.site-nav-links button { padding: 0; display:inline-flex; align-items:center; gap:.35rem; background: none; border: 0; cursor: pointer; }
+	.copy-icon { width:1rem; height:1rem; flex:0 0 auto; fill:none; stroke:currentColor; stroke-width:1.4; stroke-linecap:round; stroke-linejoin:round; }
+	.site-nav-links a::after,.site-nav-links button::after { content: ""; position: absolute; left: 0; bottom: -.35rem; width: 100%; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform .25s ease; }
+	.site-nav-links a:hover::after,.site-nav-links a:focus-visible::after,.site-nav-links button:hover::after,.site-nav-links button:focus-visible::after { transform: scaleX(1); transform-origin: left; }
+	.site-header-actions { grid-column: 2; grid-row: 1; justify-self: end; margin-right: clamp(1.5rem,3vw,3.5rem); display: flex; align-items: center; gap: 1rem; }
+	.site-status { display: flex; align-items: center; gap: .55rem; white-space: nowrap; }
+	.site-status > span { width: .45rem; height: .45rem; flex: 0 0 auto; background: var(--color-accent); border-radius: 50%; box-shadow: 0 0 0 .3rem rgba(201,36,39,.12); }
+	.mobile-nav,.mobile-contact-panel { display: none; }
+	.site-brand:focus-visible,.site-nav-links a:focus-visible,.site-nav-links button:focus-visible,.site-status:focus-visible,.mobile-nav a:focus-visible,.mobile-nav button:focus-visible,.mobile-contact-panel a:focus-visible,.mobile-contact-panel button:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
+	.copy-toast { position:fixed; top:7rem; right:clamp(1rem,4vw,4.5rem); z-index:300; padding:.85rem 1rem; color:#fff; background:#111; border-radius:var(--radius-thumb); box-shadow:0 .8rem 2rem rgba(0,0,0,.2); font-size:.82rem; font-weight:750; }
+	.copy-toast[hidden] { display:none; }
+
+	@media (max-width: 1024px) {
+		.site-header { min-height: 4.75rem; padding: .75rem 1rem; }
+		.site-header-inner { position: relative; grid-template-columns: auto minmax(0,1fr); gap: .75rem; }
+		.site-brand { width: max-content; }
+		.site-nav-links,.site-header-actions { display: none; }
+		.mobile-nav { min-width: 0; display: flex; justify-content: flex-end; gap: .45rem; }
+		.mobile-nav a,.mobile-nav button {
+			min-height: 2.75rem;
+			padding: .72rem .85rem;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			color: #111;
+			background: #fff;
+			border: 1px solid rgba(17,17,17,.18);
+			border-radius: var(--radius-pill);
+			font: inherit;
+			font-size: .78rem;
+			font-weight: 750;
+			line-height: 1;
+			text-decoration: none;
+			white-space: nowrap;
+			cursor: pointer;
+		}
+		.mobile-contacts-toggle { gap: .5rem; }
+		.mobile-contacts-toggle span { color: var(--color-accent); font-size: 1.05rem; font-weight: 500; line-height: .7; }
+		.mobile-contact-panel {
+			position: absolute;
+			top: calc(100% + 1rem);
+			left: 0;
+			right: 0;
+			padding: .45rem;
+			color: #fff;
+			background: #111;
+			border: 1px solid rgba(255,255,255,.14);
+			border-radius: var(--radius-card);
+			box-shadow: 0 1rem 2.5rem rgba(0,0,0,.22);
+		}
+		.mobile-contact-panel:not([hidden]) { display: grid; }
+		.mobile-contact-panel a,.mobile-contact-panel button {
+			width: 100%;
+			min-height: 3.6rem;
+			padding: .85rem 1rem;
+			display: grid;
+			grid-template-columns: minmax(0,1fr) 1.25rem;
+			align-items: center;
+			gap: .75rem;
+			color: inherit;
+			background: transparent;
+			border: 0;
+			border-bottom: 1px solid rgba(255,255,255,.14);
+			font: inherit;
+			text-align: left;
+			text-decoration: none;
+			cursor: pointer;
+		}
+		.mobile-contact-panel > :last-child { border-bottom: 0; }
+		.mobile-contact-panel strong { min-width: 0; font-size: .85rem; line-height: 1.25; }
+		.mobile-contact-panel i { justify-self:end; color:#fff; font-style:normal; }
+		.mobile-contact-panel .copy-icon { justify-self:end; }
+		.copy-toast { top:5.5rem; left:1rem; right:1rem; text-align:center; }
+	}
+
+	@media (min-width: 1025px) and (max-width: 1535px) {
+		.site-status { display: none; }
+	}
+
+	@media (max-width: 380px) {
+		.site-header { padding-inline: .75rem; }
+		.site-header-inner { gap: .5rem; }
+		.site-brand { width: max-content; }
+		.mobile-nav { gap: .35rem; }
+		.mobile-nav a,.mobile-nav button { padding-inline: .7rem; font-size: .75rem; }
+		.mobile-contact-panel a,.mobile-contact-panel button { grid-template-columns:minmax(0,1fr) 1.3rem; gap:.35rem .75rem; }
+		.mobile-contact-panel i,.mobile-contact-panel .copy-icon { grid-column:2; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.site-nav-links a::after,.site-nav-links button::after { transition-duration: .01ms; }
+	}
+</style>

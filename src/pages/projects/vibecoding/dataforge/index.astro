@@ -1,0 +1,151 @@
+---
+import CaseLightbox from '../../../../components/CaseLightbox.astro';
+import ResponsiveImage from '../../../../components/ResponsiveImage.astro';
+import SiteHeader from '../../../../components/SiteHeader.astro';
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+
+const experiments = [
+	{ image: 'dataforge-01.webp', title: 'Оригинал' },
+	{ image: 'dataforge-03.webp', title: 'ASCII art' },
+	{ image: 'dataforge-04.webp', title: 'Пиксельная сетка #1', detail: 'Сдвиг по RGB, CRT Scanlines' },
+	{ image: 'dataforge-05.webp', title: 'Ухудшение качества #1', detail: 'Растровая пикселизация, JPG артефакты' },
+	{ image: 'dataforge-06.webp', title: 'Пиксельная сетка #2', detail: 'Цветовая схема PICO-8' },
+	{ image: 'dataforge-07.webp', title: 'Пиксельная сетка #3', detail: 'Dithering, CGA Graphics' },
+	{ image: 'dataforge-08.webp', title: 'Пиксельная сетка #4', detail: 'Цветовая схема Classic MacOS' },
+	{ image: 'dataforge-09.webp', title: 'Пиксельная сетка #5' },
+	{ image: 'dataforge-10.webp', title: 'Ухудшение качества #2', detail: 'Много JPG артефактов' },
+	{ image: 'dataforge-02.webp', title: 'Пиксельная сетка #6', detail: 'Цветовая схема Nintendo Gameboy' },
+];
+---
+
+<BaseLayout
+	title="Dataforge — Федор Юрецкий"
+	description="Браузерное приложение для обработки изображений и создания генеративного глитч-арта."
+	image="/portfolio/dataforge/dataforge-04.webp"
+	imageAlt="Изображение, обработанное в Dataforge"
+>
+	<SiteHeader />
+
+	<main class="dataforge-page">
+		<section class="dataforge-intro">
+			<div class="dataforge-heading">
+				<h1>Dataforge</h1>
+				<a href="https://dataforge-alpha.vercel.app" target="_blank" rel="noopener noreferrer">Открыть Dataforge <span aria-hidden="true">↗</span></a>
+			</div>
+
+			<div class="dataforge-description">
+				<p>Браузерное приложение для обработки изображений и создания генеративного глитч-арта.</p>
+				<p>Весь функционал программы делится на два основных направления.</p>
+				<p><strong>Первое — пикселизация:</strong> это гибкий набор визуальных фильтров, позволяющий перерисовывать изображение с использованием различных форм (от квадратов и кругов до ASCII-символов), накладывать ретро-палитры, дизеринг и эффект ЭЛТ-монитора.</p>
+				<p><strong>Второе направление — датамошинг:</strong> набор «деструктивных» эффектов, которые необратимо искажают исходник. Сюда входят сортировка пикселей, визуализация аудио-искажений, смещение RGB-каналов и имитация сильной потери качества при многократном пересохранении.</p>
+				<p>Dataforge активно использовался в работе над авторской <a href="/projects/personal/cards/">колодой карт Misprint</a>.</p>
+				<div class="misprint-preview" aria-label="Карты и рубашка Misprint">
+					<button class="zoom-trigger" type="button" data-lightbox-target="dataforge-lightbox" data-caption="Misprint · Валет червей" aria-label="Увеличить валета червей Misprint">
+						<ResponsiveImage src="/portfolio/cards/card-41.webp" alt="Валет червей из колоды Misprint" widths={[96, 160, 240, 373]} sizes="4.75rem" />
+					</button>
+					<button class="zoom-trigger" type="button" data-lightbox-target="dataforge-lightbox" data-caption="Misprint · Валет треф" aria-label="Увеличить валета треф Misprint">
+						<ResponsiveImage src="/portfolio/cards/card-44.webp" alt="Валет треф из колоды Misprint" widths={[96, 160, 240, 373]} sizes="4.75rem" />
+					</button>
+					<button class="zoom-trigger" type="button" data-lightbox-target="dataforge-lightbox" data-caption="Misprint · Рубашка" aria-label="Увеличить рубашку Misprint">
+						<ResponsiveImage src="/portfolio/cards/card-53.webp" alt="Рубашка колоды Misprint" widths={[96, 160, 240, 373]} sizes="4.75rem" />
+					</button>
+				</div>
+			</div>
+		</section>
+
+		<section class="dataforge-experiments" aria-label="Примеры обработки изображений">
+			<div class="experiment-grid">
+				{experiments.map((experiment) => (
+					<figure>
+						<button
+							class="zoom-trigger"
+							type="button"
+							data-lightbox-target="dataforge-lightbox"
+							data-caption={experiment.detail ? `${experiment.title} · ${experiment.detail}` : experiment.title}
+							aria-label={`Увеличить: ${experiment.title}`}
+						>
+							<img src={`/portfolio/dataforge/${experiment.image}`} alt={`${experiment.title}: собака Жулик после обработки в Dataforge`} width="1400" height="1400" loading="lazy" decoding="async" />
+						</button>
+						<figcaption>
+							<h2>{experiment.title}</h2>
+							{experiment.detail && <p>{experiment.detail}</p>}
+						</figcaption>
+					</figure>
+				))}
+			</div>
+			<p class="dog-note">*Наш подопытный, собака Жулик, в визуальных экспериментах никак не пострадал.</p>
+		</section>
+
+		<section class="dataforge-interface" aria-label="Интерфейс Dataforge">
+			<figure>
+				<button class="zoom-trigger" type="button" data-lightbox-target="dataforge-lightbox" data-caption="Интерфейс Dataforge · Пикселизация" aria-label="Увеличить интерфейс пикселизации">
+					<img src="/portfolio/dataforge/dataforge-ui-pixelate.png" alt="Панель настройки пикселизации в Dataforge" width="638" height="1520" loading="lazy" decoding="async" />
+				</button>
+				<figcaption>Пикселизация</figcaption>
+			</figure>
+			<figure>
+				<button class="zoom-trigger" type="button" data-lightbox-target="dataforge-lightbox" data-caption="Интерфейс Dataforge · Датамошинг" aria-label="Увеличить интерфейс датамошинга">
+					<img src="/portfolio/dataforge/dataforge-ui-datamosh.png" alt="Панель настройки датамошинга в Dataforge" width="640" height="1518" loading="lazy" decoding="async" />
+				</button>
+				<figcaption>Датамошинг</figcaption>
+			</figure>
+		</section>
+	</main>
+
+	<CaseLightbox id="dataforge-lightbox" variant="single" label="Увеличенное изображение Dataforge" />
+</BaseLayout>
+
+<style>
+	.dataforge-page { width: min(100%, 100rem); margin-inline: auto; padding: clamp(2.5rem, 6vw, 7rem) clamp(1rem, 3vw, 3rem) clamp(4rem, 8vw, 8rem); }
+	.dataforge-intro { display: grid; grid-template-columns: minmax(18rem, .8fr) minmax(30rem, 1.2fr); gap: clamp(3rem, 8vw, 10rem); align-items: start; }
+	.dataforge-heading { position: sticky; top: 9rem; }
+	h1 { margin: 0; font-size: var(--text-page-title); font-weight: var(--weight-page-title); line-height: var(--leading-page-title); letter-spacing: var(--tracking-page-title); }
+	.dataforge-heading a { width: max-content; margin-top: clamp(2rem, 4vw, 4rem); padding-bottom: .35rem; display: inline-flex; align-items: center; gap: .7rem; color: var(--color-text); border-bottom: 1px solid currentColor; font-size: var(--text-body); font-weight: 650; text-decoration: none; }
+	.dataforge-heading a span { font-size: .8em; transition: transform .2s ease; }
+	.dataforge-heading a:hover span { transform: translate(.2rem, -.2rem); }
+	.dataforge-description { max-width: 47rem; color: var(--color-muted); font-size: var(--text-lead); font-weight: 430; line-height: var(--leading-lead); }
+	.dataforge-description p { margin: 0 0 1.45rem; }
+	.dataforge-description p:last-child { margin-bottom: 0; }
+	.dataforge-description strong { color: var(--color-text); font-weight: 650; }
+	.dataforge-description a { color: var(--color-text); text-underline-offset: .22em; text-decoration-thickness: 1px; }
+	.dataforge-description a:hover { color: #d8d8d8; }
+	.misprint-preview { margin-top: .4rem; display: flex; align-items: flex-start; gap: .65rem; }
+	.misprint-preview .zoom-trigger { width: 4.75rem; flex: 0 0 auto; }
+	.misprint-preview img { width: 100%; height: auto; display: block; }
+
+	.dataforge-interface { margin: clamp(6rem, 10vw, 10rem) auto 0; display: grid; grid-template-columns: repeat(2, 23.75rem); justify-content: center; gap: clamp(2rem, 5vw, 5rem); }
+	.dataforge-interface figure { margin: 0; min-width: 0; }
+	.zoom-trigger { width: 100%; padding: 0; display: block; background: transparent; border: 0; cursor: zoom-in; }
+	.dataforge-interface img { width: 100%; height: auto; display: block; background: var(--color-panel); border: 1px solid var(--color-border); }
+	.dataforge-interface figcaption { margin-top: .75rem; color: var(--color-text); font-size: var(--text-body-sm); font-weight: 650; }
+
+	.dataforge-experiments { margin-top: clamp(4rem, 8vw, 8rem); }
+	.experiment-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(2.5rem, 5vw, 5rem) clamp(1rem, 2.2vw, 2.5rem); }
+	.experiment-grid figure { min-width: 0; margin: 0; }
+	.experiment-grid img { width: 100%; height: auto; aspect-ratio: 1; display: block; object-fit: cover; background: var(--color-panel); }
+	.experiment-grid figcaption { margin-top: .75rem; text-align: center; }
+	.experiment-grid h2 { margin: 0; font-size: clamp(.92rem, 1.25vw, 1.35rem); font-weight: 520; line-height: 1.2; letter-spacing: -.035em; }
+	.experiment-grid p { margin: .3rem 0 0; color: var(--color-muted); font-size: clamp(.68rem, .85vw, .82rem); line-height: 1.35; }
+	.dog-note { margin: clamp(4rem, 7vw, 7rem) 0 0; color: var(--color-muted); font-size: var(--text-body-sm); font-style: italic; line-height: var(--leading-body-sm); }
+	:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
+
+	@media (max-width: 1100px) {
+		.dataforge-intro { grid-template-columns: 1fr; gap: 3rem; }
+		.dataforge-heading { position: static; }
+		.experiment-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+	}
+
+	@media (max-width: 700px) {
+		.dataforge-page { padding-top: 3.5rem; }
+		.dataforge-description { font-size: 1rem; }
+		.dataforge-interface { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+		.dataforge-interface figcaption { margin-top: .55rem; }
+		.experiment-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem .75rem; }
+		.experiment-grid h2 { font-size: .88rem; }
+		.experiment-grid p { font-size: .65rem; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.dataforge-heading a span { transition-duration: .01ms; }
+	}
+</style>

@@ -1,0 +1,169 @@
+---
+import BackToTop from '../components/BackToTop.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import personalMark from '../../links/my logo miniature white.png';
+import indesignLogo from '../../links/id.svg';
+import figmaLogo from '../../links/figma.svg';
+import illustratorLogo from '../../links/ai.svg';
+import affinityLogo from '../../links/affinity.svg';
+import photoshopLogo from '../../links/ps.svg';
+import powerpointLogo from '../../links/PP.svg';
+import premiereLogo from '../../links/Pr.png';
+import corelLogo from '../../links/corel.svg';
+import acrobatLogo from '../../links/acrobat.svg';
+import miroLogo from '../../links/miro.svg';
+import procreateLogo from '../../links/procreate.svg';
+import lightroomLogo from '../../links/lr.svg';
+import arcgisLogo from '../../links/Ag.svg';
+import codexLogo from '../../links/Codex.svg';
+
+const roles = ['Арт-директор', 'Графический дизайнер', 'Верстальщик'];
+const capabilities = [
+	{ title: ['Editorial &', 'Layout'], text: 'издания, брошюры, презентации' },
+	{ title: ['Information', 'Design'], text: 'инфографика, навигация, данные' },
+	{ title: ['Branding &', 'Packaging'], text: 'айдентика, упаковка, POS' },
+	{ title: ['Key', 'Visuals'], text: 'наружная реклама, афиши, постеры' },
+	{ title: ['DesignOps &', 'Pre-press'], text: 'AI, скрипты, подготовка к печати' },
+];
+const tools = [
+	{ name: 'Adobe InDesign', src: indesignLogo },
+	{ name: 'Figma', src: figmaLogo },
+	{ name: 'Adobe Illustrator', src: illustratorLogo },
+	{ name: 'Affinity', src: affinityLogo },
+	{ name: 'Adobe Photoshop', src: photoshopLogo },
+	{ name: 'Microsoft PowerPoint', src: powerpointLogo },
+	{ name: 'Adobe Premiere Pro', src: premiereLogo },
+	{ name: 'CorelDRAW', src: corelLogo },
+	{ name: 'Adobe Acrobat', src: acrobatLogo },
+	{ name: 'Miro', src: miroLogo },
+	{ name: 'Procreate', src: procreateLogo },
+	{ name: 'Adobe Lightroom', src: lightroomLogo },
+	{ name: 'ArcGIS', src: arcgisLogo },
+	{ name: 'Codex', src: codexLogo },
+];
+---
+
+<BaseLayout
+	title="Федор Юрецкий, портфолио"
+	description="Портфолио Федора Юрецкого: арт-дирекшн, графический дизайн, многостраничная вёрстка, инфографика и презентации."
+>
+	<SiteHeader />
+	<main class="home">
+		<section class="hero-grid" aria-label="Профиль и проекты">
+			<div class="profile-pane" id="about">
+				<div class="profile-heading">
+					<h1>Федор<br /><span>Юрецкий</span></h1>
+					<Image class="personal-mark" src={personalMark} alt="Монограмма Федора Юрецкого" width={64} height={64} loading="eager" />
+				</div>
+
+				<ul class="role-list" aria-label="Профессиональные роли">
+					{roles.map((role) => <li>{role}</li>)}
+				</ul>
+
+				<div class="profile-summary">
+					<p>Дизайнер-генералист с экспертизой в многостраничной вёрстке и разработке упаковки. Оптимизирую производство макетов с помощью вайбкодинга и AI-инструментов.</p>
+				</div>
+
+				<div class="profile-meta">
+					<div><span>Локация</span><strong>Астана, Казахстан<br />Офис · гибрид · ремоут · релокация</strong></div>
+					<div><span>Языки</span><strong>Русский — родной<br />Английский — C2</strong></div>
+				</div>
+
+				<div class="capabilities" aria-label="Ключевые компетенции">
+					{capabilities.map((item) => (
+						<article><h2>{item.title[0]}<br />{item.title[1]}</h2><p>{item.text}</p></article>
+					))}
+				</div>
+
+				<div class="tools-panel">
+					<p>Рабочие инструменты</p>
+					<ul aria-label="Программы и инструменты">
+						{tools.map((tool) => <li title={tool.name}><img src={tool.src.src} alt={tool.name} width="38" height="38" loading="lazy" /></li>)}
+					</ul>
+				</div>
+
+			</div>
+
+			<section class="projects-grid" id="work" aria-label="Направления портфолио">
+				<a class="portfolio-index-item" href="/projects/publications" aria-label="Открыть инфографику и вёрстку">
+					<span class="portfolio-index-number">01</span><h2>Инфографика и вёрстка</h2><b aria-hidden="true">↗</b>
+				</a>
+				<a class="portfolio-index-item" href="/projects/presentations" aria-label="Открыть презентации">
+					<span class="portfolio-index-number">02</span><h2>Презентации</h2><b aria-hidden="true">↗</b>
+				</a>
+				<a class="portfolio-index-item" href="/projects/coming-soon#branding" aria-label="Упаковка и брендинг — раздел в работе">
+					<span class="portfolio-index-number">03</span><h2>Упаковка, брендинг</h2><b aria-hidden="true">↗</b>
+				</a>
+				<a class="portfolio-index-item" href="/projects/product-design/shelfr" aria-label="Открыть Product Design — Shelfr">
+					<span class="portfolio-index-number">04</span><h2>Product Design</h2><b aria-hidden="true">↗</b>
+				</a>
+				<a class="portfolio-index-item" href="/projects/personal" aria-label="Открыть личные проекты">
+					<span class="portfolio-index-number">05</span><h2>Личные проекты</h2><b aria-hidden="true">↗</b>
+				</a>
+				<a class="portfolio-index-item" href="/projects/vibecoding" aria-label="Открыть вайбкодинг">
+					<span class="portfolio-index-number">06</span><h2>Вайбкодинг</h2><b aria-hidden="true">↗</b>
+				</a>
+			</section>
+		</section>
+	</main>
+	<BackToTop />
+</BaseLayout>
+
+<style>
+	.home { min-height: calc(100svh - 6rem); padding: clamp(1rem,2vw,1.75rem) clamp(1rem,3vw,3rem); }
+	.hero-grid { width: min(100%,96rem); min-height: calc(100svh - 9rem); margin-inline: auto; display: grid; grid-template-columns: minmax(34rem,1.02fr) minmax(34rem,.98fr); gap: .8rem; align-content: center; align-items: stretch; }
+	.profile-pane { min-width: 0; padding: clamp(1.15rem,1.8vw,1.75rem); display: flex; flex-direction: column; position: relative; background: rgba(8,8,8,.88); border: 1px solid var(--color-border); overflow: hidden; }
+	.tools-panel > p { margin: 0; color: var(--color-muted); font-size: .62rem; font-weight: 700; line-height: 1.4; letter-spacing: .1em; text-transform: uppercase; }
+	.personal-mark { width: 2.9rem; height: auto; flex: 0 0 auto; margin-top: .25rem; image-rendering: pixelated; }
+	.profile-heading { margin-top: 0; display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+	h1 { margin: 0; font-size: var(--text-page-title); font-weight: var(--weight-page-title); line-height: var(--leading-page-title); letter-spacing: var(--tracking-page-title); }
+	h1 span { color: #ffffff; }
+	.role-list { margin: clamp(1.5rem,3vh,2.4rem) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: .55rem clamp(1rem,2vw,1.6rem); list-style: none; }
+	.role-list li { min-width: 0; color: #fff; font-size: .86rem; font-weight: 650; line-height: 1.35; }
+	.profile-summary { margin-top: clamp(1.2rem,2.4vh,2rem); max-width: 38rem; }
+	.profile-summary p { margin: 0; color: #d4d4d4; font-size: var(--text-page-intro); font-weight: var(--weight-page-intro); line-height: var(--leading-page-intro); }
+	.profile-meta { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .8rem; margin-top: 1rem; }
+	.profile-meta div { padding-top: .65rem; border-top: 1px solid var(--color-border); }
+	.profile-meta span { display: block; margin-bottom: .35rem; color: var(--color-muted); font-size: .5rem; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; }
+	.profile-meta strong { font-size: .72rem; font-weight: 500; line-height: 1.45; }
+	.capabilities { margin-top: 1rem; display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+	.capabilities article { min-width: 0; padding: .75rem .65rem .8rem; display: grid; grid-template-rows: auto auto; align-content: start; row-gap: .45rem; border-left: 1px solid var(--color-border); }
+	.capabilities article:first-child { padding-left: 0; border-left: 0; }
+	.capabilities h2 { margin: 0; font-size: .72rem; font-weight: 650; line-height: 1.2; letter-spacing: -.015em; }
+	.capabilities p { margin: 0; color: var(--color-muted); font-size: .62rem; font-weight: 430; line-height: 1.35; }
+	.tools-panel { margin-top: 1rem; }
+	.tools-panel > p { margin-bottom: .5rem; }
+	.tools-panel ul { margin: 0; padding: 0; display: grid; grid-template-columns: repeat(14,minmax(0,1fr)); gap: .4rem; list-style: none; }
+	.tools-panel li { min-width: 0; aspect-ratio: 1; display: grid; place-items: center; background: #111; border: 1px solid var(--color-border); }
+	.tools-panel img { width: 55%; height: 55%; object-fit: contain; }
+
+	.projects-grid { min-width: 0; display: grid; grid-template-columns: 1fr; grid-template-rows: repeat(6,minmax(0,1fr)); gap: .55rem; }
+	.portfolio-index-item { min-width: 0; min-height: 0; padding: clamp(.8rem,1.2vw,1.05rem); display: grid; grid-template-columns: 2rem minmax(0,1fr) 2.35rem; align-items: center; gap: clamp(.75rem,1.5vw,1.25rem); color: #fff; background: var(--color-panel); border: 1px solid var(--color-border); text-decoration: none; transition: background-color .2s ease,border-color .2s ease; }
+	.portfolio-index-number { color: var(--color-muted); font-size: .56rem; font-weight: 720; letter-spacing: .09em; }
+	.portfolio-index-item h2 { margin: 0; font-size: clamp(1.2rem,1.65vw,1.7rem); font-weight: 650; line-height: .95; letter-spacing: -.045em; }
+	.portfolio-index-item b { width: 2.35rem; height: 2.35rem; display: grid; place-items: center; justify-self: end; color: #fff; background: transparent; border: 1px solid var(--color-border); font-size: .74rem; font-weight: 500; transition: transform .2s ease,background-color .2s ease,color .2s ease,border-color .2s ease; }
+	.portfolio-index-item:hover { background: #121212; border-color: #4a4a4a; }
+	.portfolio-index-item:hover b { color: #050505; background: #fff; border-color: #fff; transform: rotate(45deg); }
+
+	@media (max-width: 1180px) {
+		.hero-grid { grid-template-columns: 1fr; align-content: start; }
+		.profile-pane { min-height: 0; }
+		.projects-grid { grid-template-rows: repeat(6,minmax(4.75rem,auto)); }
+	}
+	@media (max-width: 680px) {
+		.home { padding: .75rem; }
+		.profile-pane { padding: 1rem; }
+		.profile-meta { grid-template-columns: 1fr; }
+		.capabilities { grid-template-columns: 1fr; }
+		.capabilities article, .capabilities article:first-child, .capabilities article:nth-child(2n) { padding: .75rem 0; border-left: 0; border-right: 0; border-bottom: 1px solid var(--color-border); }
+		.capabilities article:last-child { border-bottom: 0; }
+		.tools-panel ul { grid-template-columns: repeat(7,minmax(0,1fr)); }
+		.projects-grid { grid-template-rows: repeat(6,minmax(4.5rem,auto)); gap: .5rem; }
+		.portfolio-index-item { grid-template-columns: 1.6rem minmax(0,1fr) 2.35rem; padding: .8rem; }
+		.portfolio-index-item h2 { font-size: 1.2rem; }
+	}
+	@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; } }
+	:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
+</style>
