@@ -38,6 +38,11 @@ assert.match(shelfrMobile, /@media \(max-width: 1024px\)/, 'Shelfr: mobile break
 assert.match(shelfrMobile, /#main > \[data-framer-root\]/, 'Shelfr: fixed Framer canvas is not hidden on mobile');
 assert.equal((shelfrMobileScript.match(/id: '[^']+'/g) ?? []).length, 14, 'Shelfr: expected 14 mobile sections');
 assert.match(shelfrMobileScript, /shelfr-mobile-table/, 'Shelfr: prioritization table is missing');
+assert.match(shelfrMobileScript, /tableHeaders: \['Приложение'/, 'Shelfr: competitor comparison is missing');
+assert.match(shelfrMobileScript, /\.framer-1mobc36/, 'Shelfr: survey questions are missing');
+assert.match(shelfrMobileScript, /buildAllQuoteCards/, 'Shelfr: full interview quotes are missing');
+assert.match(shelfrMobileScript, /\.framer-ohkkmy/, 'Shelfr: testing scenarios are missing');
+assert.match(shelfrMobile, /#mobile-ia h2/, 'Shelfr: long IA heading needs a narrow-screen size');
 
 for (const [name, html] of Object.entries(pages).filter(([name]) => ['iofs', 'unesco', 'kipd', 'infographics'].includes(name))) {
 	const gallery = html.match(/<section id="case-gallery"[\s\S]*?<\/section>/)?.[0] ?? '';

@@ -12,19 +12,35 @@
 			copy: ['.framer-1qvig0t', '.framer-4c9kwj', '.framer-10zbl45'],
 			gallery: true,
 			galleryClass: 'shelfr-mobile-gallery--phones',
-			captions: ['Storygraph', 'Turn', 'Bookshelf', 'Bookmory', 'Goodreads'],
+			captions: [
+				'Storygraph — прекрасное приложение: быстрый поиск, добавление книги в одно действие, интересные челленджи, статистика и точные рекомендации.',
+				'Turn — больше восьми шагов, чтобы добавить книгу в список.',
+				'Bookshelf — вкладка Explore одинаковая для всех, без персонализации.',
+				'Bookmory — плохой контраст, непонятные поля для ввода и стены текста. Слишком много функций: приложение-швейцарский нож.',
+				'Goodreads — устаревший UI. Домашняя страница показывает действия друзей и больше ничего.',
+			],
+			tableHeaders: ['Приложение', 'Аудитория', 'Рейтинг', 'Трекер чтения', 'Рекомендации', 'Статистика', 'Коллекции', 'Сообщество'],
+			table: [
+				['Storygraph', '700', '4.5', 'Хорошо', 'Хорошо', 'Хорошо', 'N/A', 'Хорошо'],
+				['Goodreads', '14000', '4.3', 'Средне', 'Хорошо', 'Плохо', 'Средне', 'Хорошо'],
+				['Bookmory', '700', '4.8', 'Плохо', 'N/A', 'Хорошо', 'Средне', 'N/A'],
+				['Bookshelf', '700', '4.8', 'Средне', 'Плохо', 'N/A', 'Хорошо', 'Средне'],
+				['Turn', '500', '—', 'Плохо', 'N/A', 'Средне', 'Плохо', 'N/A'],
+			],
+			tableClass: 'shelfr-mobile-table--wide',
+			tableAfterGallery: true,
 		},
 		{
 			id: 'survey',
 			title: 'UX Survey',
-			copy: ['.framer-knywju', '.framer-197frqy', '.framer-1vn7qkh', '.framer-4e386o', '.framer-1w57i5x', '.framer-1kygq3w'],
+			copy: ['.framer-knywju', '.framer-197frqy', '.framer-1vn7qkh', '.framer-50kav6', '.framer-1mobc36', '.framer-4e386o', '.framer-1w57i5x', '.framer-1kygq3w'],
 			gallery: true,
 		},
 		{
 			id: 'interview',
 			title: 'User Interview',
 			copy: ['.framer-magty6', '.framer-1an88ng', '.framer-1dwfo28', '.framer-5ksj25', '.framer-1jm3i', '.framer-1e3de96', '.framer-1wvzjgi', '.framer-1j6ys85'],
-			quotes: ['.framer-1cgflk', '.framer-168hom6', '.framer-yaxl4', '.framer-49le4p', '.framer-14t43jt', '.framer-1agbbjf'],
+			allQuotes: true,
 		},
 		{
 			id: 'prioritization',
@@ -67,9 +83,24 @@
 		{
 			id: 'test',
 			title: 'User Testing',
-			copy: ['.framer-1jgaojy', '.framer-1ok1hqw', '.framer-qkw911', '.framer-1k1wjlp', '.framer-spmwy3', '.framer-118e75u', '.framer-3hswfr'],
+			introCopy: ['.framer-1jgaojy', '.framer-qkw911'],
+			scenarioCards: [
+				['Регистрация и начальные действия', '.framer-ohkkmy'],
+				['Начать челлендж и получить достижение', '.framer-vlz9fd'],
+				['Добавить и редактировать чужой список', '.framer-1rvpy6t'],
+				['Подписаться на друга', '.framer-8xibkx'],
+				['Категоризировать книги в «Хочу прочитать»', '.framer-11zq9so'],
+			],
+			copy: ['.framer-1ok1hqw', '.framer-1k1wjlp', '.framer-spmwy3', '.framer-118e75u', '.framer-3hswfr'],
 			gallery: true,
 			galleryClass: 'shelfr-mobile-gallery--phones',
+			captions: [
+				'Элемент книги: убрал рейтинг, чтобы разгрузить интерфейс.',
+				'Элемент списка был слишком похож на элемент книги, что мешало ориентироваться.',
+				'Поп-ап, который появляется, когда пользователь пытается редактировать чужой список. Он был слишком перегружен — я переписал формулировки. Он всё ещё загруженный и сложный, но меньше.',
+				'Начать челлендж: из поп-апа вынес на отдельную страницу, переработал иерархию. Эта стрелочка специально уродливая. Она мне нравится.',
+				'Категоризация в «Хочу прочитать»: переписал формулировки, добавил подсказку о том, что это вообще такое, и кнопку отмены последнего действия.',
+			],
 		},
 		{
 			id: 'iterations',
@@ -96,8 +127,9 @@
 		{
 			id: 'design-system',
 			title: 'Дизайн-система',
-			copy: ['.framer-1oq9m2g'],
+			copy: ['.framer-1oq9m2g', '.framer-6x2v5t'],
 			gallery: true,
+			captions: ['Основные цвета', 'Дополнительные цвета', 'UI Kit'],
 		},
 		{
 			id: 'mort',
@@ -123,10 +155,7 @@
 	appendCopies(hero, root, ['.framer-1k1k0so']);
 
 	const meta = element('div', 'shelfr-mobile-meta');
-	meta.append(
-		metaItem('Время создания', root.querySelector('.framer-11tj4iv')?.textContent.trim()),
-		metaItem('Роли', root.querySelector('.framer-1yqfw9b')?.textContent.replace(/\s+/g, ' ').trim()),
-	);
+	meta.append(metaItem('Время создания', root.querySelector('.framer-11tj4iv')), metaItem('Роли', root.querySelector('.framer-1yqfw9b')));
 	hero.append(meta);
 	appendGallery(hero, root.querySelector('.framer-1mfnjks'), 'shelfr-mobile-gallery--compact');
 	hero.append(buildToc(sectionData));
@@ -149,10 +178,14 @@
 		);
 		section.append(heading);
 		if (!source) return section;
-		appendCopies(section, source, data.copy || []);
-		if (data.table) section.append(buildTable(data.table));
+		appendCopies(section, source, data.introCopy || data.copy || []);
+		if (data.scenarioCards) section.append(buildScenarioCards(source, data.scenarioCards));
+		if (data.introCopy) appendCopies(section, source, data.copy || []);
+		if (data.table && !data.tableAfterGallery) section.append(buildTable(data.table, data.tableHeaders, data.tableClass));
 		if (data.gallery) appendGallery(section, source, data.galleryClass || '', data.captions || []);
+		if (data.table && data.tableAfterGallery) section.append(buildTable(data.table, data.tableHeaders, data.tableClass));
 		if (data.quotes) section.append(buildCards(source, data.quotes));
+		if (data.allQuotes) section.append(buildAllQuoteCards(source));
 		if (data.cards) section.append(buildNamedCards(source, data.cards));
 		if (data.closing) appendCopies(section, source, [data.closing]);
 		const back = textElement('a', 'shelfr-mobile-back-top', '↑ Наверх');
@@ -196,6 +229,9 @@
 				if (!keep.includes(attribute.name)) node.removeAttribute(attribute.name);
 			});
 		});
+		copy.querySelectorAll('p').forEach((paragraph) => {
+			if (!paragraph.textContent.trim()) paragraph.remove();
+		});
 	}
 
 	function appendGallery(target, source, extraClass = '', captions = []) {
@@ -228,6 +264,23 @@
 		return cards;
 	}
 
+	function buildAllQuoteCards(source) {
+		const cards = element('div', 'shelfr-mobile-quotes');
+		const seen = new Set();
+		[...source.querySelectorAll('[data-framer-component-type="RichTextContainer"]')].forEach((original) => {
+			const quote = original.textContent.replace(/\s+/g, ' ').trim();
+			if (!/^["“]/.test(quote) || quote.length < 20 || seen.has(quote)) return;
+			seen.add(quote);
+			const card = element('article', 'shelfr-mobile-card');
+			const copy = element('div', 'shelfr-mobile-copy');
+			copy.innerHTML = original.innerHTML;
+			cleanCopy(copy);
+			card.append(copy);
+			cards.append(card);
+		});
+		return cards;
+	}
+
 	function buildNamedCards(source, items) {
 		const cards = element('div', 'shelfr-mobile-cards');
 		items.forEach(([title, selector]) => {
@@ -239,17 +292,39 @@
 		return cards;
 	}
 
-	function buildTable(rows) {
+	function buildScenarioCards(source, items) {
+		const cards = buildNamedCards(source, items);
+		cards.querySelectorAll('.shelfr-mobile-card').forEach((card) => {
+			const title = card.querySelector('h3').textContent.replace(/\s+/g, '').toLowerCase();
+			const paragraphs = [...card.querySelectorAll('.shelfr-mobile-copy p')];
+			let prefix = '';
+			for (const paragraph of paragraphs) {
+				if (prefix.length >= title.length || !title.startsWith(prefix)) break;
+				prefix += paragraph.textContent.replace(/\s+/g, '').toLowerCase();
+				if (!title.startsWith(prefix)) break;
+				paragraph.remove();
+				if (prefix === title) break;
+			}
+			card.querySelectorAll('br').forEach((lineBreak) => lineBreak.remove());
+		});
+		return cards;
+	}
+
+	function buildTable(rows, headers = ['Feature', 'Value', 'Effort', 'Score'], className = '') {
 		const wrap = element('div', 'shelfr-mobile-table-wrap');
-		const table = element('table', 'shelfr-mobile-table');
+		const table = element('table', `shelfr-mobile-table ${className}`.trim());
 		const head = document.createElement('thead');
 		const headRow = document.createElement('tr');
-		['Feature', 'Value', 'Effort', 'Score'].forEach((value) => headRow.append(textElement('th', '', value)));
+		headers.forEach((value) => headRow.append(textElement('th', '', value)));
 		head.append(headRow);
 		const body = document.createElement('tbody');
 		rows.forEach((row) => {
 			const tr = document.createElement('tr');
-			row.forEach((value) => tr.append(textElement('td', '', value)));
+			row.forEach((value, index) => {
+				const cell = textElement('td', '', value);
+				cell.dataset.label = headers[index];
+				tr.append(cell);
+			});
 			body.append(tr);
 		});
 		table.append(head, body);
@@ -287,9 +362,14 @@
 		});
 	}
 
-	function metaItem(label, value = '') {
+	function metaItem(label, source) {
 		const item = element('div', 'shelfr-mobile-meta-item');
-		item.append(textElement('span', 'shelfr-mobile-meta-label', label), textElement('span', '', value));
+		const value = element('span');
+		if (source) {
+			value.innerHTML = source.innerHTML;
+			cleanCopy(value);
+		}
+		item.append(textElement('span', 'shelfr-mobile-meta-label', label), value);
 		return item;
 	}
 
