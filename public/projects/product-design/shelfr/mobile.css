@@ -452,8 +452,9 @@ a[href="https://www.linkedin.com/in/bogdan-goncharenko/"] * {
 	}
 
 	.shelfr-mobile-table--wide tr {
-		padding: .75rem 0;
-		border-bottom: 1px solid rgb(255 255 255 / 18%);
+		margin-bottom: 1rem;
+		padding: 0 .75rem .45rem;
+		border: 1px solid rgb(255 255 255 / 18%);
 	}
 
 	.shelfr-mobile-table--wide td,
@@ -473,6 +474,20 @@ a[href="https://www.linkedin.com/in/bogdan-goncharenko/"] * {
 		letter-spacing: .06em;
 		text-transform: uppercase;
 		color: rgb(255 255 255 / 55%);
+	}
+
+	.shelfr-mobile-table--wide td:first-child {
+		display: block;
+		margin: 0 -.75rem .35rem;
+		padding: .75rem;
+		background: #1b5bff;
+		font-size: 1.05rem;
+		font-weight: 700;
+		color: #fff;
+	}
+
+	.shelfr-mobile-table--wide td:first-child::before {
+		display: none;
 	}
 
 	.shelfr-mobile-table th:first-child,
