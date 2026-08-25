@@ -7,7 +7,9 @@ const pages = {
 	kipd: await readFile('dist/projects/publications/kipd/index.html', 'utf8'),
 	infographics: await readFile('dist/projects/infographics/index.html', 'utf8'),
 	adobeScripts: await readFile('dist/projects/vibecoding/adobe-scripts/index.html', 'utf8'),
+	shelfr: await readFile('dist/projects/product-design/shelfr/index.html', 'utf8'),
 };
+const shelfrMobile = await readFile('dist/projects/product-design/shelfr/mobile.css', 'utf8');
 
 for (const [name, html] of Object.entries(pages).filter(([name]) => ['iofs', 'unesco', 'kipd'].includes(name))) {
 	assert.match(html, /class="case-facts"/, `${name}: common facts module is missing`);
@@ -27,6 +29,11 @@ for (const id of ['contents', 'gridster', 'colorproofer', 'framesplitter', 'book
 }
 assert.equal((pages.adobeScripts.match(/\bdata-full-src=/g) ?? []).length, 12, 'Adobe Scripts: expected 12 source screenshots');
 assert.equal((pages.adobeScripts.match(/\bsrcset=/g) ?? []).length, 12, 'Adobe Scripts: every screenshot needs a responsive srcset');
+
+assert.match(pages.shelfr, /name="viewport" content="width=device-width, initial-scale=1"/, 'Shelfr: responsive viewport is missing');
+assert.match(pages.shelfr, /href="\/projects\/product-design\/shelfr\/mobile\.css"/, 'Shelfr: mobile stylesheet is missing');
+assert.match(shelfrMobile, /@media \(max-width: 809px\)/, 'Shelfr: mobile breakpoint is missing');
+assert.match(shelfrMobile, /\.framer-rfg7ud > \*/, 'Shelfr: sections are not reflowed on mobile');
 
 for (const [name, html] of Object.entries(pages).filter(([name]) => ['iofs', 'unesco', 'kipd', 'infographics'].includes(name))) {
 	const gallery = html.match(/<section id="case-gallery"[\s\S]*?<\/section>/)?.[0] ?? '';

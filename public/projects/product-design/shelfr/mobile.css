@@ -1,0 +1,202 @@
+/* Mobile reading mode for the fixed 1440px Framer canvas. Desktop stays untouched. */
+@media (max-width: 809px) {
+	html,
+	body,
+	#main {
+		width: 100%;
+		min-width: 0;
+		overflow-x: clip;
+	}
+
+	body {
+		background: #000;
+	}
+
+	#main {
+		padding-top: 4.75rem;
+	}
+
+	.framer-h3sPI.framer-1xbg4c5 {
+		display: block !important;
+		width: 100% !important;
+		height: auto !important;
+		min-height: 100vh !important;
+		overflow: hidden !important;
+	}
+
+	.framer-h3sPI .framer-vhc9ab,
+	.framer-h3sPI .framer-ok9by1,
+	.framer-h3sPI .framer-hbcnn5 {
+		display: none !important;
+	}
+
+	.framer-h3sPI .framer-rfg7ud {
+		position: relative !important;
+		inset: auto !important;
+		display: flex !important;
+		width: 100% !important;
+		height: auto !important;
+		padding: 2rem 1rem 5rem !important;
+		gap: 5rem !important;
+		align-items: stretch !important;
+		justify-content: flex-start !important;
+		overflow: visible !important;
+	}
+
+	.framer-h3sPI .framer-rfg7ud > * {
+		position: relative !important;
+		inset: auto !important;
+		display: flex !important;
+		flex-direction: column !important;
+		width: 100% !important;
+		height: auto !important;
+		min-height: 0 !important;
+		padding: 0 !important;
+		gap: 2rem !important;
+		align-items: stretch !important;
+		justify-content: flex-start !important;
+		transform: none !important;
+		overflow: visible !important;
+	}
+
+	.framer-h3sPI .framer-rfg7ud > :not(:first-child) {
+		padding-top: 2.5rem !important;
+		border-top: 1px solid rgb(255 255 255 / 18%);
+	}
+
+	.framer-h3sPI .framer-rfg7ud [data-framer-name]:not([data-framer-component-type="SVG"]) {
+		position: relative !important;
+		inset: auto !important;
+		max-width: 100% !important;
+		height: auto !important;
+		min-height: 0 !important;
+		transform: none !important;
+	}
+
+	.framer-h3sPI .framer-rfg7ud [data-framer-name^="Frame"],
+	.framer-h3sPI .framer-rfg7ud [data-framer-name^="Group"] {
+		display: flex !important;
+		flex-direction: column !important;
+		width: 100% !important;
+		gap: 1.5rem !important;
+		align-items: stretch !important;
+		justify-content: flex-start !important;
+		overflow: visible !important;
+	}
+
+	.framer-h3sPI .framer-rfg7ud [data-framer-component-type="RichTextContainer"] {
+		display: block !important;
+		width: 100% !important;
+		white-space: normal !important;
+	}
+
+	.framer-h3sPI .framer-rfg7ud [data-framer-component-type="RichTextContainer"] .framer-text {
+		max-width: 100%;
+		white-space: normal !important;
+		overflow-wrap: anywhere;
+	}
+
+	.framer-h3sPI .framer-rfg7ud p[style*="--framer-font-size:256px"] {
+		--framer-font-size: clamp(4.5rem, 24vw, 7rem) !important;
+	}
+
+	.framer-h3sPI .framer-rfg7ud p[style*="--framer-font-size:105px"] {
+		--framer-font-size: 4rem !important;
+	}
+
+	.framer-h3sPI .framer-rfg7ud p[style*="--framer-font-size:48px"] {
+		--framer-font-size: clamp(2rem, 9vw, 2.75rem) !important;
+		--framer-line-height: 1 !important;
+	}
+
+	.framer-h3sPI .framer-rfg7ud p[style*="--framer-font-size:32px"] {
+		--framer-font-size: 1.65rem !important;
+		--framer-line-height: 1.05 !important;
+	}
+
+	.framer-h3sPI .framer-rfg7ud p[style*="--framer-font-size:24px"] {
+		--framer-font-size: 1.15rem !important;
+	}
+
+	.framer-h3sPI .framer-rfg7ud [data-framer-background-image-wrapper] {
+		position: relative !important;
+		inset: auto !important;
+		display: block !important;
+		width: 100% !important;
+		height: auto !important;
+		border-radius: inherit;
+	}
+
+	.framer-h3sPI .framer-rfg7ud img {
+		position: relative !important;
+		display: block !important;
+		width: 100% !important;
+		height: auto !important;
+		max-height: 78vh;
+		object-fit: contain !important;
+		object-position: center !important;
+	}
+
+	.framer-h3sPI .framer-rfg7ud [data-framer-component-type="SVG"] {
+		position: relative !important;
+		inset: auto !important;
+		width: min(100%, 32rem) !important;
+		height: auto !important;
+		max-height: 70vh;
+		margin-inline: auto;
+		transform: none !important;
+	}
+
+	.framer-h3sPI .framer-rfg7ud [data-framer-component-type="SVG"] svg {
+		display: block;
+		width: 100% !important;
+		height: auto !important;
+	}
+
+	.framer-h3sPI .framer-rfg7ud [data-framer-name^="Rectangle"]:empty,
+	.framer-h3sPI .framer-rfg7ud [data-framer-name^="Line"]:empty {
+		display: none !important;
+	}
+
+	.framer-h3sPI .framer-1mfnjks .framer-1mlzl5f {
+		order: -3;
+	}
+
+	.framer-h3sPI .framer-1mfnjks .framer-aymo50 {
+		order: -2;
+	}
+
+	.framer-h3sPI .framer-1mfnjks .framer-14iq9dp {
+		order: -1;
+		display: grid !important;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: .75rem !important;
+	}
+
+	.framer-h3sPI .framer-1mfnjks .framer-14iq9dp > * {
+		display: contents !important;
+	}
+
+	.framer-h3sPI .framer-1mfnjks .framer-14iq9dp [data-framer-name^="image"] {
+		width: 100% !important;
+	}
+
+	.framer-h3sPI .framer-1mfnjks .framer-14iq9dp img {
+		max-height: 42vh;
+	}
+
+	.framer-h3sPI .framer-rfg7ud a,
+	.framer-h3sPI .framer-rfg7ud button {
+		min-height: 2.75rem;
+	}
+}
+
+@media (max-width: 420px) {
+	.framer-h3sPI .framer-rfg7ud {
+		padding-inline: .875rem !important;
+	}
+
+	.framer-h3sPI .framer-1mfnjks .framer-14iq9dp {
+		grid-template-columns: 1fr;
+	}
+}
