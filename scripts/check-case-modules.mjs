@@ -2,19 +2,46 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 
 const pages = {
+	home: await readFile('dist/index.html', 'utf8'),
 	iofs: await readFile('dist/projects/publications/iofs/index.html', 'utf8'),
 	unesco: await readFile('dist/projects/publications/unesco/index.html', 'utf8'),
 	kipd: await readFile('dist/projects/publications/kipd/index.html', 'utf8'),
 	infographics: await readFile('dist/projects/infographics/index.html', 'utf8'),
 	adobeScripts: await readFile('dist/projects/vibecoding/adobe-scripts/index.html', 'utf8'),
+	republica: await readFile('dist/projects/personal/republica/index.html', 'utf8'),
 	shelfr: await readFile('dist/projects/product-design/shelfr/index.html', 'utf8'),
 };
 const shelfrMobile = await readFile('dist/projects/product-design/shelfr/mobile.css', 'utf8');
 const shelfrMobileScript = await readFile('dist/projects/product-design/shelfr/mobile.js', 'utf8');
 
+assert.doesNotMatch(pages.kipd, /class="case-facts"/, 'kipd: facts module should be removed');
+assert.match(pages.kipd, /class="case-results"/, 'kipd: results module is missing');
+assert.doesNotMatch(pages.kipd, /class="project-cta"/, 'kipd: project CTA should be removed');
+assert.match(pages.kipd, />ГАЛЕРЕЯ<\/h2>/, 'kipd: simplified gallery heading is missing');
+assert.match(pages.kipd, /В рамках трёх исследовательских проектов KIPD/, 'kipd: project introduction is missing');
+assert.match(pages.kipd, /Все версии я подготовил к публикации/, 'kipd: result should be written in first person');
+
 for (const [name, html] of Object.entries(pages).filter(([name]) => ['iofs', 'unesco', 'kipd'].includes(name))) {
-	assert.match(html, /class="case-facts"/, `${name}: common facts module is missing`);
+	assert.doesNotMatch(html, /class="case-index"/, `${name}: case index should be removed`);
+}
+
+for (const [name, html] of Object.entries(pages).filter(([name]) => ['iofs'].includes(name))) {
+	assert.doesNotMatch(html, /class="case-facts"/, `${name}: facts module should be removed`);
 	assert.match(html, /class="case-results"/, `${name}: common results module is missing`);
+	assert.doesNotMatch(html, /class="project-cta"/, `${name}: project CTA should be removed`);
+	assert.match(html, />ГАЛЕРЕЯ<\/h2>/, `${name}: simplified gallery heading is missing`);
+	assert.match(html, /Основной язык вёрстки — английский/, `${name}: English layout language is missing`);
+	assert.match(html, /В работе над печатными материалами ИОПБ я выступаю ведущим дизайнером/, `${name}: project introduction is missing`);
+}
+
+assert.doesNotMatch(pages.unesco, /class="case-facts"|class="case-results"|class="project-cta"/, 'unesco: secondary summary modules should be removed');
+assert.match(pages.unesco, />ГАЛЕРЕЯ<\/h2>/, 'unesco: simplified gallery heading is missing');
+assert.match(pages.unesco, /Над серией крупных аналитических докладов ЮНЕСКО/, 'unesco: project introduction is missing');
+assert.match(pages.unesco, /Основной доклад и четыре приложения объединяют большой объём данных/, 'unesco: task paragraph is missing');
+assert.doesNotMatch(pages.unesco, /Данные задают|Четыре приложения\. Общие правила|Карты и диаграммы объясняют/, 'unesco: removed explanatory sections are still present');
+
+for (const [name, html] of Object.entries(pages).filter(([name]) => ['home', 'iofs', 'unesco', 'kipd'].includes(name))) {
+	assert.doesNotMatch(html, /печатн(?:ый|ого) тираж|производств(?:о|а) тиража|произвел\S* тираж|типографическ\S* услуг/i, `${name}: print-production service wording is still present`);
 }
 
 assert.match(pages.iofs, /case-gallery-spread/);
@@ -32,6 +59,10 @@ assert.equal((pages.adobeScripts.match(/\bdata-full-src=/g) ?? []).length, 13, '
 assert.equal((pages.adobeScripts.match(/\bsrcset=/g) ?? []).length, 13, 'Adobe Scripts: every screenshot needs a responsive srcset');
 
 assert.match(pages.shelfr, /name="viewport" content="width=device-width, initial-scale=1"/, 'Shelfr: responsive viewport is missing');
+
+assert.match(pages.republica, /<h1\b[^>]*id="republica-title"[^>]*>Шрифт Republica<\/h1>/, 'Republica: page title is missing');
+assert.equal((pages.republica.match(/class="letter-button"/g) ?? []).length, 26, 'Republica: expected all 26 PNG glyphs');
+assert.equal((pages.republica.match(/<video\b/g) ?? []).length, 3, 'Republica: expected three source-to-glyph videos');
 assert.match(pages.shelfr, /href="\/projects\/product-design\/shelfr\/mobile\.css"/, 'Shelfr: mobile stylesheet is missing');
 assert.match(pages.shelfr, /src="\/projects\/product-design\/shelfr\/mobile\.js"/, 'Shelfr: mobile script is missing');
 assert.match(shelfrMobile, /@media \(max-width: 1024px\)/, 'Shelfr: mobile breakpoint is missing');

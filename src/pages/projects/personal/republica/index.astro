@@ -1,0 +1,168 @@
+---
+import CaseLightbox from '../../../../components/CaseLightbox.astro';
+import ResponsiveImage from '../../../../components/ResponsiveImage.astro';
+import SiteHeader from '../../../../components/SiteHeader.astro';
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+
+const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map((letter) => ({
+	letter,
+	src: `/portfolio/republica/letters/${letter.toLowerCase()}.webp`,
+}));
+
+const applications = [1, 2, 3].map((number) => ({
+	src: `/portfolio/republica/application-${number}.webp`,
+	alt: `Пример использования шрифта Republica ${number}`,
+}));
+
+const specimens = [1, 2, 3].map((number) => ({
+	src: `/portfolio/republica/specimen-${number}.webp`,
+	alt: `Текстовый образец Republica ${number}`,
+}));
+
+const origins = [
+	{ letter: 'A', video: '/portfolio/republica/video/a.mp4' },
+	{ letter: 'B', video: '/portfolio/republica/video/b.mp4' },
+	{ letter: 'G', video: '/portfolio/republica/video/g.mp4' },
+];
+---
+
+<BaseLayout
+	title="Шрифт Republica — Федор Юрецкий"
+	description="Republica — авторский шрифт Федора Юрецкого, собранный из реальных объектов на улицах Астаны."
+>
+	<SiteHeader />
+
+	<main class="republica-page">
+		<section class="republica-intro" aria-labelledby="republica-title">
+			<h1 id="republica-title">Шрифт Republica</h1>
+			<div class="republica-copy">
+				<p>Republica — шрифт, созданный из объектов на улицах Астаны. Каждая буква основана на отдельной реальной форме, найденной в городской среде.</p>
+				<p>Проект развивался полгода и существует в двух вариантах: как набор PNG-глифов и как живой шрифт.</p>
+			</div>
+		</section>
+
+		<button class="alphabet-stage zoom-trigger" type="button" data-lightbox-target="republica-lightbox" data-caption="Алфавит Republica" aria-label="Увеличить алфавит Republica">
+			<ResponsiveImage src="/portfolio/republica/alphabet.webp" alt="Полный латинский алфавит Republica" widths={[640, 960, 1200]} sizes="(max-width: 700px) 100vw, 94vw" loading="eager" />
+		</button>
+
+		<section class="republica-section" aria-labelledby="applications-title">
+			<header class="section-heading"><h2 id="applications-title">Примеры использования</h2></header>
+			<div class="application-grid">
+				{applications.map((application) => (
+					<button class="zoom-trigger" type="button" data-lightbox-target="republica-lightbox" data-caption={application.alt} aria-label={`Увеличить: ${application.alt}`}>
+						<ResponsiveImage src={application.src} alt={application.alt} widths={[420, 700, 900]} sizes="(max-width: 700px) 82vw, 31vw" />
+					</button>
+				))}
+			</div>
+		</section>
+
+		<section class="republica-section" aria-labelledby="specimens-title">
+			<div class="section-heading section-heading--split">
+				<h2 id="specimens-title">Живой шрифт</h2>
+				<div>
+					<p>В наборной версии Republica работает вместе с нейтральной гротескной основой: найденные формы заменяют отдельные буквы и меняют ритм привычного текста.</p>
+					<p>Я векторизировал найденные формы, исправил проблемные места и собрал из них полноценный шрифт в FontLab.</p>
+				</div>
+			</div>
+			<div class="specimen-grid">
+				{specimens.map((specimen) => (
+					<button class="zoom-trigger" type="button" data-lightbox-target="republica-lightbox" data-caption={specimen.alt} aria-label={`Увеличить: ${specimen.alt}`}>
+						<ResponsiveImage src={specimen.src} alt={specimen.alt} widths={[480, 760, 1080]} sizes="(max-width: 700px) 88vw, 31vw" />
+					</button>
+				))}
+			</div>
+		</section>
+
+		<section class="republica-section" aria-labelledby="origins-title">
+			<div class="section-heading section-heading--split">
+				<h2 id="origins-title">Каждая буква — найденный объект</h2>
+				<p>Формы сначала находились и снимались в городе, затем отделялись от окружения и превращались в самостоятельные глифы.</p>
+			</div>
+			<div class="origin-grid">
+				{origins.map((origin) => (
+					<article class="origin-item">
+						<video src={origin.video} controls muted playsinline preload="metadata" aria-label={`Происхождение буквы ${origin.letter}`}></video>
+						<div class="origin-letter">
+							<ResponsiveImage src={`/portfolio/republica/letters/${origin.letter.toLowerCase()}.webp`} alt={`Буква ${origin.letter} шрифта Republica`} widths={[240, 360, 480]} sizes="(max-width: 700px) 38vw, 14vw" />
+						</div>
+					</article>
+				))}
+			</div>
+		</section>
+
+		<section class="republica-section" aria-labelledby="glyphs-title">
+			<div class="section-heading section-heading--split">
+				<h2 id="glyphs-title">PNG-набор</h2>
+				<p>Все 26 знаков также существуют как отдельные изображения: их можно использовать независимо от наборной версии.</p>
+			</div>
+			<div class="letter-scroll" tabindex="0" aria-label="Алфавит Republica, 26 отдельных PNG-глифов">
+				<div class="letter-grid">
+					{letters.map(({ letter, src }) => (
+						<button class="letter-button" type="button" data-lightbox-target="republica-lightbox" data-caption={`Republica · ${letter}`} aria-label={`Увеличить букву ${letter}`}>
+							<ResponsiveImage src={src} alt={`Буква ${letter} шрифта Republica`} widths={[160, 240, 480]} sizes="6rem" />
+						</button>
+					))}
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<CaseLightbox id="republica-lightbox" variant="single" label="Увеличенное изображение проекта Republica" />
+</BaseLayout>
+
+<style>
+	.republica-page { width: min(100%, 100rem); margin-inline: auto; padding: clamp(3.5rem, 8vw, 8rem) clamp(.75rem, 3vw, 3rem) clamp(6rem, 11vw, 11rem); }
+	.republica-intro, .section-heading--split { display: grid; grid-template-columns: minmax(18rem, .82fr) minmax(28rem, 1.18fr); align-items: start; gap: clamp(3rem, 8vw, 9rem); }
+	h1, h2 { margin: 0; font-weight: 600; letter-spacing: var(--tracking-page-title); }
+	h1 { font-size: var(--text-page-title); line-height: var(--leading-page-title); }
+	h2 { font-size: var(--text-display-section); line-height: var(--leading-display-section); }
+	.republica-copy, .section-heading p { color: var(--color-muted); font-size: var(--text-body-lg); font-weight: 430; line-height: var(--leading-body-lg); }
+	.section-heading > div { max-width: 40rem; }
+	.republica-copy p, .section-heading p { margin: 0 0 1.35rem; }
+	.republica-copy p:last-child, .section-heading p:last-child { margin-bottom: 0; }
+	.zoom-trigger, .letter-button { min-width: 0; padding: 0; display: block; color: inherit; background: transparent; border: 0; cursor: zoom-in; }
+	.zoom-trigger :global(img), .letter-button :global(img) { width: 100%; height: auto; display: block; }
+	.alphabet-stage { width: 100%; margin-top: clamp(4rem, 8vw, 8rem); padding: clamp(.75rem, 2vw, 2rem); background: #000; border: 1px solid var(--color-border); }
+	.alphabet-stage :global(img) { width: 100%; max-height: 76svh; object-fit: contain; }
+	.republica-section { margin-top: clamp(7rem, 13vw, 13rem); }
+	.section-heading { margin-bottom: clamp(2.5rem, 5vw, 5rem); }
+	.section-heading--split > p { max-width: 40rem; }
+	.application-grid, .specimen-grid, .origin-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(.65rem, 1.2vw, 1.25rem); }
+	.application-grid .zoom-trigger { aspect-ratio: 930 / 1318; overflow: hidden; background: var(--color-panel); border: 1px solid var(--color-border); }
+	.application-grid :global(img) { width: 100%; height: 100%; object-fit: cover; }
+	.specimen-grid .zoom-trigger { aspect-ratio: 4 / 3; padding: clamp(.5rem, 1vw, 1rem); background: #000; border: 1px solid var(--color-border); }
+	.specimen-grid :global(img) { width: 100%; height: 100%; object-fit: contain; }
+	.origin-item { min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(6rem, .62fr); align-items: stretch; background: var(--color-panel); border: 1px solid var(--color-border); }
+	.origin-item video { width: 100%; height: clamp(24rem, 45vw, 42rem); display: block; object-fit: cover; background: #000; }
+	.origin-letter { min-width: 0; padding: clamp(.75rem, 2vw, 2rem); display: grid; place-items: center; background: #050505; }
+	.origin-letter :global(img) { width: 100%; height: auto; display: block; }
+	.letter-scroll { padding-bottom: .75rem; overflow-x: auto; overscroll-behavior-inline: contain; scrollbar-width: thin; scrollbar-color: var(--color-muted) transparent; }
+	.letter-grid { min-width: 78rem; display: grid; grid-template-columns: repeat(13, minmax(0, 1fr)); gap: .55rem; }
+	.letter-button { aspect-ratio: 1; display: grid; place-items: center; background: var(--color-panel); border: 1px solid var(--color-border); transition: background-color .18s ease; }
+	.letter-button:hover { background: var(--color-panel-high); }
+	.letter-button :global(img) { width: 100%; height: 100%; object-fit: contain; }
+	.zoom-trigger:focus-visible, .letter-button:focus-visible, .letter-scroll:focus-visible, .origin-item video:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
+
+	@media (max-width: 900px) {
+		.republica-intro, .section-heading--split { grid-template-columns: 1fr; gap: 2.5rem; }
+		.origin-grid { grid-template-columns: 1fr; }
+		.origin-item { grid-template-columns: minmax(0, 1fr) minmax(7rem, .45fr); }
+		.origin-item video { height: min(110vw, 42rem); }
+	}
+
+	@media (max-width: 700px) {
+		.republica-page { padding-top: 3.5rem; }
+		.republica-intro { gap: 2rem; }
+		.alphabet-stage { margin-top: 4rem; padding: .4rem; }
+		.republica-section { margin-top: 7rem; }
+		.section-heading { margin-bottom: 2.5rem; }
+		.application-grid, .specimen-grid { margin-inline: -.75rem; padding: 0 .75rem .7rem; grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 82vw; overflow-x: auto; overscroll-behavior-inline: contain; scroll-snap-type: x proximity; scrollbar-width: thin; scrollbar-color: var(--color-muted) transparent; }
+		.application-grid .zoom-trigger, .specimen-grid .zoom-trigger { scroll-snap-align: start; }
+		.specimen-grid { grid-auto-columns: 88vw; }
+		.origin-item { grid-template-columns: minmax(0, 1fr) 7.5rem; }
+		.origin-item video { height: min(118vw, 34rem); }
+		.letter-grid { min-width: 70rem; }
+	}
+
+	@media (prefers-reduced-motion: reduce) { .letter-button { transition-duration: .01ms; } }
+</style>

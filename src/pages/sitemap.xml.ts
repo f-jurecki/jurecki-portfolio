@@ -7,6 +7,7 @@ const routes = [
 	'/projects/personal',
 	'/projects/personal/cards',
 	'/projects/personal/posters',
+	'/projects/personal/republica',
 	'/projects/presentations',
 	'/projects/product-design/shelfr',
 	'/projects/vibecoding',
