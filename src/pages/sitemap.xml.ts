@@ -2,6 +2,7 @@ import type { APIRoute } from 'astro';
 
 const routes = [
 	'/',
+	'/projects/coming-soon',
 	'/projects/infographics',
 	'/projects/personal',
 	'/projects/personal/cards',

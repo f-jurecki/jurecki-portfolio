@@ -1,4 +1,20 @@
 (() => {
+	const translations = new Map([
+		['User Testing', 'Пользовательское тестирование'],
+		['Test the remaining flows', 'Протестировать оставшиеся сценарии'],
+		['Develop branding and UI', 'Разработать айдентику и интерфейс'],
+		['Полный User Testing в Notion', 'Полное пользовательское тестирование в Notion'],
+		['В списке "Хочу прочитать"', 'в списке "Хочу прочитать"'],
+	]);
+	const textNodes = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+	while (textNodes.nextNode()) {
+		const value = textNodes.currentNode.nodeValue;
+		const text = value.trim();
+		if (translations.has(text)) textNodes.currentNode.nodeValue = value.replace(text, translations.get(text));
+	}
+	const matrixCopy = document.querySelector('#killer .framer-1r3d4hn p');
+	if (matrixCopy) matrixCopy.innerHTML = 'Это слегка измененная <strong>матрица Эйзенхауэра</strong> для сортировки книг.';
+
 	if (!matchMedia('(max-width: 1024px)').matches) return;
 
 	const root = document.querySelector('[data-framer-root]');
@@ -78,12 +94,12 @@
 			title: 'Wireframes',
 			copy: ['.framer-1tx37zh', '.framer-epdr6v', '.framer-otf1ve'],
 			gallery: true,
-			galleryClass: 'shelfr-mobile-gallery--phones',
+			galleryClass: 'shelfr-mobile-gallery--phones shelfr-mobile-gallery--masonry',
 			captions: ['Главная страница', 'Запись чтения', 'Челленджи', 'Библиотека', 'Список прочитанного', 'Достижения', 'Уведомления', 'Написание отзыва', 'Хочу прочитать', 'Категоризация', 'Чужой список', 'Страница книги', 'Поиск'],
 		},
 		{
 			id: 'test',
-			title: 'User Testing',
+			title: 'Пользовательское тестирование',
 			introCopy: ['.framer-1jgaojy', '.framer-qkw911'],
 			scenarioCards: [
 				['Регистрация и начальные действия', '.framer-ohkkmy'],
@@ -94,7 +110,7 @@
 			],
 			copy: ['.framer-1ok1hqw', '.framer-1k1wjlp', '.framer-spmwy3', '.framer-118e75u', '.framer-3hswfr'],
 			gallery: true,
-			galleryClass: 'shelfr-mobile-gallery--phones',
+			galleryClass: 'shelfr-mobile-gallery--phones shelfr-mobile-gallery--single',
 			captions: [
 				'Элемент книги: убрал рейтинг, чтобы разгрузить интерфейс.',
 				'Элемент списка был слишком похож на элемент книги, что мешало ориентироваться.',
@@ -107,10 +123,14 @@
 			id: 'iterations',
 			title: 'Итерации',
 			node: '.framer-6w3hbj',
-			copy: ['.framer-1qkvzop', '.framer-3935ut', '.framer-2oo2m9'],
-			gallery: true,
-			galleryClass: 'shelfr-mobile-gallery--phones',
-			galleryCount: 15,
+			copy: ['.framer-1qkvzop'],
+			iterationSliders: [
+				['Список прочитанного', []],
+				['Страница книги', []],
+				['Страница челленджа', []],
+				['Статистика', ['.framer-3935ut', '.framer-2oo2m9']],
+				['Поиск', []],
+			],
 			colorGallery: [
 				['.framer-kzbogl', '/portfolio/shelfr/shelfr-54.webp'],
 				['.framer-nk58gh', '/portfolio/shelfr/shelfr-53.webp'],
@@ -122,21 +142,20 @@
 		{
 			id: 'final',
 			title: 'Финальный вид',
-			copy: ['.framer-6ybkqo', '.framer-1cab1g'],
 			gallery: true,
-			galleryClass: 'shelfr-mobile-gallery--phones',
+			galleryClass: 'shelfr-mobile-gallery--phones shelfr-mobile-gallery--masonry',
 			captions: ['Главная страница', 'Запись чтения', 'Челленджи', 'Поиск', 'Уведомления', 'Профиль', 'Сообщество', 'Настройки', 'Библиотека', 'Список прочитанного', 'Написать отзыв', 'Чужой список', 'Достижения', 'Страница книги', 'Старт челленджа'],
 		},
 		{
 			id: 'killer',
 			title: 'Killer Feature',
-			copy: ['.framer-ed2mu', '.framer-j6ibeh', '.framer-1wgvns6', '.framer-1r3d4hn', '.framer-1ixfoml', '.framer-1abaucq', '.framer-ns8qf9'],
+			killerCopy: true,
 			gallery: true,
 		},
 		{
 			id: 'design-system',
 			title: 'Дизайн-система',
-			copy: ['.framer-1oq9m2g', '.framer-6x2v5t'],
+			copy: ['.framer-6x2v5t'],
 			gallery: true,
 			captions: ['Основные цвета', 'Дополнительные цвета', 'UI Kit'],
 		},
@@ -193,6 +212,8 @@
 		if (data.table && !data.tableAfterGallery) section.append(buildTable(data.table, data.tableHeaders, data.tableClass));
 		if (data.surveyVisuals) section.append(buildSurveyVisuals(source));
 		if (data.flowCarousel) section.append(buildFlowCarousel());
+		if (data.iterationSliders) section.append(buildIterationSliders(source, data.iterationSliders));
+		if (data.killerCopy) section.append(buildKillerCopy());
 		if (data.gallery) appendGallery(section, source, data.galleryClass || '', data.captions || [], data.galleryCount);
 		if (data.colorGallery) section.append(buildColorGallery(source, data.colorGallery));
 		if (data.table && data.tableAfterGallery) section.append(buildTable(data.table, data.tableHeaders, data.tableClass));
@@ -228,6 +249,7 @@
 			const original = source.querySelector(selector);
 			if (!original) return;
 			const copy = element('div', `shelfr-mobile-copy${index === 0 ? ' shelfr-mobile-lead' : ''}`);
+			if (selector === '.framer-spmwy3') copy.classList.add('shelfr-mobile-recommendations');
 			copy.innerHTML = original.innerHTML;
 			cleanCopy(copy);
 			target.append(copy);
@@ -251,6 +273,10 @@
 		const images = [...source.querySelectorAll('img')].slice(0, count);
 		if (!images.length) return;
 		const gallery = element('div', `shelfr-mobile-gallery ${extraClass}`.trim());
+		const columns = extraClass.includes('shelfr-mobile-gallery--masonry')
+			? [element('div', 'shelfr-mobile-gallery-column'), element('div', 'shelfr-mobile-gallery-column')]
+			: [];
+		if (columns.length) gallery.append(...columns);
 		images.forEach((image, index) => {
 			const figure = element('figure', 'shelfr-mobile-figure');
 			const clone = image.cloneNode(false);
@@ -260,7 +286,7 @@
 			clone.sizes = extraClass.includes('phones') || extraClass.includes('compact') ? '(max-width: 1024px) 50vw, 0px' : '(max-width: 1024px) 100vw, 0px';
 			figure.append(clone);
 			if (captions[index]) figure.append(textElement('figcaption', '', captions[index]));
-			gallery.append(figure);
+			(columns[index % 2] || gallery).append(figure);
 		});
 		target.append(gallery);
 	}
@@ -301,7 +327,7 @@
 		controls.append(previous, next);
 		const head = element('div', 'shelfr-mobile-flow-head');
 		head.append(title, counter);
-		carousel.append(head, figure, controls);
+		carousel.append(head, controls, figure);
 		let active = 0;
 		const show = (index) => {
 			active = (index + slides.length) % slides.length;
@@ -319,6 +345,47 @@
 		});
 		show(0);
 		return carousel;
+	}
+
+	function buildIterationSliders(source, groups) {
+		const images = [...source.querySelectorAll('img')].slice(0, groups.length * 3);
+		const stages = ['Скетч на бумаге', 'Вайрфрейм', 'Готовый экран'];
+		const sliders = element('div', 'shelfr-mobile-iteration-sliders');
+		groups.forEach(([title, notes], groupIndex) => {
+			const item = element('article', 'shelfr-mobile-iteration');
+			item.append(textElement('h3', '', title));
+			appendCopies(item, source, notes);
+			const track = element('div', 'shelfr-mobile-iteration-track');
+			track.setAttribute('aria-label', `${title}: этапы дизайна`);
+			images.slice(groupIndex * 3, groupIndex * 3 + 3).forEach((image, stageIndex) => {
+				const figure = element('figure', 'shelfr-mobile-figure');
+				const clone = image.cloneNode(false);
+				clone.removeAttribute('style');
+				clone.loading = groupIndex === 0 ? 'eager' : 'lazy';
+				clone.decoding = 'async';
+				clone.sizes = '(max-width: 1024px) 88vw, 0px';
+				figure.append(clone, textElement('figcaption', '', stages[stageIndex]));
+				track.append(figure);
+			});
+			item.append(track);
+			sliders.append(item);
+		});
+		return sliders;
+	}
+
+	function buildKillerCopy() {
+		const copy = element('div', 'shelfr-mobile-killer-copy');
+		copy.append(
+			textElement('h3', '', 'Категоризация книг в списке "Хочу прочитать"'),
+		);
+		const matrix = document.createElement('p');
+		matrix.append('Это слегка измененная ', textElement('strong', '', 'матрица Эйзенхауэра'), ' для сортировки книг.');
+		copy.append(
+			matrix,
+			textElement('p', '', 'Разделите книги на 4 категории, чтобы легче решить, что читать дальше.'),
+			textElement('p', '', 'Уведомления напомнят о важных книгах или о пересортировке.'),
+		);
+		return copy;
 	}
 
 	function buildSurveyVisuals(source) {
@@ -443,6 +510,7 @@
 	function buildScenarioCards(source, items) {
 		const cards = buildNamedCards(source, items);
 		cards.querySelectorAll('.shelfr-mobile-card').forEach((card) => {
+			card.classList.add('shelfr-mobile-card--scenario');
 			const title = card.querySelector('h3').textContent.replace(/\s+/g, '').toLowerCase();
 			const paragraphs = [...card.querySelectorAll('.shelfr-mobile-copy p')];
 			let prefix = '';

@@ -28,8 +28,8 @@ assert.match(pages.infographics, /data-case-lightbox="single"/);
 for (const id of ['contents', 'gridster', 'colorproofer', 'framesplitter', 'book-styles']) {
 	assert.match(pages.adobeScripts, new RegExp(`id="${id}"`), `Adobe Scripts: ${id} section is missing`);
 }
-assert.equal((pages.adobeScripts.match(/\bdata-full-src=/g) ?? []).length, 12, 'Adobe Scripts: expected 12 source screenshots');
-assert.equal((pages.adobeScripts.match(/\bsrcset=/g) ?? []).length, 12, 'Adobe Scripts: every screenshot needs a responsive srcset');
+assert.equal((pages.adobeScripts.match(/\bdata-full-src=/g) ?? []).length, 13, 'Adobe Scripts: expected 13 source screenshots');
+assert.equal((pages.adobeScripts.match(/\bsrcset=/g) ?? []).length, 13, 'Adobe Scripts: every screenshot needs a responsive srcset');
 
 assert.match(pages.shelfr, /name="viewport" content="width=device-width, initial-scale=1"/, 'Shelfr: responsive viewport is missing');
 assert.match(pages.shelfr, /href="\/projects\/product-design\/shelfr\/mobile\.css"/, 'Shelfr: mobile stylesheet is missing');
@@ -45,6 +45,13 @@ assert.match(shelfrMobileScript, /\.framer-ohkkmy/, 'Shelfr: testing scenarios a
 assert.equal((shelfrMobileScript.match(/shelfr-flow-\d{2}\.(?:webp|png)/g) ?? []).length, 14, 'Shelfr: expected all 15 User Flow slides including the existing first slide');
 assert.match(shelfrMobileScript, /buildSurveyVisuals/, 'Shelfr: survey messages and audience chart are missing');
 assert.match(shelfrMobileScript, /buildColorGallery/, 'Shelfr: color exploration gallery is missing');
+assert.match(shelfrMobileScript, /buildIterationSliders/, 'Shelfr: iteration triplets are missing');
+assert.match(shelfrMobileScript, /Скетч на бумаге.*Вайрфрейм.*Готовый экран/, 'Shelfr: iteration stages are incomplete');
+assert.match(shelfrMobileScript, /buildKillerCopy/, 'Shelfr: Killer Feature copy is missing');
+assert.doesNotMatch(shelfrMobileScript, /copy: \['\.framer-ed2mu'/, 'Shelfr: old Killer Feature copy is still used on mobile');
+assert.match(shelfrMobileScript, /shelfr-mobile-gallery--masonry/, 'Shelfr: independent Wireframes columns are missing');
+assert.match(shelfrMobileScript, /Протестировать оставшиеся сценарии/, 'Shelfr: User Testing recommendations are not translated');
+assert.match(shelfrMobile, /shelfr-mobile-recommendations/, 'Shelfr: User Testing recommendations are not separated');
 assert.match(shelfrMobile, /#mobile-ia h2/, 'Shelfr: long IA heading needs a narrow-screen size');
 
 for (const [name, html] of Object.entries(pages).filter(([name]) => ['iofs', 'unesco', 'kipd', 'infographics'].includes(name))) {

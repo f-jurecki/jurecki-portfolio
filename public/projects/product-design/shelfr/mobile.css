@@ -10,6 +10,33 @@ a[href="https://www.linkedin.com/in/bogdan-goncharenko/"] * {
 	--framer-text-color: #fff !important;
 }
 
+.framer-spmwy3 br {
+	display: none;
+}
+
+.framer-spmwy3 p {
+	padding: .8rem 0;
+	border-top: 1px solid rgb(255 255 255 / 22%);
+}
+
+.framer-spmwy3 p:last-child {
+	border-bottom: 1px solid rgb(255 255 255 / 22%);
+}
+
+.framer-6ybkqo,
+.framer-1cab1g {
+	display: none !important;
+}
+
+.framer-1wgvns6,
+.framer-ns8qf9 {
+	display: none !important;
+}
+
+.framer-1oq9m2g {
+	display: none !important;
+}
+
 @media (max-width: 1024px) {
 	html,
 	body,
@@ -209,6 +236,22 @@ a[href="https://www.linkedin.com/in/bogdan-goncharenko/"] * {
 		gap: .65rem;
 	}
 
+	.shelfr-mobile-gallery--single {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 1.25rem;
+	}
+
+	.shelfr-mobile-gallery--masonry {
+		align-items: start;
+	}
+
+	.shelfr-mobile-gallery-column {
+		display: grid;
+		align-content: start;
+		gap: .65rem;
+		min-width: 0;
+	}
+
 	.shelfr-mobile-figure {
 		display: grid;
 		gap: .5rem;
@@ -253,6 +296,7 @@ a[href="https://www.linkedin.com/in/bogdan-goncharenko/"] * {
 		align-items: baseline;
 		justify-content: space-between;
 		gap: 1rem;
+		min-height: 4.5rem;
 	}
 
 	.shelfr-mobile-flow-head h3,
@@ -269,8 +313,18 @@ a[href="https://www.linkedin.com/in/bogdan-goncharenko/"] * {
 		color: rgb(255 255 255 / 55%);
 	}
 
+	.shelfr-mobile-flow-carousel .shelfr-mobile-figure {
+		height: min(calc((100vw - 2rem) * 2.6974), 65rem);
+		align-items: center;
+		overflow: hidden;
+		background: #0b0b0b;
+	}
+
 	.shelfr-mobile-flow-carousel .shelfr-mobile-figure img {
+		width: 100%;
+		height: 100%;
 		max-height: none;
+		object-fit: contain;
 	}
 
 	.shelfr-mobile-flow-controls {
@@ -294,6 +348,75 @@ a[href="https://www.linkedin.com/in/bogdan-goncharenko/"] * {
 	.shelfr-mobile-flow-controls button:active {
 		color: #000;
 		background: #fff;
+	}
+
+	.shelfr-mobile-iteration-sliders,
+	.shelfr-mobile-iteration {
+		display: grid;
+		min-width: 0;
+	}
+
+	.shelfr-mobile-iteration-sliders {
+		gap: 2.5rem;
+	}
+
+	.shelfr-mobile-iteration {
+		gap: .9rem;
+	}
+
+	.shelfr-mobile-iteration h3 {
+		margin: 0;
+		font-size: 1.35rem;
+		line-height: 1.05;
+	}
+
+	.shelfr-mobile-iteration > .shelfr-mobile-copy {
+		padding-left: .75rem;
+		border-left: 2px solid rgb(255 255 255 / 32%);
+		font-size: .9rem;
+		color: rgb(255 255 255 / 70%);
+	}
+
+	.shelfr-mobile-iteration-track {
+		display: grid;
+		grid-auto-flow: column;
+		grid-auto-columns: minmax(17rem, 88%);
+		gap: .75rem;
+		overflow-x: auto;
+		overscroll-behavior-inline: contain;
+		scroll-snap-type: inline mandatory;
+		scrollbar-width: thin;
+		padding-bottom: .5rem;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.shelfr-mobile-iteration-track .shelfr-mobile-figure {
+		scroll-snap-align: start;
+	}
+
+	.shelfr-mobile-iteration-track .shelfr-mobile-figure img {
+		max-height: 76vh;
+	}
+
+	.shelfr-mobile-killer-copy {
+		display: grid;
+		gap: 0;
+	}
+
+	.shelfr-mobile-killer-copy h3 {
+		margin: 0 0 .75rem;
+		font-size: 1.35rem;
+		line-height: 1.1;
+	}
+
+	.shelfr-mobile-killer-copy p {
+		margin: 0;
+		padding: .85rem 0;
+		border-top: 1px solid rgb(255 255 255 / 22%);
+	}
+
+	.shelfr-mobile-killer-copy p:last-child {
+		border-bottom: 1px solid rgb(255 255 255 / 22%);
 	}
 
 	.shelfr-mobile-survey-visuals,
@@ -420,6 +543,57 @@ a[href="https://www.linkedin.com/in/bogdan-goncharenko/"] * {
 
 	.shelfr-mobile-card .shelfr-mobile-copy {
 		gap: .45rem;
+	}
+
+	.shelfr-mobile-card--scenario .shelfr-mobile-copy {
+		counter-reset: scenario-step;
+	}
+
+	.shelfr-mobile-card--scenario .shelfr-mobile-copy p {
+		display: grid;
+		grid-template-columns: 1.6rem minmax(0, 1fr);
+		gap: .45rem;
+		counter-increment: scenario-step;
+	}
+
+	.shelfr-mobile-card--scenario .shelfr-mobile-copy p::before {
+		content: counter(scenario-step, decimal-leading-zero);
+		padding-top: .24em;
+		font-size: .68rem;
+		font-weight: 700;
+		letter-spacing: .06em;
+		color: rgb(255 255 255 / 48%);
+	}
+
+	.shelfr-mobile-recommendations {
+		gap: 0;
+		counter-reset: recommendation;
+	}
+
+	.shelfr-mobile-recommendations p {
+		display: grid;
+		grid-template-columns: 1.75rem minmax(0, 1fr);
+		gap: .55rem;
+		padding: .85rem 0;
+		border-top: 1px solid rgb(255 255 255 / 22%);
+		counter-increment: recommendation;
+	}
+
+	.shelfr-mobile-recommendations br {
+		display: none;
+	}
+
+	.shelfr-mobile-recommendations p:last-child {
+		border-bottom: 1px solid rgb(255 255 255 / 22%);
+	}
+
+	.shelfr-mobile-recommendations p::before {
+		content: counter(recommendation, decimal-leading-zero);
+		padding-top: .24em;
+		font-size: .68rem;
+		font-weight: 700;
+		letter-spacing: .06em;
+		color: rgb(255 255 255 / 48%);
 	}
 
 	.shelfr-mobile-table {

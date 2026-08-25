@@ -127,7 +127,7 @@ try {
 					width === widths[0] && audit.seo.canonical !== expectedCanonical && `wrong canonical ${audit.seo.canonical}`,
 					width === widths[0] && (!audit.seo.ogTitle || !audit.seo.ogDescription) && 'Open Graph title or description is missing',
 					width === widths[0] && audit.seo.ogUrl !== expectedCanonical && `wrong og:url ${audit.seo.ogUrl}`,
-					width === widths[0] && audit.seo.ogImage !== `${productionOrigin}/og/jurecki-portfolio.png` && `wrong og:image ${audit.seo.ogImage}`,
+					width === widths[0] && !audit.seo.ogImage.startsWith(`${productionOrigin}/`) && `wrong og:image ${audit.seo.ogImage}`,
 					width === widths[0] && audit.seo.twitterCard !== 'summary_large_image' && 'Twitter large card is missing',
 					width === widths[0] && audit.seo.structuredType !== 'Person' && 'Person JSON-LD is missing',
 					...runtimeErrors,

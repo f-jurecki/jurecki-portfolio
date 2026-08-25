@@ -49,6 +49,7 @@ const gridsterImages = [
 					<p>Одним кликом удаляется без ущерба макету. Адаптируется под разные размеры, можно настраивать отступы от границ страницы и между самими направляющими.</p>
 				</div>
 				<p class="note">*Толщины линий увеличены для репрезентации</p>
+				<ResponsiveImage class="gridster-dialog" src="/portfolio/adobe-scripts/gridster-dialog.webp" alt="Окно настроек Gridster" sizes="(max-width: 700px) 90vw, (max-width: 1100px) 50vw, 20vw" />
 			</div>
 
 			<div class="gridster-gallery">
@@ -168,6 +169,7 @@ const gridsterImages = [
 	.contents-link:hover { color: var(--color-text); }
 
 	.script-gridster { grid-template-columns: minmax(16rem, .62fr) minmax(36rem, 1.38fr); align-items: start; }
+	.gridster-dialog { width: min(100%, 22rem); height: auto; margin-top: 2rem; display: block; }
 	.gridster-gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1rem, 2.5vw, 2.75rem); }
 	.gridster-gallery img { width: 100%; height: auto; aspect-ratio: .71; display: block; object-fit: cover; background: #fff; }
 
@@ -192,7 +194,7 @@ const gridsterImages = [
 
 	.script-framesplitter { grid-template-columns: minmax(18rem, .78fr) minmax(34rem, 1.22fr); align-items: center; }
 	.framesplitter-dialog { width: min(58%, 19rem); height: auto; margin: clamp(3rem, 7vw, 7rem) 0 0 clamp(2rem, 8vw, 7rem); display: block; }
-	.framesplitter-result { width: min(100%, 47rem); max-height: 72vh; justify-self: center; object-fit: contain; }
+	.framesplitter-result { width: min(100%, 47rem); height: auto; max-height: 72vh; justify-self: center; object-fit: contain; }
 
 	.script-book { grid-template-columns: minmax(18rem, .68fr) minmax(40rem, 1.32fr); align-items: start; }
 	.book-intro { grid-column: 1; }
