@@ -42,6 +42,9 @@ assert.match(shelfrMobileScript, /tableHeaders: \['Приложение'/, 'Shel
 assert.match(shelfrMobileScript, /\.framer-1mobc36/, 'Shelfr: survey questions are missing');
 assert.match(shelfrMobileScript, /buildAllQuoteCards/, 'Shelfr: full interview quotes are missing');
 assert.match(shelfrMobileScript, /\.framer-ohkkmy/, 'Shelfr: testing scenarios are missing');
+assert.equal((shelfrMobileScript.match(/shelfr-flow-\d{2}\.(?:webp|png)/g) ?? []).length, 14, 'Shelfr: expected all 15 User Flow slides including the existing first slide');
+assert.match(shelfrMobileScript, /buildSurveyVisuals/, 'Shelfr: survey messages and audience chart are missing');
+assert.match(shelfrMobileScript, /buildColorGallery/, 'Shelfr: color exploration gallery is missing');
 assert.match(shelfrMobile, /#mobile-ia h2/, 'Shelfr: long IA heading needs a narrow-screen size');
 
 for (const [name, html] of Object.entries(pages).filter(([name]) => ['iofs', 'unesco', 'kipd', 'infographics'].includes(name))) {

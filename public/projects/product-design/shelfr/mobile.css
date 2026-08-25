@@ -229,6 +229,170 @@
 		color: rgb(255 255 255 / 62%);
 	}
 
+	.shelfr-mobile-flow-carousel {
+		display: grid;
+		gap: 1rem;
+		outline: none;
+	}
+
+	.shelfr-mobile-flow-carousel:focus-visible {
+		outline: 2px solid #fff;
+		outline-offset: .5rem;
+	}
+
+	.shelfr-mobile-flow-head {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+
+	.shelfr-mobile-flow-head h3,
+	.shelfr-mobile-color-section > h3,
+	.shelfr-mobile-survey-block > h3 {
+		margin: 0;
+		font-size: 1.35rem;
+		line-height: 1.05;
+	}
+
+	.shelfr-mobile-flow-counter {
+		flex: none;
+		font-variant-numeric: tabular-nums;
+		color: rgb(255 255 255 / 55%);
+	}
+
+	.shelfr-mobile-flow-carousel .shelfr-mobile-figure img {
+		max-height: none;
+	}
+
+	.shelfr-mobile-flow-controls {
+		display: grid;
+		grid-template-columns: repeat(2, 3.5rem);
+		justify-content: end;
+		gap: .5rem;
+	}
+
+	.shelfr-mobile-flow-controls button {
+		min-height: 3.5rem;
+		border: 1px solid rgb(255 255 255 / 32%);
+		border-radius: 0;
+		color: #fff;
+		background: transparent;
+		font: inherit;
+		font-size: 1.4rem;
+		cursor: pointer;
+	}
+
+	.shelfr-mobile-flow-controls button:active {
+		color: #000;
+		background: #fff;
+	}
+
+	.shelfr-mobile-survey-visuals,
+	.shelfr-mobile-survey-block,
+	.shelfr-mobile-color-section {
+		display: grid;
+		gap: 1.25rem;
+	}
+
+	.shelfr-mobile-survey-visuals {
+		gap: 3.5rem;
+		padding-top: 1rem;
+	}
+
+	.shelfr-mobile-survey-block {
+		padding-top: 1.25rem;
+		border-top: 1px solid rgb(255 255 255 / 18%);
+	}
+
+	.shelfr-mobile-survey-question {
+		max-width: 34rem;
+		margin: 0;
+		font-size: 1.05rem;
+	}
+
+	.shelfr-mobile-audience-chart {
+		display: grid;
+		grid-template-columns: minmax(9rem, 12rem) minmax(0, 1fr);
+		gap: 1.25rem;
+		align-items: center;
+	}
+
+	.shelfr-mobile-audience-pie {
+		width: 100%;
+		aspect-ratio: 1;
+		border: 1px solid #fff;
+		border-radius: 50%;
+		background: conic-gradient(#fff 0 29.2%, #1b5bff 29.2% 100%);
+	}
+
+	.shelfr-mobile-audience-legend {
+		display: grid;
+		gap: 1rem;
+		font-size: .9rem;
+	}
+
+	.shelfr-mobile-audience-legend p {
+		margin: 0;
+	}
+
+	.shelfr-mobile-messages {
+		display: grid;
+		gap: .75rem;
+	}
+
+	.shelfr-mobile-message {
+		width: min(100%, 31rem);
+		margin: 0;
+	}
+
+	.shelfr-mobile-message:nth-child(even) {
+		justify-self: end;
+	}
+
+	.shelfr-mobile-message img,
+	.shelfr-mobile-message svg {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+	.shelfr-mobile-color-gallery {
+		display: grid;
+		grid-auto-flow: column;
+		grid-auto-columns: minmax(16rem, 82%);
+		gap: .75rem;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		overscroll-behavior-inline: contain;
+		padding-bottom: .75rem;
+	}
+
+	.shelfr-mobile-color-card {
+		display: grid;
+		gap: .75rem;
+		align-content: start;
+		scroll-snap-align: start;
+	}
+
+	.shelfr-mobile-color-card h4,
+	.shelfr-mobile-color-card p {
+		margin: 0;
+	}
+
+	.shelfr-mobile-color-card h4 {
+		font-size: 1.05rem;
+	}
+
+	.shelfr-mobile-color-card p {
+		font-size: .85rem;
+		color: rgb(255 255 255 / 65%);
+	}
+
+	.shelfr-mobile-color-card .shelfr-mobile-figure img {
+		max-height: none;
+	}
+
 	.shelfr-mobile-cards {
 		display: grid;
 		gap: .75rem;
@@ -386,5 +550,10 @@
 	.shelfr-mobile-table th,
 	.shelfr-mobile-table td {
 		padding-inline: .35rem;
+	}
+
+	.shelfr-mobile-audience-chart {
+		grid-template-columns: 8.5rem minmax(0, 1fr);
+		gap: .8rem;
 	}
 }

@@ -33,8 +33,9 @@
 		{
 			id: 'survey',
 			title: 'UX Survey',
-			copy: ['.framer-knywju', '.framer-197frqy', '.framer-1vn7qkh', '.framer-50kav6', '.framer-1mobc36', '.framer-4e386o', '.framer-1w57i5x', '.framer-1kygq3w'],
-			gallery: true,
+			copy: ['.framer-knywju', '.framer-197frqy', '.framer-1vn7qkh', '.framer-50kav6', '.framer-1mobc36', '.framer-1w57i5x'],
+			surveyVisuals: true,
+			closing: '.framer-1kygq3w',
 		},
 		{
 			id: 'interview',
@@ -70,7 +71,7 @@
 			id: 'flows',
 			title: 'User Flow',
 			copy: ['.framer-i7jyd4'],
-			gallery: true,
+			flowCarousel: true,
 		},
 		{
 			id: 'wireframes',
@@ -106,9 +107,17 @@
 			id: 'iterations',
 			title: 'Итерации',
 			node: '.framer-6w3hbj',
-			copy: ['.framer-1qkvzop', '.framer-3935ut', '.framer-2oo2m9', '.framer-kzbogl', '.framer-nk58gh', '.framer-1buj9vt', '.framer-1yat9k0', '.framer-il6gg'],
+			copy: ['.framer-1qkvzop', '.framer-3935ut', '.framer-2oo2m9'],
 			gallery: true,
 			galleryClass: 'shelfr-mobile-gallery--phones',
+			galleryCount: 15,
+			colorGallery: [
+				['.framer-kzbogl', '/portfolio/shelfr/shelfr-54.webp'],
+				['.framer-nk58gh', '/portfolio/shelfr/shelfr-53.webp'],
+				['.framer-1buj9vt', '/portfolio/shelfr/shelfr-52.webp'],
+				['.framer-1yat9k0', '/portfolio/shelfr/shelfr-51.webp'],
+				['.framer-il6gg', '/portfolio/shelfr/shelfr-50.webp'],
+			],
 		},
 		{
 			id: 'final',
@@ -182,7 +191,10 @@
 		if (data.scenarioCards) section.append(buildScenarioCards(source, data.scenarioCards));
 		if (data.introCopy) appendCopies(section, source, data.copy || []);
 		if (data.table && !data.tableAfterGallery) section.append(buildTable(data.table, data.tableHeaders, data.tableClass));
-		if (data.gallery) appendGallery(section, source, data.galleryClass || '', data.captions || []);
+		if (data.surveyVisuals) section.append(buildSurveyVisuals(source));
+		if (data.flowCarousel) section.append(buildFlowCarousel());
+		if (data.gallery) appendGallery(section, source, data.galleryClass || '', data.captions || [], data.galleryCount);
+		if (data.colorGallery) section.append(buildColorGallery(source, data.colorGallery));
 		if (data.table && data.tableAfterGallery) section.append(buildTable(data.table, data.tableHeaders, data.tableClass));
 		if (data.quotes) section.append(buildCards(source, data.quotes));
 		if (data.allQuotes) section.append(buildAllQuoteCards(source));
@@ -234,9 +246,9 @@
 		});
 	}
 
-	function appendGallery(target, source, extraClass = '', captions = []) {
+	function appendGallery(target, source, extraClass = '', captions = [], count = Infinity) {
 		if (!source) return;
-		const images = [...source.querySelectorAll('img')];
+		const images = [...source.querySelectorAll('img')].slice(0, count);
 		if (!images.length) return;
 		const gallery = element('div', `shelfr-mobile-gallery ${extraClass}`.trim());
 		images.forEach((image, index) => {
@@ -251,6 +263,142 @@
 			gallery.append(figure);
 		});
 		target.append(gallery);
+	}
+
+	function buildFlowCarousel() {
+		const slides = [
+			['Sign-up', '/portfolio/shelfr/shelfr-13.webp'],
+			['Add a book to "Reading now"', '/portfolio/shelfr/shelfr-flow-02.webp'],
+			['Record a streak', '/portfolio/shelfr/shelfr-flow-03.png'],
+			['Start a challenge', '/portfolio/shelfr/shelfr-flow-04.png'],
+			['Add a book to any list', '/portfolio/shelfr/shelfr-flow-05.png'],
+			['Categorize books in "Want to read"', '/portfolio/shelfr/shelfr-flow-06.png'],
+			['Add a book to "Finished" or “Abandoned” list', '/portfolio/shelfr/shelfr-flow-07.png'],
+			['Write a review', '/portfolio/shelfr/shelfr-flow-08.png'],
+			['Create a list', '/portfolio/shelfr/shelfr-flow-09.png'],
+			['Find what to read', '/portfolio/shelfr/shelfr-flow-10.png'],
+			['Read reviews', '/portfolio/shelfr/shelfr-flow-11.png'],
+			['Use search', '/portfolio/shelfr/shelfr-flow-12.png'],
+			['Actions with others profiles', '/portfolio/shelfr/shelfr-flow-13.png'],
+			['Filling, editing the profile, privacy settings', '/portfolio/shelfr/shelfr-flow-14.png'],
+			['Achievements, stats', '/portfolio/shelfr/shelfr-flow-15.png'],
+		];
+		const carousel = element('div', 'shelfr-mobile-flow-carousel');
+		carousel.tabIndex = 0;
+		carousel.setAttribute('aria-label', 'Схемы User Flow');
+		const title = textElement('h3', '', '');
+		const counter = textElement('span', 'shelfr-mobile-flow-counter', '');
+		const figure = element('figure', 'shelfr-mobile-figure');
+		const image = document.createElement('img');
+		image.decoding = 'async';
+		figure.append(image);
+		const previous = textElement('button', '', '←');
+		const next = textElement('button', '', '→');
+		previous.type = next.type = 'button';
+		previous.setAttribute('aria-label', 'Предыдущая схема');
+		next.setAttribute('aria-label', 'Следующая схема');
+		const controls = element('div', 'shelfr-mobile-flow-controls');
+		controls.append(previous, next);
+		const head = element('div', 'shelfr-mobile-flow-head');
+		head.append(title, counter);
+		carousel.append(head, figure, controls);
+		let active = 0;
+		const show = (index) => {
+			active = (index + slides.length) % slides.length;
+			const [label, src] = slides[active];
+			title.textContent = label;
+			counter.textContent = `${active + 1}/${slides.length}`;
+			image.src = src;
+			image.alt = `User Flow: ${label}`;
+		};
+		previous.addEventListener('click', () => show(active - 1));
+		next.addEventListener('click', () => show(active + 1));
+		carousel.addEventListener('keydown', (event) => {
+			if (event.key === 'ArrowLeft') show(active - 1);
+			if (event.key === 'ArrowRight') show(active + 1);
+		});
+		show(0);
+		return carousel;
+	}
+
+	function buildSurveyVisuals(source) {
+		const visuals = element('div', 'shelfr-mobile-survey-visuals');
+		const issues = element('section', 'shelfr-mobile-survey-block');
+		issues.append(textElement('h3', '', 'Основные проблемы существующих приложений'));
+		appendCopies(issues, source, ['.framer-4e386o']);
+
+		const audience = element('section', 'shelfr-mobile-survey-block');
+		audience.append(
+			textElement('h3', '', 'Потенциальная аудитория'),
+			textElement('p', 'shelfr-mobile-survey-question', 'Почему вы не используете трекеры?'),
+		);
+		const chart = element('div', 'shelfr-mobile-audience-chart');
+		const pie = element('div', 'shelfr-mobile-audience-pie');
+		pie.setAttribute('role', 'img');
+		pie.setAttribute('aria-label', '29,2 процента неинтересно отслеживать прочитанное; 70,8 процента ещё не нашли подходящий трекер');
+		const legend = element('div', 'shelfr-mobile-audience-legend');
+		legend.append(
+			textElement('p', '', '29.2% — Мне неинтересно отслеживать прочитанное'),
+			textElement('p', '', '70.8% — Я ещё не нашел подходящий трекер'),
+		);
+		chart.append(pie, legend);
+		audience.append(chart);
+
+		const features = element('section', 'shelfr-mobile-survey-block');
+		features.append(
+			textElement('h3', '', 'Потенциальные функции'),
+			textElement('p', 'shelfr-mobile-survey-question', 'Есть ли какая-то функция книжного трекера, которая вам нужна, но вы нигде её не нашли?'),
+		);
+		const messages = element('div', 'shelfr-mobile-messages');
+		const group = source.querySelector('[data-framer-name="Group 75"]');
+		[...(group?.children || [])].forEach((item) => {
+			const message = element('figure', 'shelfr-mobile-message');
+			const image = item.querySelector('img');
+			if (image) {
+				const clone = image.cloneNode(false);
+				clone.removeAttribute('style');
+				clone.loading = 'lazy';
+				message.append(clone);
+			} else {
+				const svg = item.querySelector('svg')?.cloneNode(true);
+				if (svg) {
+					svg.removeAttribute('style');
+					svg.removeAttribute('width');
+					svg.removeAttribute('height');
+					message.append(svg);
+				}
+			}
+			if (message.children.length) messages.append(message);
+		});
+		features.append(messages);
+		visuals.append(issues, audience, features);
+		return visuals;
+	}
+
+	function buildColorGallery(source, items) {
+		const section = element('div', 'shelfr-mobile-color-section');
+		section.append(textElement('h3', '', 'Поиск цветов'));
+		const gallery = element('div', 'shelfr-mobile-color-gallery');
+		items.forEach(([selector, src]) => {
+			const original = source.querySelector(selector);
+			if (!original) return;
+			const paragraphs = [...original.querySelectorAll('p')];
+			const card = element('article', 'shelfr-mobile-color-card');
+			card.append(textElement('h4', '', paragraphs[0]?.textContent.trim() || ''));
+			const figure = element('figure', 'shelfr-mobile-figure');
+			const image = document.createElement('img');
+			image.src = src;
+			image.alt = paragraphs[0]?.textContent.trim() || 'Вариант цветового решения';
+			image.loading = 'lazy';
+			image.decoding = 'async';
+			figure.append(image);
+			card.append(figure);
+			const description = paragraphs.slice(1).map((paragraph) => paragraph.textContent.trim()).filter(Boolean).join(' ');
+			if (description) card.append(textElement('p', '', description));
+			gallery.append(card);
+		});
+		section.append(gallery);
+		return section;
 	}
 
 	function buildCards(source, selectors) {
