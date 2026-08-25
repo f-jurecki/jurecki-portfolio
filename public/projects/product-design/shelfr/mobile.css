@@ -2,6 +2,14 @@
 	display: none;
 }
 
+a[href="https://www.linkedin.com/in/jurecki"],
+a[href="https://www.linkedin.com/in/bogdan-goncharenko/"],
+a[href="https://www.linkedin.com/in/jurecki"] *,
+a[href="https://www.linkedin.com/in/bogdan-goncharenko/"] * {
+	color: #fff !important;
+	--framer-text-color: #fff !important;
+}
+
 @media (max-width: 1024px) {
 	html,
 	body,
