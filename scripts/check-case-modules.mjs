@@ -10,6 +10,7 @@ const pages = {
 	shelfr: await readFile('dist/projects/product-design/shelfr/index.html', 'utf8'),
 };
 const shelfrMobile = await readFile('dist/projects/product-design/shelfr/mobile.css', 'utf8');
+const shelfrMobileScript = await readFile('dist/projects/product-design/shelfr/mobile.js', 'utf8');
 
 for (const [name, html] of Object.entries(pages).filter(([name]) => ['iofs', 'unesco', 'kipd'].includes(name))) {
 	assert.match(html, /class="case-facts"/, `${name}: common facts module is missing`);
@@ -32,8 +33,11 @@ assert.equal((pages.adobeScripts.match(/\bsrcset=/g) ?? []).length, 12, 'Adobe S
 
 assert.match(pages.shelfr, /name="viewport" content="width=device-width, initial-scale=1"/, 'Shelfr: responsive viewport is missing');
 assert.match(pages.shelfr, /href="\/projects\/product-design\/shelfr\/mobile\.css"/, 'Shelfr: mobile stylesheet is missing');
-assert.match(shelfrMobile, /@media \(max-width: 809px\)/, 'Shelfr: mobile breakpoint is missing');
-assert.match(shelfrMobile, /\.framer-rfg7ud > \*/, 'Shelfr: sections are not reflowed on mobile');
+assert.match(pages.shelfr, /src="\/projects\/product-design\/shelfr\/mobile\.js"/, 'Shelfr: mobile script is missing');
+assert.match(shelfrMobile, /@media \(max-width: 1024px\)/, 'Shelfr: mobile breakpoint is missing');
+assert.match(shelfrMobile, /#main > \[data-framer-root\]/, 'Shelfr: fixed Framer canvas is not hidden on mobile');
+assert.equal((shelfrMobileScript.match(/id: '[^']+'/g) ?? []).length, 14, 'Shelfr: expected 14 mobile sections');
+assert.match(shelfrMobileScript, /shelfr-mobile-table/, 'Shelfr: prioritization table is missing');
 
 for (const [name, html] of Object.entries(pages).filter(([name]) => ['iofs', 'unesco', 'kipd', 'infographics'].includes(name))) {
 	const gallery = html.match(/<section id="case-gallery"[\s\S]*?<\/section>/)?.[0] ?? '';
