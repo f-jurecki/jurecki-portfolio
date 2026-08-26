@@ -7,6 +7,7 @@ const pages = {
 	unesco: await readFile('dist/projects/publications/unesco/index.html', 'utf8'),
 	kipd: await readFile('dist/projects/publications/kipd/index.html', 'utf8'),
 	infographics: await readFile('dist/projects/infographics/index.html', 'utf8'),
+	presentations: await readFile('dist/projects/presentations/index.html', 'utf8'),
 	adobeScripts: await readFile('dist/projects/vibecoding/adobe-scripts/index.html', 'utf8'),
 	republica: await readFile('dist/projects/personal/republica/index.html', 'utf8'),
 	shelfr: await readFile('dist/projects/product-design/shelfr/index.html', 'utf8'),
@@ -52,6 +53,14 @@ assert.match(pages.iofs, /data-case-lightbox="spread"/);
 assert.match(pages.kipd, /data-case-lightbox="single"/);
 assert.match(pages.infographics, /data-case-lightbox="single"/);
 
+assert.match(pages.presentations, /<h1\b[^>]*>Презентации<\/h1>/, 'Presentations: simplified title is missing');
+assert.match(pages.presentations, /понятную и выразительную инфографику/, 'Presentations: project introduction is missing');
+assert.match(pages.presentations, /href="\/projects\/infographics"/, 'Presentations: infographics link is missing');
+assert.doesNotMatch(pages.presentations, /NDA|Конфиденциальн|Открытые примеры/, 'Presentations: removed NDA sections are still present');
+assert.equal((pages.presentations.match(/class="case-gallery-item"/g) ?? []).length, 33, 'Presentations: expected all 33 slides');
+assert.match(pages.presentations, /case-gallery-numbered/);
+assert.match(pages.presentations, /data-case-lightbox="single"/);
+
 for (const id of ['contents', 'gridster', 'colorproofer', 'framesplitter', 'book-styles']) {
 	assert.match(pages.adobeScripts, new RegExp(`id="${id}"`), `Adobe Scripts: ${id} section is missing`);
 }
@@ -85,7 +94,7 @@ assert.match(shelfrMobileScript, /Протестировать оставшие�
 assert.match(shelfrMobile, /shelfr-mobile-recommendations/, 'Shelfr: User Testing recommendations are not separated');
 assert.match(shelfrMobile, /#mobile-ia h2/, 'Shelfr: long IA heading needs a narrow-screen size');
 
-for (const [name, html] of Object.entries(pages).filter(([name]) => ['iofs', 'unesco', 'kipd', 'infographics'].includes(name))) {
+for (const [name, html] of Object.entries(pages).filter(([name]) => ['iofs', 'unesco', 'kipd', 'infographics', 'presentations'].includes(name))) {
 	const gallery = html.match(/<section id="case-gallery"[\s\S]*?<\/section>/)?.[0] ?? '';
 	const images = gallery.match(/<img\b[^>]*>/g) ?? [];
 	assert.ok(images.length > 0, `${name}: gallery images are missing`);

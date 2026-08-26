@@ -1,272 +1,137 @@
 ---
 import BackToTop from '../../../components/BackToTop.astro';
+import CaseGallery from '../../../components/CaseGallery.astro';
+import CaseLightbox from '../../../components/CaseLightbox.astro';
 import ProjectFooter from '../../../components/ProjectFooter.astro';
-import ResponsiveImage from '../../../components/ResponsiveImage.astro';
 import SiteHeader from '../../../components/SiteHeader.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 
 const tools = ['PowerPoint', 'Google Slides', 'Keynote', 'Figma'];
+
+const groups = [
+	{ folder: 'business', count: 9, caption: 'Бизнес-презентация' },
+	{ folder: 'infographics', slides: ['01', '02', '06'], caption: 'Инфографика' },
+	{ folder: 'education', count: 21, caption: 'Образовательная презентация' },
+];
+
+const galleryItems = groups.flatMap((group) => {
+	const slides = group.slides ?? Array.from({ length: group.count ?? 0 }, (_, index) => String(index + 1).padStart(2, '0'));
+	return slides.map((slide) => ({
+		caption: group.caption,
+		images: [{
+			src: `/portfolio/presentations/${group.folder}/slide-${slide}.webp`,
+			alt: `${group.caption}: слайд ${slide}`,
+		}],
+	}));
+}).map((item, index) => ({ ...item, number: String(index + 1).padStart(2, '0') }));
 ---
 
-	<BaseLayout
-		title="Бизнес-презентации — Федор Юрецкий"
-		description="Бизнес-презентации Федора Юрецкого: структура, дизайн, вёрстка и инфографика для конфиденциальных проектов под NDA."
-	>
-		<SiteHeader />
+<BaseLayout
+	title="Презентации — Федор Юрецкий"
+	description="Дизайн презентаций Федора Юрецкого: структура, визуальный язык, вёрстка и инфографика на казахском, русском и английском языках."
+>
+	<SiteHeader />
 
-		<main>
-			<section class="project-hero">
-				<p class="eyebrow">Бизнес-презентации · Конфиденциальные проекты</p>
-				<div class="hero-row">
-					<h1>Презентации<br /><span class="title-accent">под NDA.</span></h1>
-					<p class="summary">Помогаем бизнесу представлять продукты, защищать решения, показывать результаты и убеждать аудиторию. Большинство таких материалов содержит чувствительные данные, поэтому мы не публикуем клиентские презентации в портфолио.</p>
-				</div>
-			</section>
-
-			<section class="nda-stage" aria-labelledby="nda-title">
-				<div class="nda-mark" aria-hidden="true"><span>NDA</span><i></i></div>
-				<div class="nda-copy">
-					<p>01 / Конфиденциальность</p>
-					<h2 id="nda-title">Не показываем проекты.<br />Защищаем доверие.</h2>
-					<div class="nda-text">
-						<p>Стратегии, финансовые показатели, исследования, внутренние процессы и планы развития требуют аккуратного обращения. Мы работаем с такими данными регулярно и соблюдаем условия конфиденциальности на всех этапах.</p>
-						<p>Поэтому здесь нет вымышленных кейсов и замаскированных клиентских слайдов. Вместо этого мы показываем открытые фрагменты других работ, которые демонстрируют те же компетенции: композицию, вёрстку и инфографику.</p>
-					</div>
-					<nav class="related-projects" aria-label="Открытые проекты">
-						<a href="/projects/publications">Многостраничные издания <span aria-hidden="true">↗&#xfe0e;</span></a>
-						<a href="/projects/infographics">Инфографика <span aria-hidden="true">↗&#xfe0e;</span></a>
-					</nav>
-				</div>
-			</section>
-
-			<section class="approach section-grid">
-				<p class="section-label">02 / Опыт</p>
-				<div class="rich-text">
-					<h2>Большой опыт, который остаётся за кадром.</h2>
-					<p>Мы создаём презентации для руководителей, коммерческих команд, аналитиков и проектных офисов. Работаем с отчётами, предложениями, защитами проектов, обучающими материалами и презентациями для выступлений.</p>
-					<p>Сначала расставляем аргументы в нужном порядке, затем задаём композицию, сетку и типографическую иерархию. Один слайд — одна мысль; каждая диаграмма отвечает на конкретный вопрос; вся презентация ведёт аудиторию к нужному выводу.</p>
-				</div>
-			</section>
-
-			<section class="experience-evidence" aria-label="Масштаб работы с презентациями">
-				<div class="evidence-stats">
-					<div><strong>Любой объём</strong><span>от коротких питч-деков до презентаций для крупных проектов</span></div>
-					<div><strong>KZ · RU · EN</strong><span>казахский, русский и английский языки</span></div>
-					<div><strong>Любая аудитория</strong><span>команды, руководство, инвесторы, партнёры, клиенты и широкая публика</span></div>
-				</div>
-				<div class="evidence-details">
-					<p><strong>Отрасли</strong><span>Финансы и инвестиции, нефтегаз, промышленность, девелопмент, IT и телеком, фармацевтика, ритейл, логистика и консалтинг.</span></p>
-					<p><strong>Задачи</strong><span>Питч-деки, коммерческие и инвестиционные предложения, стратегии, тендерные защиты, отчёты для руководства, обучение и публичные выступления.</span></p>
-				</div>
-			</section>
-
-			<div class="capabilities">
-				<article><span>01</span><strong>Структура</strong><p>Собираем разрозненный материал в последовательный сценарий.</p></article>
-				<article><span>02</span><strong>Оформление</strong><p>Создаём сетку, типографику и набор повторяемых шаблонов слайдов.</p></article>
-				<article><span>03</span><strong>Данные</strong><p>Превращаем таблицы и показатели в понятную инфографику.</p></article>
-				<article><span>04</span><strong>Поддержка</strong><p>Регулярно обновляем данные, версии и материалы для следующих встреч.</p></article>
+	<main>
+		<section class="project-intro">
+			<h1>Презентации</h1>
+			<div class="intro-copy">
+				<p>У меня большой опыт работы с презентациями на казахском, русском и английском языках — для самых разных сфер, задач и аудиторий. Работаю как с корпоративными и аналитическими материалами, так и с более визуальными и имиджевыми форматами.</p>
+				<p>Умею выстраивать последовательное повествование, структурировать большие объёмы информации и превращать сложные данные в <a href="/projects/infographics">понятную и выразительную инфографику</a>. Подбираю визуальный язык под содержание презентации, сохраняя баланс между ясностью, эстетикой и задачей материала.</p>
 			</div>
+		</section>
 
-			<section class="tools-section">
-				<div class="tools-head">
-					<p class="section-label">03 / Инструменты</p>
-					<h2>В привычной<br />для команды среде.</h2>
-				</div>
-				<div class="tools-grid">{tools.map((tool, index) => <div><span>{String(index + 1).padStart(2, '0')}</span><strong>{tool}</strong></div>)}</div>
-				<p class="tools-note">Работаем в среде, привычной команде клиента. При необходимости берём презентации на регулярное сопровождение: обновляем данные, адаптируем версии под новые аудитории и сохраняем сетку, стили и шаблоны.</p>
-			</section>
+		<section class="experience" aria-label="Опыт работы с презентациями">
+			<div class="experience-main">
+				<div><strong>Любой объём</strong><span>от коротких питч-деков до презентаций для крупных проектов</span></div>
+				<div><strong>KZ · RU · EN</strong><span>казахский, русский и английский языки</span></div>
+				<div><strong>Любая аудитория</strong><span>команды, руководство, инвесторы, партнёры, клиенты и широкая публика</span></div>
+			</div>
+			<div class="experience-details">
+				<p><strong>Отрасли</strong><span>Финансы и инвестиции, нефтегаз, промышленность, девелопмент, IT и телеком, фармацевтика, ритейл, логистика и консалтинг.</span></p>
+				<p><strong>Задачи</strong><span>Питч-деки, коммерческие и инвестиционные предложения, стратегии, тендерные защиты, отчёты для руководства, обучение и публичные выступления.</span></p>
+			</div>
+		</section>
 
-			<section class="samples" aria-labelledby="samples-title">
-				<div class="samples-head section-grid">
-					<p class="section-label">04 / Открытые примеры</p>
-					<div class="rich-text">
-						<h2 id="samples-title">Из чего складывается презентация.</h2>
-						<p>Ниже — не клиентские презентации, а открытые фрагменты наших многостраничных изданий и инфографики. Они показывают качество композиции, работу с иерархией, таблицами и данными — именно из этих навыков собирается сильная презентация.</p>
-					</div>
-				</div>
+		<section class="tools" aria-labelledby="tools-title">
+			<h2 id="tools-title">Работаю во всех основных редакторах</h2>
+			<ul>{tools.map((tool) => <li>{tool}</li>)}</ul>
+		</section>
 
-				<div class="sample-groups">
-					<a class="sample-group sample-layout" href="/projects/publications">
-						<div class="sample-copy">
-							<p>Композиция · Сетка · Типографика</p>
-							<h3>Вёрстка.</h3>
-							<span class="sample-description">Чистая композиция помогает удерживать внимание и проводить аудиторию через материал без лишних деталей.</span>
-							<span class="sample-action">Смотреть многостраничные издания <i aria-hidden="true">↗&#xfe0e;</i></span>
-						</div>
-						<div class="sample-stage" aria-hidden="true">
-							<figure class="sample-sheet sheet-left"><ResponsiveImage src="/portfolio/iofs/annual-glance-2.webp" alt="" sizes="(max-width: 700px) 34vw, 18vw" /></figure>
-							<figure class="sample-sheet sheet-center"><ResponsiveImage src="/portfolio/unesco/indicators-1.webp" alt="" sizes="(max-width: 700px) 34vw, 18vw" /></figure>
-							<figure class="sample-sheet sheet-right"><ResponsiveImage src="/portfolio/kipd/legal-data-1.webp" alt="" sizes="(max-width: 700px) 34vw, 18vw" /></figure>
-						</div>
-					</a>
+		<CaseGallery
+			label="Галерея презентаций"
+			title=""
+			showHeader={false}
+			items={galleryItems}
+			variant="numbered"
+			lightboxId="presentations-lightbox"
+			imageSizes="(max-width: 620px) 100vw, (max-width: 900px) 50vw, 33vw"
+		/>
 
-					<a class="sample-group sample-data" href="/projects/infographics">
-						<div class="sample-copy">
-							<p>Графики · Диаграммы · Ключевые выводы</p>
-							<h3>Инфографика,<br />которая объясняет.</h3>
-							<span class="sample-description">Выбираем форму под задачу: сравнить значения, показать динамику, объяснить процесс или выделить ключевой вывод.</span>
-							<span class="sample-action">Смотреть инфографику <i aria-hidden="true">↗&#xfe0e;</i></span>
-						</div>
-						<div class="sample-stage" aria-hidden="true">
-							<figure class="sample-sheet sheet-left"><ResponsiveImage src="/portfolio/infographics/graphic-017.webp" alt="" sizes="(max-width: 700px) 34vw, 18vw" /></figure>
-							<figure class="sample-sheet sheet-center"><ResponsiveImage src="/portfolio/infographics/graphic-040.webp" alt="" sizes="(max-width: 700px) 34vw, 18vw" /></figure>
-							<figure class="sample-sheet sheet-right"><ResponsiveImage src="/portfolio/infographics/graphic-083.webp" alt="" sizes="(max-width: 700px) 34vw, 18vw" /></figure>
-						</div>
-					</a>
-				</div>
-			</section>
+		<CaseLightbox id="presentations-lightbox" variant="single" label="Увеличенный слайд презентации" />
+		<ProjectFooter />
+	</main>
 
-			<ProjectFooter />
-		</main>
-		<BackToTop />
-	</BaseLayout>
+	<BackToTop />
+</BaseLayout>
 
 <style>
-	header { height:6rem; padding:0 clamp(1.25rem,4vw,4.5rem); display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); align-items:center; }
-	.back { display:flex; align-items:center; gap:.7rem; width:max-content; font-size:var(--text-navigation); font-weight:750; text-decoration:none; }
-	.back span { width:2.25rem; height:2.25rem; display:grid; place-items:center; border:1px solid #1113; border-radius:50%; transition:transform .2s ease; }
-	.back:hover span { transform:translateX(-.25rem); }
-	.brand { width:clamp(7.8rem,10vw,10rem); line-height:0; }
-	.brand img { display:block; width:100%; }
-	.page-count { justify-self:end; color:#777; font-size:var(--text-caption); font-weight:750; line-height:var(--leading-caption); letter-spacing:var(--tracking-caption); text-transform:uppercase; }
-	main { padding:0 clamp(1.25rem,4vw,4.5rem) clamp(2rem,5vw,5rem); }
-	.project-hero { width:100%; max-width:88rem; margin:0 auto; padding:clamp(4rem,8vw,7rem) 0 clamp(4rem,7vw,7rem); }
-	.eyebrow,.section-label,.nda-copy>p,.sample-copy>p { margin:0; color:var(--color-accent); font-size:var(--text-label); font-weight:800; line-height:var(--leading-label); letter-spacing:var(--tracking-label); text-transform:uppercase; }
-	.hero-row { display:grid; grid-template-columns:minmax(0,1fr) minmax(20rem,.42fr); gap:4rem; align-items:end; }
-	header>*,.hero-row>*,.section-grid>*,.nda-stage>*,.nda-text>*,.evidence-stats>*,.evidence-details>*,.evidence-details p>*,.capabilities>*,.tools-head>*,.tools-grid>*,.sample-groups>*,.sample-group>* { min-width:0; }
-	h1 { margin:0; font-size:var(--text-page-title); font-weight:var(--weight-page-title); line-height:var(--leading-page-title); letter-spacing:var(--tracking-page-title); }
-	h1 .title-accent { display:block; color:var(--color-accent); font-family:inherit; font-size:1em; font-style:normal; font-weight:inherit; line-height:inherit; letter-spacing:inherit; overflow-wrap:anywhere; }
-	.summary { margin:0; color:#565656; font-size:var(--text-page-intro); font-weight:var(--weight-page-intro); line-height:var(--leading-page-intro); }
-	.nda-stage { width:100%; max-width:88rem; min-height:clamp(34rem,56vw,55rem); margin:0 auto; padding:clamp(2rem,4vw,4.5rem); display:grid; grid-template-columns:minmax(0,.72fr) minmax(0,1fr); gap:clamp(2rem,6vw,7rem); align-items:center; color:#fff; background:#0b0b0b; border-radius:var(--radius-shell); overflow:hidden; }
-	.nda-mark { display:grid; place-items:center; position:relative; aspect-ratio:1; border:1px solid #ffffff20; border-radius:50%; }
-	.nda-mark::before { content:""; position:absolute; width:72%; aspect-ratio:1; border:1px solid #ffffff20; border-radius:50%; }
-	.nda-mark span { position:relative; z-index:1; font-size:clamp(5rem,12vw,12rem); font-weight:850; line-height:.75; letter-spacing:-.1em; }
-	.nda-mark i { position:absolute; right:14%; top:18%; width:clamp(1rem,2vw,2rem); aspect-ratio:1; background:var(--color-accent); border-radius:50%; }
-	.nda-copy h2,.rich-text h2,.tools-head h2 { margin:1.5rem 0 0; font-size:var(--text-display-section); line-height:var(--leading-display-section); letter-spacing:var(--tracking-display-section); }
-	.nda-text { margin-top:clamp(2rem,4vw,4rem); display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(1.2rem,3vw,3rem); }
-	.nda-text p { margin:0; color:#b5b5b5; font-size:var(--text-body); line-height:var(--leading-body); }
-	.related-projects { width:100%; margin:clamp(1.5rem,3vw,2.5rem) 0 0; display:flex; flex-wrap:wrap; gap:.65rem; }
-	.related-projects a { min-height:2.7rem; padding:.65rem .75rem .65rem 1rem; display:flex; align-items:center; gap:.8rem; border:1px solid #1113; border-radius:var(--radius-pill); font-size:.7rem; font-weight:800; text-decoration:none; transition:transform .2s ease,background .2s ease,color .2s ease; }
-	.related-projects span { width:1.45rem; aspect-ratio:1; display:grid; place-items:center; color:#fff; background:var(--color-accent); border-radius:50%; }
-	.nda-stage .related-projects a { color:#111; background:#fff; border-color:#fff; }
-	.related-projects a:hover { color:#111; background:#fff; transform:translateY(var(--cta-hover-lift)); }
-	.related-projects a:active { transform:translateY(var(--cta-active-lift)); }
-	.related-projects a:focus-visible { outline:var(--focus-ring-width) solid var(--focus-ring-color); outline-offset:var(--focus-ring-offset); }
-	.section-grid { width:100%; max-width:82rem; margin:0 auto; display:grid; grid-template-columns:minmax(10rem,.28fr) minmax(0,1fr); gap:clamp(2rem,7vw,8rem); }
-	.approach { padding:clamp(8rem,13vw,13rem) 0 clamp(4rem,7vw,7rem); }
-	.rich-text h2 { margin-top:0; }
-	.rich-text p { max-width:52rem; margin:1.7rem 0 0; color:#5a5a5a; font-size:var(--text-body-lg); line-height:var(--leading-body-lg); }
-	.experience-evidence { width:100%; max-width:82rem; margin:0 auto clamp(4rem,7vw,7rem); border-top:1px solid #1112; border-bottom:1px solid #1112; }
-	.evidence-stats { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); }
-	.evidence-stats div { min-height:12rem; padding:1.6rem 1.2rem; display:flex; flex-direction:column; justify-content:space-between; border-right:1px solid #1112; }
-	.evidence-stats div:last-child { gap:1.5rem; border-right:0; }
-	.evidence-stats strong { max-width:16rem; font-size:clamp(2rem,3.2vw,3.5rem); line-height:.92; letter-spacing:-.055em; }
-	.evidence-stats div:nth-child(2) strong { max-width:none; white-space:nowrap; }
-	.evidence-stats span { max-width:20rem; color:#666; font-size:.84rem; line-height:1.5; }
-	.evidence-details { padding:1.5rem 1.2rem; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(2rem,5vw,6rem); border-top:1px solid #1112; }
-	.evidence-details p { margin:0; display:grid; grid-template-columns:5rem minmax(0,1fr); gap:1rem; }
-	.evidence-details strong { padding-top:.2rem; color:var(--color-accent); font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; }
-	.evidence-details span { color:#555; font-size:.88rem; line-height:1.6; }
-	.capabilities { width:100%; max-width:82rem; margin:0 auto clamp(8rem,13vw,13rem); display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); border-top:1px solid #1112; border-bottom:1px solid #1112; }
-	.capabilities article { min-height:13rem; padding:1.6rem 1.2rem; display:flex; flex-direction:column; border-right:1px solid #1112; }
-	.capabilities article:last-child { border-right:0; }
-	.capabilities span { color:var(--color-accent); font-size:.6rem; font-weight:800; letter-spacing:.1em; }
-	.capabilities strong { margin-top:auto; font-size:1.25rem; letter-spacing:-.035em; }
-	.capabilities p { margin:.7rem 0 0; color:#666; font-size:.84rem; line-height:1.5; }
-	.tools-section { width:100%; max-width:88rem; margin:0 auto; padding:clamp(2rem,4vw,4.5rem); color:#fff; background:#0b0b0b; border-radius:var(--radius-shell); }
-	.tools-head { display:grid; grid-template-columns:minmax(0,.25fr) minmax(0,1fr); gap:clamp(2rem,6vw,7rem); margin-bottom:clamp(3rem,6vw,6rem); }
-	.tools-head h2 { margin:0; }
-	.tools-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); border-top:1px solid #fff2; border-bottom:1px solid #fff2; }
-	.tools-grid div { min-height:12rem; padding:1.4rem; display:flex; flex-direction:column; border-right:1px solid #fff2; }
-	.tools-grid div:last-child { border-right:0; }
-	.tools-grid span { color:var(--color-accent); font-size:.58rem; font-weight:800; }
-	.tools-grid strong { margin-top:auto; font-size:clamp(1.25rem,2.2vw,2.2rem); letter-spacing:-.04em; }
-	.tools-note { max-width:43rem; margin:2rem 0 0 auto; color:#aaa; font-size:.9rem; line-height:1.65; }
-	.samples { width:100%; max-width:88rem; margin:0 auto; padding-top:clamp(8rem,13vw,13rem); }
-	.samples-head { margin-bottom:clamp(4rem,7vw,7rem); }
-	.sample-groups { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(1rem,2vw,2rem); }
-	.sample-group { min-height:clamp(31rem,37vw,39rem); padding:clamp(1.5rem,2.5vw,2.8rem); display:grid; grid-template-rows:auto minmax(15rem,1fr); gap:1.25rem; border-radius:var(--radius-card); overflow:hidden; text-decoration:none; transition:transform .25s ease,box-shadow .25s ease; }
-	.sample-layout { color:#fff; background:#0b0b0b; }
-	.sample-data { color:#111; background:#f4f4f1; border:1px solid #1112; }
-	.sample-copy h3 { margin:1rem 0 0; font-size:var(--text-display-subsection); line-height:var(--leading-display-subsection); letter-spacing:var(--tracking-display-subsection); }
-	.sample-description { display:block; max-width:28rem; margin:1.25rem 0 0; color:#aaa; font-size:.9rem; line-height:1.6; }
-	.sample-data .sample-description { color:#606060; }
-	.sample-action { width:max-content; max-width:100%; margin-top:1.5rem; padding:.75rem .9rem .75rem 1.1rem; display:flex; align-items:center; gap:.7rem; border:1px solid currentColor; border-radius:var(--radius-pill); font-size:.64rem; font-weight:800; line-height:1.3; }
-	.sample-action i { width:1.8rem; height:1.8rem; display:grid; place-items:center; color:#fff; background:var(--color-accent); border-radius:50%; font-style:normal; transition:transform .2s ease; }
-	.sample-group:hover { transform:translateY(var(--cta-hover-lift)); box-shadow:var(--cta-hover-shadow); }
-	.sample-group:active { transform:translateY(var(--cta-active-lift)); box-shadow:none; }
-	.sample-group:hover .sample-action i { transform:translate(.12rem,-.12rem); }
-	.sample-group:focus-visible { outline:var(--focus-ring-width) solid var(--focus-ring-color); outline-offset:var(--focus-ring-offset); }
-	.sample-stage { min-height:clamp(17rem,23vw,23rem); display:grid; place-items:center; position:relative; isolation:isolate; }
-	.sample-stage::before { content:""; position:absolute; width:84%; aspect-ratio:1; border:1px solid currentColor; border-radius:50%; opacity:.12; }
-	.sample-sheet { width:clamp(6rem,24%,9rem); margin:0; padding:.35rem; position:absolute; background:#fff; border-radius:var(--radius-thumb); box-shadow:0 2rem 4rem #0008; transition:transform .4s cubic-bezier(.2,.8,.2,1); }
-	.sample-sheet img { display:block; width:100%; height:auto; }
-	.sheet-left { z-index:1; transform:translateX(-72%) rotate(-8deg); }
-	.sheet-center { z-index:3; width:clamp(7.5rem,29%,11rem); transform:translateY(-3%); }
-	.sheet-right { z-index:2; transform:translateX(72%) rotate(8deg); }
-	.sample-group:hover .sheet-left { transform:translateX(-88%) rotate(-10deg); }
-	.sample-group:hover .sheet-center { transform:translateY(-6%) scale(1.025); }
-	.sample-group:hover .sheet-right { transform:translateX(88%) rotate(10deg); }
-	.sample-data .sample-sheet { box-shadow:0 2rem 4rem #0003; border:1px solid #1112; }
-	@media(max-width:980px){
-		.hero-row { grid-template-columns:minmax(0,1fr); gap:2rem; }
-		.summary { max-width:43rem; }
-		.nda-stage { grid-template-columns:minmax(0,.6fr) minmax(0,1fr); }
-		.nda-text { grid-template-columns:minmax(0,1fr); }
-		.evidence-details { grid-template-columns:minmax(0,1fr); }
-		.capabilities { grid-template-columns:repeat(2,minmax(0,1fr)); }
-		.capabilities article:nth-child(2) { border-right:0; }
-		.capabilities article:nth-child(-n+2) { border-bottom:1px solid #1112; }
-		.tools-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
-		.tools-grid div:nth-child(2) { border-right:0; }
-		.tools-grid div:nth-child(-n+2) { border-bottom:1px solid #fff2; }
-		.sample-groups { grid-template-columns:minmax(0,1fr); }
-		.sample-copy { max-width:43rem; }
+	main { padding: 0 clamp(1.25rem,4vw,4.5rem) clamp(2rem,5vw,5rem); }
+	.project-intro { width: 100%; max-width: 88rem; margin: 0 auto; padding: clamp(4rem,8vw,7rem) 0 clamp(4rem,7vw,7rem); display: grid; grid-template-columns: minmax(0,1fr) minmax(20rem,.62fr); gap: clamp(2rem,7vw,8rem); align-items: start; }
+	.project-intro > *,.experience-main > *,.experience-details > *,.tools > * { min-width: 0; }
+	h1 { margin: 0; font-size: var(--text-page-title); font-weight: var(--weight-page-title); line-height: var(--leading-page-title); letter-spacing: var(--tracking-page-title); }
+	.intro-copy { display: grid; gap: 1.5rem; }
+	.intro-copy p { margin: 0; color: var(--color-muted); font-size: var(--text-page-intro); font-weight: var(--weight-page-intro); line-height: var(--leading-page-intro); }
+	.intro-copy a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: .18em; }
+	.intro-copy a:hover { color: var(--color-accent); }
+	.experience { width: 100%; max-width: 88rem; margin: 0 auto clamp(5rem,9vw,9rem); border-top: 1px solid #1112; border-bottom: 1px solid #1112; }
+	.experience-main { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); }
+	.experience-main div { min-height: clamp(9rem,13vw,12rem); padding: clamp(1rem,2vw,1.6rem); display: flex; flex-direction: column; justify-content: space-between; gap: 2rem; border-right: 1px solid #1112; }
+	.experience-main div:last-child { border-right: 0; }
+	.experience-main strong { max-width: 17rem; font-size: clamp(2rem,3.2vw,3.5rem); line-height: .92; letter-spacing: -.055em; }
+	.experience-main div:nth-child(2) strong { max-width: none; white-space: nowrap; }
+	.experience-main span { max-width: 20rem; color: #666; font-size: .84rem; line-height: 1.5; }
+	.experience-details { padding: clamp(1rem,2vw,1.5rem); display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: clamp(2rem,5vw,6rem); border-top: 1px solid #1112; }
+	.experience-details p { margin: 0; display: grid; grid-template-columns: 5rem minmax(0,1fr); gap: 1rem; }
+	.experience-details strong { padding-top: .2rem; color: var(--color-accent); font-size: .6rem; letter-spacing: .1em; text-transform: uppercase; }
+	.experience-details span { color: #555; font-size: .88rem; line-height: 1.6; }
+	.tools { width: 100%; max-width: 88rem; margin: 0 auto clamp(5rem,9vw,9rem); display: grid; grid-template-columns: minmax(12rem,.32fr) minmax(0,1fr); gap: clamp(2rem,6vw,7rem); align-items: start; }
+	.tools h2 { margin: .15rem 0 0; color: #666; font-size: var(--text-body-lg); line-height: var(--leading-body-lg); font-weight: 500; }
+	.tools ul { margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); list-style: none; border-top: 1px solid #1112; border-bottom: 1px solid #1112; }
+	.tools li { min-height: clamp(6rem,9vw,8rem); padding: 1rem; display: flex; align-items: flex-end; border-right: 1px solid #1112; font-size: clamp(1.15rem,2vw,1.8rem); font-weight: 750; letter-spacing: -.035em; }
+	.tools li:last-child { border-right: 0; }
+	:global(.case-gallery-numbered .case-gallery-grid) { column-count: 3 !important; }
+	:global(.case-gallery-numbered .case-gallery-trigger) { padding: .35rem; background: #0b0b0b; }
+	:global(.case-gallery-numbered .case-gallery-item) { margin-bottom: clamp(1.2rem,2vw,2rem); }
+
+	@media (max-width: 900px) {
+		.project-intro { grid-template-columns: minmax(0,1fr); gap: 2rem; }
+		.intro-copy { max-width: 48rem; }
+		.tools { grid-template-columns: minmax(0,1fr); gap: 1.5rem; }
+		.tools h2 { max-width: 25rem; }
+		:global(.case-gallery-numbered .case-gallery-grid) { column-count: 2 !important; }
 	}
 
-	@media(max-width:700px){
-		header { height:5rem; padding-inline:1rem; grid-template-columns:minmax(0,1fr) auto; }
-		.brand { display:none; }
-		.page-count { max-width:9rem; text-align:right; }
-		main { padding-inline:1rem; }
-		.project-hero { padding:3.5rem 0 4rem; }
-		.nda-stage { min-height:0; padding:1.25rem; grid-template-columns:minmax(0,1fr); }
-		.nda-mark { width:min(80%,22rem); margin:0 auto; }
-		.nda-copy { padding:1rem 0; }
-		.section-grid,.tools-head { grid-template-columns:minmax(0,1fr); gap:1.4rem; }
-		.approach { padding:7rem 0 4rem; }
-		.evidence-stats { grid-template-columns:minmax(0,1fr); }
-		.evidence-stats div { min-height:9rem; border-right:0; border-bottom:1px solid #1112; }
-		.evidence-stats div:last-child { border-bottom:0; }
-		.evidence-stats strong { font-size:clamp(2.2rem,11vw,3.2rem); }
-		.evidence-details { padding:1.4rem 1rem; gap:1.5rem; }
-		.evidence-details p { grid-template-columns:minmax(0,1fr); gap:.55rem; }
-		.evidence-details strong { padding-top:0; }
-		.evidence-details strong,.capabilities span { font-size:.7rem; line-height:1.45; }
-		.capabilities { margin-bottom:7rem; grid-template-columns:minmax(0,1fr); }
-		.capabilities article { min-height:10rem; border-right:0; border-bottom:1px solid #1112; }
-		.capabilities article:nth-child(2) { border-bottom:1px solid #1112; }
-		.capabilities article:last-child { border-bottom:0; }
-		.tools-section { padding:1.25rem; }
-		.tools-grid { grid-template-columns:minmax(0,1fr); }
-		.tools-grid div { min-height:8rem; border-right:0; border-bottom:1px solid #fff2; }
-		.tools-grid div:nth-child(2) { border-bottom:1px solid #fff2; }
-		.tools-grid div:last-child { border-bottom:0; }
-		.samples { padding-top:7rem; }
-		.sample-group { min-height:0; padding:1.25rem; }
-		.sample-action { width:100%; justify-content:space-between; font-size:.72rem; line-height:1.4; }
-		.sample-stage { min-height:24rem; }
-		.sample-sheet { width:31%; }
-		.sheet-center { width:37%; }
+	@media (max-width: 620px) {
+		main { padding-inline: 1rem; }
+		.project-intro { padding: 3.5rem 0 4rem; }
+		.experience { margin-bottom: 5rem; }
+		.experience-main { grid-template-columns: minmax(0,1fr); }
+		.experience-main div { min-height: 8.5rem; border-right: 0; border-bottom: 1px solid #1112; }
+		.experience-main div:last-child { border-bottom: 0; }
+		.experience-main strong { font-size: clamp(2.2rem,11vw,3.2rem); }
+		.experience-details { grid-template-columns: minmax(0,1fr); gap: 1.5rem; }
+		.experience-details p { grid-template-columns: minmax(0,1fr); gap: .55rem; }
+		.experience-details strong { padding-top: 0; font-size: .7rem; line-height: 1.45; }
+		.tools { margin-bottom: 5rem; }
+		.tools ul { grid-template-columns: repeat(2,minmax(0,1fr)); }
+		.tools li { min-height: 6.5rem; }
+		.tools li:nth-child(2) { border-right: 0; }
+		.tools li:nth-child(-n+2) { border-bottom: 1px solid #1112; }
+		:global(.case-gallery-numbered .case-gallery-grid) { column-count: 1 !important; }
 	}
 
-	@media(max-width:440px){
-		.back span { width:2rem; height:2rem; }
-		.sample-stage { min-height:20rem; }
+	@media (prefers-reduced-motion: reduce) {
+		* { transition-duration: .01ms !important; }
 	}
-	@media(max-width:340px){
-		.nda-copy h2,.sample-copy h3 { font-size:2rem; }
-	}
-
-	@media(prefers-reduced-motion:reduce){ html{scroll-behavior:auto} *{transition-duration:.01ms!important} }
 </style>

@@ -25,15 +25,16 @@ interface Props {
 	variant: 'spread' | 'pages' | 'numbered';
 	lightboxId: string;
 	showHeader?: boolean;
+	imageSizes?: string;
 }
 
-const { id = 'case-gallery', label, title, description, items, variant, lightboxId, showHeader = true } = Astro.props;
+const { id = 'case-gallery', label, title, description, items, variant, lightboxId, showHeader = true, imageSizes } = Astro.props;
 const titleId = `${id}-title`;
-const imageSizes = variant === 'spread'
+const resolvedImageSizes = imageSizes ?? (variant === 'spread'
 	? '(max-width: 620px) 25vw, (max-width: 900px) 25vw, 17vw'
 	: variant === 'numbered'
 		? '(max-width: 620px) 50vw, (max-width: 900px) 33vw, 25vw'
-		: '(max-width: 620px) 50vw, (max-width: 900px) 33vw, 20vw';
+		: '(max-width: 620px) 50vw, (max-width: 900px) 33vw, 20vw');
 ---
 
 <section id={id} class:list={['case-gallery', `case-gallery-${variant}`]} data-case-section aria-labelledby={showHeader ? titleId : undefined} aria-label={showHeader ? undefined : label}>
@@ -66,7 +67,7 @@ const imageSizes = variant === 'spread'
 					aria-label={`Увеличить: ${caption}`}
 				>
 					{images.map(({ src, alt }) => (
-						<ResponsiveImage src={src} alt={alt} sizes={imageSizes} loading="lazy" />
+						<ResponsiveImage src={src} alt={alt} sizes={resolvedImageSizes} loading="lazy" />
 					))}
 				</button>
 				<figcaption>
