@@ -1,0 +1,121 @@
+---
+import ResponsiveImage from '../../../../components/ResponsiveImage.astro';
+import SiteHeader from '../../../../components/SiteHeader.astro';
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+
+const pages = Array.from({ length: 24 }, (_, index) => {
+	const number = String(index + 1).padStart(2, '0');
+	return { src: `/portfolio/personal/digital-scrapbook/page-${number}.webp`, alt: `Digital Scrapbook, страница ${index + 1}` };
+});
+
+const spreads = pages.reduce<typeof pages[]>((result, page, index) => {
+	if (index === 0 || index % 2 === 1) result.push([page]);
+	else result.at(-1)?.push(page);
+	return result;
+}, []);
+---
+
+<BaseLayout
+	title="Digital Scrapbook — Федор Юрецкий"
+	description="Digital Scrapbook — личный визуальный дневник Федора Юрецкого, собранный из фрагментов цифровой жизни."
+>
+	<SiteHeader />
+
+	<main class="scrapbook-page">
+		<section class="scrapbook-intro" aria-labelledby="scrapbook-title">
+			<h1 id="scrapbook-title">Digital<br />Scrapbook</h1>
+			<p>Я увидел референс цифрового скрапбука и захотел сделать что-то похожее — сохранить принцип традиционного скрапбука, но перенести его в цифровое пространство. Вместо бумажных вырезок здесь собраны скриншоты, интерфейсы, мемы и другие фрагменты повседневной жизни на экране. Получился личный визуальный дневник, собранный из цифровых находок.</p>
+		</section>
+
+		<section class="book" aria-label="Digital Scrapbook, 24 страницы" data-book>
+			<div class="book-controls">
+				<strong aria-live="polite"><span data-current>1</span> / {spreads.length}</strong>
+				<button type="button" data-step="-1" aria-label="Предыдущий разворот">←</button>
+				<button type="button" data-step="1" aria-label="Следующий разворот">→</button>
+			</div>
+
+			<div class="book-gallery" data-gallery tabindex="0" aria-label="Листать Digital Scrapbook">
+				{spreads.map((spread, spreadIndex) => (
+					<figure class:list={[spread.length === 1 && 'book-single']}>
+						<div class="book-spread">
+							{spread.map((page, pageIndex) => (
+								<ResponsiveImage
+									src={page.src}
+									alt={page.alt}
+									widths={[320, 480, 720, 951]}
+									sizes="(max-width: 700px) 50vw, 42vw"
+									loading={spreadIndex === 0 && pageIndex === 0 ? 'eager' : 'lazy'}
+								/>
+							))}
+						</div>
+						<figcaption>
+							{spread.length === 1
+								? String(spreadIndex === 0 ? 1 : spreadIndex * 2).padStart(2, '0')
+								: `${String(spreadIndex * 2).padStart(2, '0')}–${String(spreadIndex * 2 + 1).padStart(2, '0')}`}
+						</figcaption>
+					</figure>
+				))}
+			</div>
+		</section>
+	</main>
+</BaseLayout>
+
+<script>
+	document.querySelectorAll<HTMLElement>('[data-book]').forEach((book) => {
+		const gallery = book.querySelector<HTMLElement>('[data-gallery]');
+		const spreads = [...(gallery?.querySelectorAll<HTMLElement>('figure') ?? [])];
+		const current = book.querySelector<HTMLElement>('[data-current]');
+		const buttons = [...book.querySelectorAll<HTMLButtonElement>('[data-step]')];
+		let frame = 0;
+
+		const update = () => {
+			const index = spreads.reduce((nearest, spread, spreadIndex) =>
+				Math.abs(spread.offsetLeft - (gallery?.scrollLeft ?? 0)) < Math.abs(spreads[nearest].offsetLeft - (gallery?.scrollLeft ?? 0)) ? spreadIndex : nearest, 0);
+			book.dataset.page = String(index);
+			if (current) current.textContent = String(index + 1);
+			buttons[0].disabled = index === 0;
+			buttons[1].disabled = index === spreads.length - 1;
+			frame = 0;
+		};
+
+		buttons.forEach((button) => button.addEventListener('click', () => {
+			const index = Math.max(0, Math.min(spreads.length - 1, Number(book.dataset.page ?? 0) + Number(button.dataset.step)));
+			gallery?.scrollTo({ left: spreads[index].offsetLeft, behavior: 'smooth' });
+		}));
+
+		gallery?.addEventListener('scroll', () => {
+			if (!frame) frame = requestAnimationFrame(update);
+		}, { passive: true });
+		update();
+	});
+</script>
+
+<style>
+	.scrapbook-page { width: min(100%,100rem); margin-inline: auto; padding: clamp(3rem,7vw,7rem) clamp(.75rem,3vw,3rem) clamp(5rem,10vw,10rem); }
+	.scrapbook-intro { display: grid; grid-template-columns: minmax(18rem,.8fr) minmax(30rem,1.2fr); align-items: start; gap: clamp(3rem,8vw,9rem); }
+	h1 { margin: 0; font-size: var(--text-page-title); font-weight: var(--weight-page-title); line-height: var(--leading-page-title); letter-spacing: var(--tracking-page-title); }
+	.scrapbook-intro p { margin: 0; color: var(--color-muted); font-size: var(--text-body-lg); line-height: var(--leading-body-lg); }
+	.book { margin-top: clamp(4rem,8vw,8rem); min-width: 0; }
+	.book-controls { margin-bottom: .75rem; display: flex; align-items: center; justify-content: flex-end; gap: .5rem; }
+	.book-controls strong { margin-right: auto; color: var(--color-muted); font-size: var(--text-caption); letter-spacing: var(--tracking-caption); }
+	.book-controls button { width: 3rem; height: 3rem; padding: 0; color: var(--color-text); background: var(--color-panel); border: 1px solid var(--color-border); cursor: pointer; }
+	.book-controls button:hover { color: #050505; background: #fff; border-color: #fff; }
+	.book-controls button:disabled { color: #555; background: #090909; border-color: #222; cursor: default; }
+	.book-gallery { display: flex; gap: clamp(.6rem,1.25vw,1.2rem); overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-inline: contain; scrollbar-width: thin; }
+	.book-gallery figure { margin: 0; flex: 0 0 100%; min-width: 0; scroll-snap-align: start; }
+	.book-spread { height: clamp(30rem,72svh,58rem); padding: clamp(.5rem,1.5vw,1.25rem); display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .3rem; background: var(--color-panel); border: 1px solid var(--color-border); }
+	.book-single .book-spread { width: calc(50% - .15rem); margin-inline: auto; grid-template-columns: minmax(0,1fr); }
+	.book-spread :global(img) { width: 100%; height: 100%; display: block; object-fit: contain; }
+	figcaption { padding-top: .5rem; color: var(--color-muted); font-size: var(--text-caption); letter-spacing: var(--tracking-caption); }
+	.book-controls button:focus-visible,.book-gallery:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
+
+	@media (max-width: 800px) {
+		.scrapbook-page { padding-top: 3.5rem; }
+		.scrapbook-intro { grid-template-columns: 1fr; gap: 2rem; }
+		.book { margin-top: 3.5rem; }
+		.book-spread { height: min(64svh,38rem); padding: .4rem; gap: .18rem; }
+		.book-single .book-spread { width: calc(50% - .09rem); }
+	}
+
+	@media (prefers-reduced-motion: reduce) { .book-gallery { scroll-behavior: auto; } }
+</style>
