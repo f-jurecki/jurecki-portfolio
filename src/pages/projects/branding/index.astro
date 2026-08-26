@@ -137,7 +137,7 @@ function groupDocumentPages<T>(pages: T[]) {
 							</div>
 							<div class="dialog-gallery document-gallery" data-document-gallery>
 								{groupDocumentPages(project.images).map((spread, spreadIndex) => (
-									<figure class:list={[spread.length === 1 && 'document-spread-single']}>
+									<figure class:list={[spread.length === 1 && 'document-spread-single']} data-active={spreadIndex === 0 ? '' : undefined}>
 										<div class="document-spread">
 											{spread.map((image) => (
 												<ResponsiveImage src={image.src} alt={image.alt} sizes="(max-width: 700px) 50vw, 40vw" />
@@ -184,7 +184,13 @@ function groupDocumentPages<T>(pages: T[]) {
 			const gallery = reader?.querySelector<HTMLElement>('[data-document-gallery]');
 			const pages = [...(gallery?.querySelectorAll<HTMLElement>('figure') ?? [])];
 			const index = Math.max(0, Math.min(pages.length - 1, Number(reader?.dataset.page ?? 0) + Number(pageButton.dataset.pageStep)));
-			pages[index]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+			pages.forEach((page, pageIndex) => page.toggleAttribute('data-active', pageIndex === index));
+			if (reader) reader.dataset.page = String(index);
+			const current = reader?.querySelector<HTMLElement>('[data-page-current]');
+			if (current) current.textContent = String(index + 1);
+			const buttons = [...(reader?.querySelectorAll<HTMLButtonElement>('[data-page-step]') ?? [])];
+			buttons[0].disabled = index === 0;
+			buttons[1].disabled = index === pages.length - 1;
 			return;
 		}
 
@@ -209,23 +215,9 @@ function groupDocumentPages<T>(pages: T[]) {
 	});
 
 	document.querySelectorAll<HTMLElement>('[data-document-reader]').forEach((reader) => {
-		const gallery = reader.querySelector<HTMLElement>('[data-document-gallery]');
-		const pages = [...(gallery?.querySelectorAll<HTMLElement>('figure') ?? [])];
-		const current = reader.querySelector<HTMLElement>('[data-page-current]');
 		const buttons = [...reader.querySelectorAll<HTMLButtonElement>('[data-page-step]')];
-		let frame = 0;
-		const update = () => {
-			const index = pages.reduce((nearest, page, pageIndex) => Math.abs(page.offsetLeft - (gallery?.scrollLeft ?? 0)) < Math.abs(pages[nearest].offsetLeft - (gallery?.scrollLeft ?? 0)) ? pageIndex : nearest, 0);
-			reader.dataset.page = String(index);
-			if (current) current.textContent = String(index + 1);
-			buttons[0].disabled = index === 0;
-			buttons[1].disabled = index === pages.length - 1;
-			frame = 0;
-		};
-		gallery?.addEventListener('scroll', () => {
-			if (!frame) frame = requestAnimationFrame(update);
-		}, { passive: true });
-		update();
+		reader.dataset.page = '0';
+		buttons[0].disabled = true;
 	});
 </script>
 
@@ -235,9 +227,8 @@ function groupDocumentPages<T>(pages: T[]) {
 	h1 { max-width: 54rem; margin: 0; font-size: var(--text-page-title); font-weight: var(--weight-page-title); line-height: var(--leading-page-title); letter-spacing: var(--tracking-page-title); }
 	.project-grid { width: min(100%,88rem); margin: 0 auto; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: clamp(.75rem,1.5vw,1.4rem); }
 	.project-card { min-width: 0; padding: 0; display: grid; grid-template-rows: minmax(0,1fr) auto; color: #fff; background: var(--color-panel); border: 1px solid var(--color-border); text-align: left; cursor: pointer; overflow: hidden; }
-	.project-cover { aspect-ratio: 4 / 5; display: block; overflow: hidden; background: #090909; }
-	.project-cover :global(img) { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform .35s ease; }
-	.project-card:hover .project-cover :global(img) { transform: scale(1.025); }
+	.project-cover { aspect-ratio: 1; display: block; overflow: hidden; background: #090909; }
+	.project-cover :global(img) { width: 100%; height: 100%; display: block; object-fit: contain; }
 	.project-card-copy { min-height: 5.3rem; padding: .9rem 1rem; display: grid; grid-template-columns: minmax(0,1fr) 2.4rem; align-items: center; gap: 1rem; border-top: 1px solid var(--color-border); }
 	.project-card-copy > span { min-width: 0; display: grid; gap: .25rem; }
 	.project-card small,.dialog-heading small { color: var(--color-muted); font-size: var(--text-card-meta); font-style: normal; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; }
@@ -271,11 +262,12 @@ function groupDocumentPages<T>(pages: T[]) {
 	.document-controls button:hover { color: #050505; background: #fff; border-color: #fff; }
 	.document-controls button:disabled { color: #555; background: #090909; border-color: #222; cursor: default; }
 	.document-controls button:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
-	.document-gallery { display: flex; grid-template-columns: none; gap: clamp(.6rem,1.25vw,1.2rem); overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-inline: contain; scrollbar-width: thin; }
-	.document-gallery figure { flex: 0 0 100%; scroll-snap-align: start; }
-	.document-spread { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .3rem; align-items: start; }
-	.document-spread-single .document-spread { width: calc(50% - .15rem); margin-inline: auto; grid-template-columns: minmax(0,1fr); }
-	.document-spread :global(img) { width: 100%; max-height: 70dvh; object-fit: contain; background: #fff; }
+	.document-gallery { display: block; }
+	.document-gallery figure { display: none; }
+	.document-gallery figure[data-active] { display: block; }
+	.document-spread { --spread-gap: .3rem; width: 100%; min-height: 0; display: flex; justify-content: center; align-items: center; gap: var(--spread-gap); }
+	.document-spread :global(img) { width: auto; max-width: calc((100% - var(--spread-gap)) / 2); height: auto; max-height: calc(100dvh - 8rem); display: block; object-fit: contain; background: #fff; }
+	.document-spread-single .document-spread :global(img) { max-width: 50%; }
 	.document-gallery figcaption { padding: .5rem 0 0; color: var(--color-muted); font-size: var(--text-caption); letter-spacing: var(--tracking-caption); }
 
 	@media (max-width: 1050px) {
@@ -287,7 +279,7 @@ function groupDocumentPages<T>(pages: T[]) {
 		.page-heading { padding: 3.5rem 0 3rem; }
 		h1 { font-size: clamp(2.7rem,13vw,4rem); }
 		.project-grid { grid-template-columns: minmax(0,1fr); gap: 1rem; }
-		.project-cover { aspect-ratio: 4 / 4.5; }
+		.project-cover { aspect-ratio: 1; }
 		.project-card-copy { min-height: 4.8rem; padding: .8rem; }
 		.project-dialog { width: 100vw; height: 100dvh; max-height: none; border: 0; }
 		.dialog-inner { max-height: 100dvh; padding: 1rem; }
@@ -295,12 +287,11 @@ function groupDocumentPages<T>(pages: T[]) {
 		.dialog-heading small { grid-column: auto; }
 		.dialog-heading h2 { font-size: clamp(2.6rem,13vw,3.8rem); }
 		.dialog-gallery { grid-template-columns: minmax(0,1fr); gap: .75rem; }
-		.document-gallery { display: flex; }
-		.document-gallery figure { flex-basis: 100%; }
-		.document-gallery :global(img) { max-height: 64dvh; }
+		.document-spread { --spread-gap: .18rem; }
+		.document-spread :global(img) { max-height: calc(100dvh - 7rem); }
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.project-cover :global(img),.project-card i { transition-duration: .01ms; }
+		.project-card i { transition-duration: .01ms; }
 	}
 </style>
