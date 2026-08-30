@@ -9,6 +9,7 @@ const pages = {
 	infographics: await readFile('dist/projects/infographics/index.html', 'utf8'),
 	presentations: await readFile('dist/projects/presentations/index.html', 'utf8'),
 	adobeScripts: await readFile('dist/projects/vibecoding/adobe-scripts/index.html', 'utf8'),
+	sequence: await readFile('dist/projects/vibecoding/sequence/index.html', 'utf8'),
 	republica: await readFile('dist/projects/personal/republica/index.html', 'utf8'),
 	shelfr: await readFile('dist/projects/product-design/shelfr/index.html', 'utf8'),
 };
@@ -67,6 +68,11 @@ for (const id of ['contents', 'gridster', 'colorproofer', 'framesplitter', 'book
 assert.equal((pages.adobeScripts.match(/\bdata-full-src=/g) ?? []).length, 13, 'Adobe Scripts: expected 13 source screenshots');
 assert.equal((pages.adobeScripts.match(/\bsrcset=/g) ?? []).length, 13, 'Adobe Scripts: every screenshot needs a responsive srcset');
 
+assert.match(pages.sequence, /<h1[^>]*>Sequence<\/h1>/, 'Sequence: page title is missing');
+assert.match(pages.sequence, /Сиквенсы хранятся локально в браузере/, 'Sequence: project description is incomplete');
+assert.equal((pages.sequence.match(/\bdata-full-src=/g) ?? []).length, 3, 'Sequence: expected three source screenshots');
+assert.equal((pages.sequence.match(/\bsrcset=/g) ?? []).length, 3, 'Sequence: every screenshot needs a responsive srcset');
+
 assert.match(pages.shelfr, /name="viewport" content="width=device-width, initial-scale=1"/, 'Shelfr: responsive viewport is missing');
 
 assert.match(pages.republica, /<h1\b[^>]*id="republica-title"[^>]*>Шрифт Republica<\/h1>/, 'Republica: page title is missing');
@@ -75,6 +81,10 @@ assert.equal((pages.republica.match(/<video\b/g) ?? []).length, 3, 'Republica: e
 assert.match(pages.shelfr, /href="\/projects\/product-design\/shelfr\/mobile\.css"/, 'Shelfr: mobile stylesheet is missing');
 assert.match(pages.shelfr, /src="\/projects\/product-design\/shelfr\/mobile\.js"/, 'Shelfr: mobile script is missing');
 assert.match(shelfrMobile, /@media \(max-width: 1024px\)/, 'Shelfr: mobile breakpoint is missing');
+assert.match(shelfrMobile, /@media \(min-width: 1025px\)/, 'Shelfr: desktop repair breakpoint is missing');
+assert.match(shelfrMobile, /\.framer-h3sPI \.framer-1mfnjks\s*\{\s*height: 1743px !important;/, 'Shelfr: desktop table of contents still overlaps the next section');
+assert.match(shelfrMobile, /\.framer-h3sPI \.framer-wtimuh,[\s\S]*?top: 600px !important;/, 'Shelfr: competitor cards still run into each other');
+assert.match(shelfrMobile, /\.framer-h3sPI \.framer-jgnhpw \.svgContainer\s*\{\s*display: none;/, 'Shelfr: broken survey bubble SVG is still visible');
 assert.match(shelfrMobile, /#main > \[data-framer-root\]/, 'Shelfr: fixed Framer canvas is not hidden on mobile');
 assert.equal((shelfrMobileScript.match(/id: '[^']+'/g) ?? []).length, 14, 'Shelfr: expected 14 mobile sections');
 assert.match(shelfrMobileScript, /shelfr-mobile-table/, 'Shelfr: prioritization table is missing');
@@ -84,6 +94,7 @@ assert.match(shelfrMobileScript, /buildAllQuoteCards/, 'Shelfr: full interview q
 assert.match(shelfrMobileScript, /\.framer-ohkkmy/, 'Shelfr: testing scenarios are missing');
 assert.equal((shelfrMobileScript.match(/shelfr-flow-\d{2}\.(?:webp|png)/g) ?? []).length, 14, 'Shelfr: expected all 15 User Flow slides including the existing first slide');
 assert.match(shelfrMobileScript, /buildSurveyVisuals/, 'Shelfr: survey messages and audience chart are missing');
+assert.match(shelfrMobileScript, /setupDesktopFlowCarousel/, 'Shelfr: desktop User Flow controls are missing');
 assert.match(shelfrMobileScript, /buildColorGallery/, 'Shelfr: color exploration gallery is missing');
 assert.match(shelfrMobileScript, /buildIterationSliders/, 'Shelfr: iteration triplets are missing');
 assert.match(shelfrMobileScript, /Скетч на бумаге.*Вайрфрейм.*Готовый экран/, 'Shelfr: iteration stages are incomplete');

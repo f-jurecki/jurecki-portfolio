@@ -1,7 +1,25 @@
 (() => {
+	const flowSlides = [
+		['Регистрация', '/portfolio/shelfr/shelfr-13.webp'],
+		['Добавить книгу в «Читаю сейчас»', '/portfolio/shelfr/shelfr-flow-02.webp'],
+		['Записать чтение и продолжить стрик', '/portfolio/shelfr/shelfr-flow-03.png'],
+		['Начать челлендж', '/portfolio/shelfr/shelfr-flow-04.png'],
+		['Добавить книгу в список', '/portfolio/shelfr/shelfr-flow-05.png'],
+		['Категоризировать книги в «Хочу прочитать»', '/portfolio/shelfr/shelfr-flow-06.png'],
+		['Перенести книгу в «Прочитано» или «Брошено»', '/portfolio/shelfr/shelfr-flow-07.png'],
+		['Написать отзыв', '/portfolio/shelfr/shelfr-flow-08.png'],
+		['Создать список', '/portfolio/shelfr/shelfr-flow-09.png'],
+		['Выбрать следующую книгу', '/portfolio/shelfr/shelfr-flow-10.png'],
+		['Читать отзывы', '/portfolio/shelfr/shelfr-flow-11.png'],
+		['Использовать поиск', '/portfolio/shelfr/shelfr-flow-12.png'],
+		['Действия с профилями других пользователей', '/portfolio/shelfr/shelfr-flow-13.png'],
+		['Редактирование профиля и настройки приватности', '/portfolio/shelfr/shelfr-flow-14.png'],
+		['Достижения и статистика', '/portfolio/shelfr/shelfr-flow-15.png'],
+	];
 	const main = document.querySelector('#main');
 	if (!main || document.querySelector('.portfolio-project-navigation')) return;
 	if (!matchMedia('(max-width: 1024px)').matches) {
+		setupDesktopFlowCarousel();
 		main.append(buildProjectNavigation());
 		return;
 	}
@@ -280,23 +298,6 @@
 	}
 
 	function buildFlowCarousel() {
-		const slides = [
-			['Регистрация', '/portfolio/shelfr/shelfr-13.webp'],
-			['Добавить книгу в «Читаю сейчас»', '/portfolio/shelfr/shelfr-flow-02.webp'],
-			['Записать чтение и продолжить стрик', '/portfolio/shelfr/shelfr-flow-03.png'],
-			['Начать челлендж', '/portfolio/shelfr/shelfr-flow-04.png'],
-			['Добавить книгу в список', '/portfolio/shelfr/shelfr-flow-05.png'],
-			['Категоризировать книги в «Хочу прочитать»', '/portfolio/shelfr/shelfr-flow-06.png'],
-			['Перенести книгу в «Прочитано» или «Брошено»', '/portfolio/shelfr/shelfr-flow-07.png'],
-			['Написать отзыв', '/portfolio/shelfr/shelfr-flow-08.png'],
-			['Создать список', '/portfolio/shelfr/shelfr-flow-09.png'],
-			['Выбрать следующую книгу', '/portfolio/shelfr/shelfr-flow-10.png'],
-			['Читать отзывы', '/portfolio/shelfr/shelfr-flow-11.png'],
-			['Использовать поиск', '/portfolio/shelfr/shelfr-flow-12.png'],
-			['Действия с профилями других пользователей', '/portfolio/shelfr/shelfr-flow-13.png'],
-			['Редактирование профиля и настройки приватности', '/portfolio/shelfr/shelfr-flow-14.png'],
-			['Достижения и статистика', '/portfolio/shelfr/shelfr-flow-15.png'],
-		];
 		const carousel = element('div', 'shelfr-mobile-flow-carousel');
 		carousel.tabIndex = 0;
 		carousel.setAttribute('aria-label', 'Схемы пользовательских сценариев');
@@ -318,10 +319,10 @@
 		carousel.append(head, controls, figure);
 		let active = 0;
 		const show = (index) => {
-			active = (index + slides.length) % slides.length;
-			const [label, src] = slides[active];
+			active = (index + flowSlides.length) % flowSlides.length;
+			const [label, src] = flowSlides[active];
 			title.textContent = label;
-			counter.textContent = `${active + 1}/${slides.length}`;
+			counter.textContent = `${active + 1}/${flowSlides.length}`;
 			image.src = src;
 			image.alt = `Пользовательский сценарий: ${label}`;
 		};
@@ -333,6 +334,37 @@
 		});
 		show(0);
 		return carousel;
+	}
+
+	function setupDesktopFlowCarousel() {
+		const previous = document.querySelector('.framer-1naxqjp');
+		const next = document.querySelector('.framer-1bhmvmb');
+		const image = document.querySelector('.framer-1dmv734 img');
+		const labels = document.querySelectorAll('.framer-rzkesz p');
+		if (!previous || !next || !image || labels.length < 2) return;
+
+		let active = 0;
+		const show = (index) => {
+			active = (index + flowSlides.length) % flowSlides.length;
+			const [label, src] = flowSlides[active];
+			labels[0].textContent = label;
+			labels[1].textContent = `${active + 1}/${flowSlides.length}`;
+			image.removeAttribute('srcset');
+			image.removeAttribute('sizes');
+			image.src = src;
+			image.alt = `Пользовательский сценарий: ${label}`;
+		};
+		const bind = (control, step, label) => {
+			control.setAttribute('role', 'button');
+			control.setAttribute('aria-label', label);
+			control.style.cursor = 'pointer';
+			control.addEventListener('click', () => show(active + step));
+			control.addEventListener('keydown', (event) => {
+				if (event.key === 'Enter' || event.key === ' ') show(active + step);
+			});
+		};
+		bind(previous, -1, 'Предыдущая схема');
+		bind(next, 1, 'Следующая схема');
 	}
 
 	function buildIterationSliders(source, groups) {
@@ -593,7 +625,7 @@
 		const wrapper = element('div', 'portfolio-project-navigation');
 		wrapper.innerHTML = `
 			<nav aria-label="Другие проекты">
-				<a href="/projects/branding/"><span>← Предыдущий проект</span><strong>Packaging &amp; Applied Branding</strong></a>
+				<a href="/projects/branding/"><span>← Предыдущий проект</span><strong>Упаковка и брендинг материалы</strong></a>
 				<a href="/projects/personal/cards/"><span>Следующий проект →</span><strong>Колода карт Misprint</strong></a>
 			</nav>
 			<a class="portfolio-project-home" href="/"><strong>Вернуться на главную →</strong></a>

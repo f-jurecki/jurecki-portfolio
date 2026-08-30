@@ -1,0 +1,101 @@
+---
+import CaseLightbox from '../../../../components/CaseLightbox.astro';
+import CasePagination from '../../../../components/CasePagination.astro';
+import ProjectFooter from '../../../../components/ProjectFooter.astro';
+import ResponsiveImage from '../../../../components/ResponsiveImage.astro';
+import SiteHeader from '../../../../components/SiteHeader.astro';
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+
+const screenshots = [
+	{
+		src: '/portfolio/sequence/sequence-overview.png',
+		alt: 'Просмотр последовательности Creative starter в Sequence',
+		caption: 'Просмотр сиквенса',
+	},
+	{
+		src: '/portfolio/sequence/sequence-editor.png',
+		alt: 'Редактирование этапов последовательности в Sequence',
+		caption: 'Редактор этапов',
+	},
+	{
+		src: '/portfolio/sequence/sequence-timer.png',
+		alt: 'Запущенный таймер текущего этапа в Sequence',
+		caption: 'Таймер процесса',
+	},
+];
+---
+
+<BaseLayout
+	title="Sequence — Федор Юрецкий"
+	description="Минималистичный тайм-трекер для заранее спланированных процессов."
+>
+	<SiteHeader />
+
+	<main class="sequence-page">
+		<section class="sequence-intro">
+			<h1>Sequence</h1>
+			<div class="sequence-description">
+				<p>Sequence — минималистичный тайм-трекер для заранее спланированных процессов. Вместо обычного списка задач здесь создаётся последовательность этапов: каждому можно задать название, описание, эмодзи и точное время.</p>
+				<p>После запуска Sequence ведёт по процессу шаг за шагом, показывает оставшееся время текущего этапа и всей последовательности, работает в фоновой вкладке, присылает системные уведомления и проигрывает звуковые сигналы. Таймер можно поставить на паузу или переключить вручную.</p>
+				<p>Сиквенсы хранятся локально в браузере, не требуют аккаунта или сервера и могут экспортироваться в JSON для переноса на другое устройство. Интерфейс адаптирован под десктоп и мобильные устройства.</p>
+			</div>
+		</section>
+
+		<section class="sequence-gallery" aria-label="Интерфейс Sequence">
+			{screenshots.map((screenshot) => (
+				<figure>
+					<button
+						class="zoom-trigger"
+						type="button"
+						data-lightbox-target="sequence-lightbox"
+						data-caption={screenshot.caption}
+						aria-label={`Увеличить: ${screenshot.caption}`}
+					>
+						<ResponsiveImage
+							src={screenshot.src}
+							alt={screenshot.alt}
+							widths={[320, 448, 640, 896]}
+							sizes="(max-width: 700px) 82vw, 30vw"
+						/>
+					</button>
+					<figcaption>{screenshot.caption}</figcaption>
+				</figure>
+			))}
+		</section>
+	</main>
+
+	<CaseLightbox id="sequence-lightbox" variant="single" label="Увеличенный интерфейс Sequence" />
+	<CasePagination
+		previous={{ href: '/projects/vibecoding/deepfries/', label: 'Deepfries' }}
+		next={{ href: '/projects/publications/iofs', label: 'ИОПБ / IOFS' }}
+	/>
+	<ProjectFooter />
+</BaseLayout>
+
+<style>
+	.sequence-page { width: min(100%,100rem); margin-inline: auto; padding: clamp(2.5rem,6vw,7rem) clamp(1rem,3vw,3rem) clamp(4rem,8vw,8rem); }
+	.sequence-intro { display: grid; grid-template-columns: minmax(18rem,.8fr) minmax(30rem,1.2fr); gap: clamp(3rem,8vw,10rem); align-items: start; }
+	h1 { position: sticky; top: 9rem; margin: 0; font-size: var(--text-page-title); font-weight: var(--weight-page-title); line-height: var(--leading-page-title); letter-spacing: var(--tracking-page-title); }
+	.sequence-description { max-width: 47rem; color: var(--color-muted); font-size: var(--text-lead); font-weight: 430; line-height: var(--leading-lead); }
+	.sequence-description p { margin: 0 0 1.45rem; }
+	.sequence-description p:last-child { margin-bottom: 0; }
+	.sequence-gallery { margin-top: clamp(4rem,8vw,8rem); display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: clamp(1rem,2.5vw,2.5rem); align-items: start; }
+	.sequence-gallery figure { min-width: 0; margin: 0; }
+	.zoom-trigger { width: 100%; padding: 0; display: block; background: #000; border: 1px solid var(--color-border); cursor: zoom-in; }
+	.zoom-trigger :global(img) { width: 100%; height: auto; display: block; }
+	figcaption { margin-top: .75rem; color: var(--color-muted); font-size: var(--text-caption); font-weight: 750; line-height: var(--leading-caption); letter-spacing: var(--tracking-caption); text-transform: uppercase; }
+	:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
+
+	@media (max-width: 900px) {
+		.sequence-intro { grid-template-columns: 1fr; gap: 3rem; }
+		h1 { position: static; }
+	}
+
+	@media (max-width: 700px) {
+		.sequence-page { padding-top: 3.5rem; overflow: hidden; }
+		.sequence-description { font-size: 1rem; }
+		.sequence-gallery { width: calc(100% + 2rem); margin-inline: -1rem; padding-inline: 1rem; display: flex; gap: .75rem; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+		.sequence-gallery::-webkit-scrollbar { display: none; }
+		.sequence-gallery figure { width: 82vw; flex: 0 0 82vw; scroll-snap-align: start; }
+	}
+</style>

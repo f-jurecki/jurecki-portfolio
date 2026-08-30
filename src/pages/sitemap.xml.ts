@@ -15,6 +15,7 @@ const routes = [
 	'/projects/vibecoding',
 	'/projects/vibecoding/adobe-scripts',
 	'/projects/vibecoding/deepfries',
+	'/projects/vibecoding/sequence',
 	'/projects/publications',
 	'/projects/publications/iofs',
 	'/projects/publications/kipd',
