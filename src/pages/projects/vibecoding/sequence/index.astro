@@ -33,7 +33,10 @@ const screenshots = [
 
 	<main class="sequence-page">
 		<section class="sequence-intro">
-			<h1>Sequence</h1>
+			<div class="sequence-heading">
+				<h1>Sequence</h1>
+				<a href="https://sequence-rose.vercel.app" target="_blank" rel="noopener noreferrer">Открыть Sequence <span aria-hidden="true">↗</span></a>
+			</div>
 			<div class="sequence-description">
 				<p>Sequence — минималистичный тайм-трекер для заранее спланированных процессов. Вместо обычного списка задач здесь создаётся последовательность этапов: каждому можно задать название, описание, эмодзи и точное время.</p>
 				<p>После запуска Sequence ведёт по процессу шаг за шагом, показывает оставшееся время текущего этапа и всей последовательности, работает в фоновой вкладке, присылает системные уведомления и проигрывает звуковые сигналы. Таймер можно поставить на паузу или переключить вручную.</p>
@@ -75,7 +78,11 @@ const screenshots = [
 <style>
 	.sequence-page { width: min(100%,100rem); margin-inline: auto; padding: clamp(2.5rem,6vw,7rem) clamp(1rem,3vw,3rem) clamp(4rem,8vw,8rem); }
 	.sequence-intro { display: grid; grid-template-columns: minmax(18rem,.8fr) minmax(30rem,1.2fr); gap: clamp(3rem,8vw,10rem); align-items: start; }
-	h1 { position: sticky; top: 9rem; margin: 0; font-size: var(--text-page-title); font-weight: var(--weight-page-title); line-height: var(--leading-page-title); letter-spacing: var(--tracking-page-title); }
+	.sequence-heading { position: sticky; top: 9rem; }
+	h1 { margin: 0; font-size: var(--text-page-title); font-weight: var(--weight-page-title); line-height: var(--leading-page-title); letter-spacing: var(--tracking-page-title); }
+	.sequence-heading a { width: max-content; margin-top: clamp(2rem,4vw,4rem); padding-bottom: .35rem; display: inline-flex; align-items: center; gap: .7rem; color: var(--color-text); border-bottom: 1px solid currentColor; font-size: var(--text-body); font-weight: 650; text-decoration: none; }
+	.sequence-heading a span { font-size: .8em; transition: transform .2s ease; }
+	.sequence-heading a:hover span { transform: translate(.2rem,-.2rem); }
 	.sequence-description { max-width: 47rem; color: var(--color-muted); font-size: var(--text-lead); font-weight: 430; line-height: var(--leading-lead); }
 	.sequence-description p { margin: 0 0 1.45rem; }
 	.sequence-description p:last-child { margin-bottom: 0; }
@@ -88,7 +95,7 @@ const screenshots = [
 
 	@media (max-width: 900px) {
 		.sequence-intro { grid-template-columns: 1fr; gap: 3rem; }
-		h1 { position: static; }
+		.sequence-heading { position: static; }
 	}
 
 	@media (max-width: 700px) {
@@ -97,5 +104,9 @@ const screenshots = [
 		.sequence-gallery { width: calc(100% + 2rem); margin-inline: -1rem; padding-inline: 1rem; display: flex; gap: .75rem; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
 		.sequence-gallery::-webkit-scrollbar { display: none; }
 		.sequence-gallery figure { width: 82vw; flex: 0 0 82vw; scroll-snap-align: start; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.sequence-heading a span { transition-duration: .01ms; }
 	}
 </style>
