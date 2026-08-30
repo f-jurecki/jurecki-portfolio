@@ -1,5 +1,6 @@
 ---
 import BackToTop from '../../../components/BackToTop.astro';
+import CasePagination from '../../../components/CasePagination.astro';
 import ProjectFooter from '../../../components/ProjectFooter.astro';
 import ResponsiveImage from '../../../components/ResponsiveImage.astro';
 import SiteHeader from '../../../components/SiteHeader.astro';
@@ -165,6 +166,10 @@ function groupDocumentPages<T>(pages: T[]) {
 			</dialog>
 		))}
 
+		<CasePagination
+			previous={{ href: '/projects/presentations/', label: 'Презентации' }}
+			next={{ href: '/projects/product-design/shelfr/', label: 'Shelfr' }}
+		/>
 		<ProjectFooter />
 	</main>
 

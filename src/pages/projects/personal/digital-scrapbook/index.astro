@@ -1,4 +1,6 @@
 ---
+import CasePagination from '../../../../components/CasePagination.astro';
+import ProjectFooter from '../../../../components/ProjectFooter.astro';
 import ResponsiveImage from '../../../../components/ResponsiveImage.astro';
 import SiteHeader from '../../../../components/SiteHeader.astro';
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
@@ -66,6 +68,11 @@ const spreads = pages.reduce<typeof pages[]>((result, page, index) => {
 			</div>
 		</section>
 	</main>
+	<CasePagination
+		previous={{ href: '/projects/personal/posters/', label: 'Постеры' }}
+		next={{ href: '/projects/vibecoding/adobe-scripts/', label: 'Скрипты для Adobe' }}
+	/>
+	<ProjectFooter />
 </BaseLayout>
 
 <script>

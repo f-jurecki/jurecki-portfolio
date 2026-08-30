@@ -2,6 +2,7 @@
 import BackToTop from '../../../components/BackToTop.astro';
 import CaseGallery from '../../../components/CaseGallery.astro';
 import CaseLightbox from '../../../components/CaseLightbox.astro';
+import CasePagination from '../../../components/CasePagination.astro';
 import ProjectFooter from '../../../components/ProjectFooter.astro';
 import SiteHeader from '../../../components/SiteHeader.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
@@ -70,6 +71,10 @@ const galleryItems = groups.flatMap((group) => {
 		/>
 
 		<CaseLightbox id="presentations-lightbox" variant="single" label="Увеличенный слайд презентации" />
+		<CasePagination
+			previous={{ href: '/projects/infographics/', label: 'Инфографика' }}
+			next={{ href: '/projects/branding/', label: 'Packaging & Applied Branding' }}
+		/>
 		<ProjectFooter />
 	</main>
 

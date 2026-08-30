@@ -9,12 +9,17 @@ import SiteHeader from '../../../components/SiteHeader.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 
 const gallery = [
-	['gallery-a1.webp', 'gallery-a2.webp', 'Приложение 1 · Данные о криосфере'],
-	['gallery-b1.webp', 'gallery-b2.webp', 'Приложение 1 · Анализ состояния криосферы'],
-	['gallery-c1.webp', 'gallery-c2.webp', 'Приложение 2 · Карты криосферы'],
-	['gallery-d1.webp', 'gallery-d2.webp', 'Приложение 3 · Сценарии изменений'],
-	['gallery-e1.webp', 'gallery-e2.webp', 'Приложение 4 · Индикаторы состояния'],
-	['gallery-f1.webp', 'gallery-f2.webp', 'Приложение 4 · Рекомендации по криосфере'],
+	['gallery-a1.webp', 'gallery-a2.webp', 'Данные о криосфере'],
+	['gallery-b1.webp', 'gallery-b2.webp', 'Анализ состояния криосферы'],
+	['gallery-c1.webp', 'gallery-c2.webp', 'Карты криосферы'],
+	['gallery-d1.webp', 'gallery-d2.webp', 'Сценарии изменений'],
+	['gallery-e1.webp', 'gallery-e2.webp', 'Индикаторы состояния'],
+	['gallery-f1.webp', 'gallery-f2.webp', 'Рекомендации по криосфере'],
+	['appendix-system-1.webp', 'appendix-system-2.webp', 'Система аналитических материалов'],
+	['climate-map-1.webp', 'climate-map-2.webp', 'Климатические карты'],
+	['diagnostic-analysis-1.webp', 'diagnostic-analysis-2.webp', 'Диагностический анализ'],
+	['diagnostic-data-1.webp', 'diagnostic-data-2.webp', 'Данные диагностического исследования'],
+	['indicators-1.webp', 'indicators-2.webp', 'Ключевые индикаторы'],
 ];
 ---
 
@@ -66,7 +71,7 @@ const gallery = [
 
 			<CasePagination
 				previous={{ href: '/projects/publications/kipd', label: 'КИОР / KIPD' }}
-				next={{ href: '/projects/publications/iofs', label: 'ИОПБ / IOFS' }}
+				next={{ href: '/projects/infographics/', label: 'Инфографика' }}
 			/>
 			<ProjectFooter />
 		</main>

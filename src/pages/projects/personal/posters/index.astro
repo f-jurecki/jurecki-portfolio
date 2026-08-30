@@ -1,4 +1,6 @@
 ---
+import CasePagination from '../../../../components/CasePagination.astro';
+import ProjectFooter from '../../../../components/ProjectFooter.astro';
 import SiteHeader from '../../../../components/SiteHeader.astro';
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 
@@ -60,6 +62,11 @@ const posters = Array.from({ length: posterCount }, (_, index) => {
 			<p>Инструменты, которые использовались: Illustrator, Photoshop, Procreate, Affinity, металлический лист, майнкрафт, pilot parallel pen, мои фотоработы, каллиграфия, карандаши, и что только не.</p>
 		</section>
 	</main>
+	<CasePagination
+		previous={{ href: '/projects/personal/republica/', label: 'Шрифт Republica' }}
+		next={{ href: '/projects/personal/digital-scrapbook/', label: 'Digital Scrapbook' }}
+	/>
+	<ProjectFooter />
 </BaseLayout>
 
 <script>

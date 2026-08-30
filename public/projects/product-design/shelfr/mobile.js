@@ -1,9 +1,13 @@
 (() => {
-	if (!matchMedia('(max-width: 1024px)').matches) return;
+	const main = document.querySelector('#main');
+	if (!main || document.querySelector('.portfolio-project-navigation')) return;
+	if (!matchMedia('(max-width: 1024px)').matches) {
+		main.append(buildProjectNavigation());
+		return;
+	}
 
 	const root = document.querySelector('[data-framer-root]');
-	const main = document.querySelector('#main');
-	if (!root || !main || document.querySelector('.shelfr-mobile-case')) return;
+	if (!root || document.querySelector('.shelfr-mobile-case')) return;
 
 	const sectionData = [
 		{
@@ -176,7 +180,7 @@
 	const sections = element('div', 'shelfr-mobile-sections');
 	sectionData.forEach((data, index) => sections.append(buildSection(data, index)));
 	page.append(sections);
-	main.append(page);
+	main.append(page, buildProjectNavigation());
 	addLightbox(page);
 
 	function buildSection(data, index) {
@@ -583,5 +587,34 @@
 		const node = element(tag, className);
 		node.textContent = text;
 		return node;
+	}
+
+	function buildProjectNavigation() {
+		const wrapper = element('div', 'portfolio-project-navigation');
+		wrapper.innerHTML = `
+			<nav aria-label="Другие проекты">
+				<a href="/projects/branding/"><span>← Предыдущий проект</span><strong>Packaging &amp; Applied Branding</strong></a>
+				<a href="/projects/personal/cards/"><span>Следующий проект →</span><strong>Колода карт Misprint</strong></a>
+			</nav>
+			<a class="portfolio-project-home" href="/"><strong>Вернуться на главную →</strong></a>
+		`;
+		const style = document.createElement('style');
+		style.textContent = `
+			.portfolio-project-navigation{box-sizing:border-box;width:min(calc(100% - 2rem),88rem);margin:clamp(4rem,7vw,7rem) auto 0;padding-bottom:clamp(3rem,6vw,6rem);color:#f5f5f5;font-family:Inter,Arial,sans-serif}
+			.portfolio-project-navigation nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid #2b2b2b;border-bottom:1px solid #2b2b2b}
+			.portfolio-project-navigation nav a{box-sizing:border-box;min-width:0;min-height:clamp(7rem,11vw,10rem);padding:clamp(1.25rem,2.5vw,2.5rem);display:flex;flex-direction:column;justify-content:space-between;gap:1rem;color:inherit;text-decoration:none;transition:color .2s ease,background .2s ease}
+			.portfolio-project-navigation nav a+a{align-items:flex-end;border-left:1px solid #2b2b2b;text-align:right}
+			.portfolio-project-navigation nav span{color:#8d8d8d;font-size:.7rem;font-weight:800;line-height:1.2;letter-spacing:.08em;text-transform:uppercase}
+			.portfolio-project-navigation nav strong{overflow-wrap:anywhere;font-size:clamp(1.8rem,3.3vw,3.5rem);line-height:.9;letter-spacing:-.055em}
+			.portfolio-project-navigation nav a:hover{color:#050505;background:#f5f5f5}
+			.portfolio-project-navigation nav a:hover span{color:#555}
+			.portfolio-project-navigation a:focus-visible{outline:2px solid #fff;outline-offset:4px}
+			.portfolio-project-home{min-height:clamp(8rem,12vw,12rem);padding-top:clamp(2rem,4vw,4rem);display:flex;align-items:center;justify-content:flex-end;color:inherit;text-decoration:none}
+			.portfolio-project-home strong{font-size:clamp(1.8rem,3.3vw,3.5rem);line-height:.95;letter-spacing:-.05em}
+			@media(max-width:620px){.portfolio-project-navigation{margin-top:4rem}.portfolio-project-navigation nav{grid-template-columns:minmax(0,1fr)}.portfolio-project-navigation nav a{min-height:7rem;padding:1.25rem}.portfolio-project-navigation nav a+a{border-top:1px solid #2b2b2b;border-left:0}.portfolio-project-navigation nav strong,.portfolio-project-home strong{font-size:2rem}}
+			@media(prefers-reduced-motion:reduce){.portfolio-project-navigation nav a{transition-duration:.01ms}}
+		`;
+		document.head.append(style);
+		return wrapper;
 	}
 })();

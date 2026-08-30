@@ -1,4 +1,6 @@
 ---
+import CasePagination from '../../../../components/CasePagination.astro';
+import ProjectFooter from '../../../../components/ProjectFooter.astro';
 import SiteHeader from '../../../../components/SiteHeader.astro';
 import ResponsiveImage from '../../../../components/ResponsiveImage.astro';
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
@@ -142,6 +144,11 @@ const gridsterImages = [
 			<a class="contents-link" href="#contents">Вернуться в оглавление ↑</a>
 		</section>
 	</main>
+	<CasePagination
+		previous={{ href: '/projects/personal/digital-scrapbook/', label: 'Digital Scrapbook' }}
+		next={{ href: '/projects/vibecoding/deepfries/', label: 'Deepfries' }}
+	/>
+	<ProjectFooter />
 </BaseLayout>
 
 <style>

@@ -1,5 +1,7 @@
 ---
 import CaseLightbox from '../../../../components/CaseLightbox.astro';
+import CasePagination from '../../../../components/CasePagination.astro';
+import ProjectFooter from '../../../../components/ProjectFooter.astro';
 import ResponsiveImage from '../../../../components/ResponsiveImage.astro';
 import SiteHeader from '../../../../components/SiteHeader.astro';
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
@@ -93,6 +95,11 @@ const experiments = [
 	</main>
 
 	<CaseLightbox id="dataforge-lightbox" variant="single" label="Увеличенное изображение Deepfries" />
+	<CasePagination
+		previous={{ href: '/projects/vibecoding/adobe-scripts/', label: 'Скрипты для Adobe' }}
+		next={{ href: '/projects/publications/iofs', label: 'ИОПБ / IOFS' }}
+	/>
+	<ProjectFooter />
 </BaseLayout>
 
 <style>

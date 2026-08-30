@@ -90,7 +90,7 @@ assert.match(shelfrMobileScript, /Скетч на бумаге.*Вайрфрей
 assert.match(shelfrMobileScript, /buildKillerCopy/, 'Shelfr: Killer Feature copy is missing');
 assert.doesNotMatch(shelfrMobileScript, /copy: \['\.framer-ed2mu'/, 'Shelfr: old Killer Feature copy is still used on mobile');
 assert.match(shelfrMobileScript, /shelfr-mobile-gallery--masonry/, 'Shelfr: independent Wireframes columns are missing');
-assert.match(shelfrMobileScript, /Протестировать оставшиеся сценарии/, 'Shelfr: User Testing recommendations are not translated');
+assert.match(pages.shelfr, /Протестировать оставшиеся сценарии/, 'Shelfr: User Testing recommendations are not translated');
 assert.match(shelfrMobile, /shelfr-mobile-recommendations/, 'Shelfr: User Testing recommendations are not separated');
 assert.match(shelfrMobile, /#mobile-ia h2/, 'Shelfr: long IA heading needs a narrow-screen size');
 

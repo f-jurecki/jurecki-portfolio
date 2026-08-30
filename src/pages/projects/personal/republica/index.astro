@@ -1,5 +1,7 @@
 ---
 import CaseLightbox from '../../../../components/CaseLightbox.astro';
+import CasePagination from '../../../../components/CasePagination.astro';
+import ProjectFooter from '../../../../components/ProjectFooter.astro';
 import ResponsiveImage from '../../../../components/ResponsiveImage.astro';
 import SiteHeader from '../../../../components/SiteHeader.astro';
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
@@ -108,6 +110,11 @@ const origins = [
 	</main>
 
 	<CaseLightbox id="republica-lightbox" variant="single" label="Увеличенное изображение проекта Republica" />
+	<CasePagination
+		previous={{ href: '/projects/personal/cards/', label: 'Колода карт Misprint' }}
+		next={{ href: '/projects/personal/posters/', label: 'Постеры' }}
+	/>
+	<ProjectFooter />
 </BaseLayout>
 
 <style>
