@@ -40,6 +40,10 @@ a[href="https://www.linkedin.com/in/bogdan-goncharenko/"] * {
 }
 
 @media (min-width: 1025px) {
+	.framer-WDOO5 .framer-1dmv734 img {
+		object-fit: contain !important;
+	}
+
 	.framer-h3sPI .framer-1mfnjks {
 		height: 1743px !important;
 	}
@@ -51,6 +55,15 @@ a[href="https://www.linkedin.com/in/bogdan-goncharenko/"] * {
 	.framer-h3sPI .framer-137c9v0 {
 		display: grid !important;
 		grid-template-columns: 156px 62px 64px 66px;
+	}
+
+	.framer-h3sPI .framer-137c9v0 p {
+		--framer-font-size: 18px !important;
+	}
+
+	.framer-h3sPI .framer-hb00m7 {
+		width: max-content !important;
+		white-space: nowrap !important;
 	}
 
 	.framer-h3sPI .framer-jmwro6 {
@@ -118,7 +131,7 @@ a[href="https://www.linkedin.com/in/bogdan-goncharenko/"] * {
 		justify-content: center;
 		border-radius: 18px;
 		background: #1b5bff;
-		color: #fff;
+		color: #fff !important;
 		font: 400 16px/1.2 Inter, Arial, sans-serif;
 	}
 
