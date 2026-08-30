@@ -19,18 +19,18 @@ const experiments = [
 ---
 
 <BaseLayout
-	title="Dataforge — Федор Юрецкий"
+	title="Deepfries — Федор Юрецкий"
 	description="Браузерное приложение для обработки изображений и создания генеративного глитч-арта."
 	image="/portfolio/dataforge/dataforge-04.webp"
-	imageAlt="Изображение, обработанное в Dataforge"
+	imageAlt="Изображение, обработанное в Deepfries"
 >
 	<SiteHeader />
 
 	<main class="dataforge-page">
 		<section class="dataforge-intro">
 			<div class="dataforge-heading">
-				<h1>Dataforge</h1>
-				<a href="https://dataforge-alpha.vercel.app" target="_blank" rel="noopener noreferrer">Открыть Dataforge <span aria-hidden="true">↗</span></a>
+				<h1>Deepfries</h1>
+				<a href="https://deepfries.vercel.app" target="_blank" rel="noopener noreferrer">Открыть Deepfries <span aria-hidden="true">↗</span></a>
 			</div>
 
 			<div class="dataforge-description">
@@ -38,7 +38,7 @@ const experiments = [
 				<p>Весь функционал программы делится на два основных направления.</p>
 				<p><strong>Первое — пикселизация:</strong> это гибкий набор визуальных фильтров, позволяющий перерисовывать изображение с использованием различных форм (от квадратов и кругов до ASCII-символов), накладывать ретро-палитры, дизеринг и эффект ЭЛТ-монитора.</p>
 				<p><strong>Второе направление — датамошинг:</strong> набор «деструктивных» эффектов, которые необратимо искажают исходник. Сюда входят сортировка пикселей, визуализация аудио-искажений, смещение RGB-каналов и имитация сильной потери качества при многократном пересохранении.</p>
-				<p>Dataforge активно использовался в работе над авторской <a href="/projects/personal/cards/">колодой карт Misprint</a>.</p>
+				<p>Deepfries активно использовался в работе над авторской <a href="/projects/personal/cards/">колодой карт Misprint</a>.</p>
 				<div class="misprint-preview" aria-label="Карты и рубашка Misprint">
 					<button class="zoom-trigger" type="button" data-lightbox-target="dataforge-lightbox" data-caption="Misprint · Валет червей" aria-label="Увеличить валета червей Misprint">
 						<ResponsiveImage src="/portfolio/cards/card-41.webp" alt="Валет червей из колоды Misprint" widths={[96, 160, 240, 373]} sizes="4.75rem" />
@@ -64,7 +64,7 @@ const experiments = [
 							data-caption={experiment.detail ? `${experiment.title} · ${experiment.detail}` : experiment.title}
 							aria-label={`Увеличить: ${experiment.title}`}
 						>
-							<img src={`/portfolio/dataforge/${experiment.image}`} alt={`${experiment.title}: собака Жулик после обработки в Dataforge`} width="1400" height="1400" loading="lazy" decoding="async" />
+							<img src={`/portfolio/dataforge/${experiment.image}`} alt={`${experiment.title}: собака Жулик после обработки в Deepfries`} width="1400" height="1400" loading="lazy" decoding="async" />
 						</button>
 						<figcaption>
 							<h2>{experiment.title}</h2>
@@ -76,23 +76,23 @@ const experiments = [
 			<p class="dog-note">*Наш подопытный, собака Жулик, в визуальных экспериментах никак не пострадал.</p>
 		</section>
 
-		<section class="dataforge-interface" aria-label="Интерфейс Dataforge">
+		<section class="dataforge-interface" aria-label="Интерфейс Deepfries">
 			<figure>
-				<button class="zoom-trigger" type="button" data-lightbox-target="dataforge-lightbox" data-caption="Интерфейс Dataforge · Пикселизация" aria-label="Увеличить интерфейс пикселизации">
-					<img src="/portfolio/dataforge/dataforge-ui-pixelate.png" alt="Панель настройки пикселизации в Dataforge" width="638" height="1520" loading="lazy" decoding="async" />
+				<button class="zoom-trigger" type="button" data-lightbox-target="dataforge-lightbox" data-caption="Интерфейс Deepfries · Пикселизация" aria-label="Увеличить интерфейс пикселизации">
+					<img src="/portfolio/dataforge/dataforge-ui-pixelate.png" alt="Панель настройки пикселизации в Deepfries" width="638" height="1520" loading="lazy" decoding="async" />
 				</button>
 				<figcaption>Пикселизация</figcaption>
 			</figure>
 			<figure>
-				<button class="zoom-trigger" type="button" data-lightbox-target="dataforge-lightbox" data-caption="Интерфейс Dataforge · Датамошинг" aria-label="Увеличить интерфейс датамошинга">
-					<img src="/portfolio/dataforge/dataforge-ui-datamosh.png" alt="Панель настройки датамошинга в Dataforge" width="640" height="1518" loading="lazy" decoding="async" />
+				<button class="zoom-trigger" type="button" data-lightbox-target="dataforge-lightbox" data-caption="Интерфейс Deepfries · Датамошинг" aria-label="Увеличить интерфейс датамошинга">
+					<img src="/portfolio/dataforge/dataforge-ui-datamosh.png" alt="Панель настройки датамошинга в Deepfries" width="640" height="1518" loading="lazy" decoding="async" />
 				</button>
 				<figcaption>Датамошинг</figcaption>
 			</figure>
 		</section>
 	</main>
 
-	<CaseLightbox id="dataforge-lightbox" variant="single" label="Увеличенное изображение Dataforge" />
+	<CaseLightbox id="dataforge-lightbox" variant="single" label="Увеличенное изображение Deepfries" />
 </BaseLayout>
 
 <style>

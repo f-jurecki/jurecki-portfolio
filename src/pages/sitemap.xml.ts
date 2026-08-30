@@ -14,7 +14,7 @@ const routes = [
 	'/projects/product-design/shelfr',
 	'/projects/vibecoding',
 	'/projects/vibecoding/adobe-scripts',
-	'/projects/vibecoding/dataforge',
+	'/projects/vibecoding/deepfries',
 	'/projects/publications',
 	'/projects/publications/iofs',
 	'/projects/publications/kipd',
