@@ -3,6 +3,7 @@ import BackToTop from '../../../components/BackToTop.astro';
 import CaseGallery from '../../../components/CaseGallery.astro';
 import CaseLightbox from '../../../components/CaseLightbox.astro';
 import ProjectFooter from '../../../components/ProjectFooter.astro';
+import ResponsiveImage from '../../../components/ResponsiveImage.astro';
 import SiteHeader from '../../../components/SiteHeader.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 
@@ -29,6 +30,7 @@ const curatedNumbers = [
 	63, 120, 64, 121, 20, 21, 22, 46,
 ];
 const curatedRank = new Map(curatedNumbers.map((number, index) => [number, index]));
+const featuredNumbers = [32, 83, 17, 47, 63, 45];
 
 const getGroup = (number: number) => {
 	if (number >= 110) return 'Образовательная инфографика';
@@ -53,7 +55,7 @@ const getCategories = (number: number) => {
 	return categories;
 };
 
-const galleryImages = Array.from({ length: 121 }, (_, index) => {
+const allImages = Array.from({ length: 121 }, (_, index) => {
 	const number = index + 1;
 	return {
 		number,
@@ -71,6 +73,8 @@ const galleryImages = Array.from({ length: 121 }, (_, index) => {
 		if (bRank !== undefined) return 1;
 		return a.number - b.number;
 	});
+const featuredImages = featuredNumbers.map((number) => allImages.find((image) => image.number === number)!);
+const galleryImages = allImages.filter(({ number }) => !featuredNumbers.includes(number));
 
 const initialGalleryCount = 24;
 ---
@@ -99,6 +103,25 @@ const initialGalleryCount = 24;
 				</div>
 			</div>
 			<p>Превращаю сухие данные в ясную и выразительную графику: рисую вручную в Illustrator, работаю с RAWGraphs. Могу подсветить главное или сохранить максимально честную репрезентацию — в зависимости от задачи.</p>
+		</section>
+
+		<section class="featured-grid" aria-label="Избранные работы">
+			{featuredImages.map(({ src, group }, index) => (
+				<button
+					class="featured-work"
+					type="button"
+					data-lightbox-target="case-gallery-lightbox"
+					aria-label={`Увеличить: ${group}`}
+				>
+					<ResponsiveImage
+						src={src}
+						alt={`${group}: избранный пример инфографики`}
+						sizes="(max-width: 760px) 100vw, 88vw"
+						loading={index < 2 ? 'eager' : 'lazy'}
+						fetchpriority={index === 0 ? 'high' : 'auto'}
+					/>
+				</button>
+			))}
 		</section>
 
 		<CaseGallery
@@ -190,6 +213,12 @@ const initialGalleryCount = 24;
 	.format-filter:hover { border-color: #111; }
 	.format-filter.active { color: #fff; background: var(--color-accent); border-color: var(--color-accent); }
 	.format-filter:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
+	.featured-grid { width: 100%; max-width: 88rem; margin: 0 auto clamp(4rem,8vw,8rem); display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: clamp(.75rem,1.5vw,1.5rem); align-items: start; }
+	.featured-work { width: 100%; padding: clamp(.35rem,.7vw,.65rem); display: block; background: #efefec; border: 1px solid rgba(17,17,17,.12); border-radius: var(--radius-thumb); cursor: zoom-in; transition: transform .25s ease,box-shadow .25s ease; }
+	.featured-work:first-child,.featured-work:nth-child(4) { grid-column: 1 / -1; }
+	.featured-work:hover { transform: translateY(-.25rem); box-shadow: 0 1.2rem 2.5rem rgba(0,0,0,.12); }
+	.featured-work:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
+	.featured-work img { width: 100%; height: auto; display: block; }
 	.gallery-toolbar { min-height: 2.5rem; margin-bottom: 1.2rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; border-bottom: 1px solid #1112; }
 	.gallery-status { margin: 0; color: #666; font-size: .65rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
 	.gallery-reset { padding: .4rem 0; color: var(--color-accent); background: transparent; border: 0; font-size: .7rem; font-weight: 750; cursor: pointer; }
@@ -208,6 +237,8 @@ const initialGalleryCount = 24;
 		.project-intro { padding: 3.5rem 0 4rem; grid-template-columns: minmax(0,1fr); gap: 1.5rem; }
 		.tags { flex-wrap: wrap; }
 		.format-filter { padding: .55rem .8rem; font-size: .74rem; line-height: 1.35; }
+		.featured-grid { grid-template-columns: minmax(0,1fr); margin-bottom: 4rem; }
+		.featured-work:first-child,.featured-work:nth-child(4) { grid-column: auto; }
 		.gallery-status,.gallery-reset { font-size: .72rem; line-height: 1.45; }
 	}
 

@@ -26,7 +26,6 @@ main {
 
 .site-nav-links a,
 .site-nav-links button,
-.site-status,
 .footer-contacts a,
 .footer-contacts button,
 .project-footer,
@@ -42,7 +41,6 @@ main {
 	border-radius: var(--radius-thumb) !important;
 }
 
-.mobile-nav .mobile-whatsapp,
 .button-primary,
 .project-cta a,
 .gallery-more {
@@ -235,8 +233,7 @@ main {
 	color: #ffffff !important;
 }
 
-.section-kicker > span,
-.site-status > span {
+.section-kicker > span {
 	background: #ffffff !important;
 	box-shadow: none !important;
 }

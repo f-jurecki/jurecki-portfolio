@@ -3,15 +3,12 @@ import '../styles/tokens.css';
 import personalMark from '../../links/my logo miniature white.png';
 interface Props {
 	brandHref?: string;
-	whatsappMessage?: string;
 }
 
 const {
 	brandHref = '/',
-	whatsappMessage = 'Здравствуйте!\n\nПишу по поводу разработки многостраничного издания.',
 } = Astro.props;
 
-const whatsappUrl = `https://api.whatsapp.com/send/?phone=77084251518&text=${encodeURIComponent(whatsappMessage)}&type=phone_number&app_absent=0`;
 const email = 'fedorjurecki@gmail.com';
 const linkedinUrl = 'https://www.linkedin.com/in/jurecki';
 const telegramUrl = 'https://t.me/jurecki';
@@ -30,12 +27,6 @@ const instagramUrl = 'https://www.instagram.com/jurecki.things/';
 			<a href={linkedinUrl} target="_blank" rel="noopener noreferrer">LinkedIn</a>
 			<a href={telegramUrl} target="_blank" rel="noopener noreferrer">Telegram</a>
 			<a href={instagramUrl} target="_blank" rel="noopener noreferrer">Instagram</a>
-		</div>
-
-		<div class="site-header-actions">
-			<a class="site-status" href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-				<span aria-hidden="true"></span>Открыт для новых проектов
-			</a>
 		</div>
 
 		<div class="mobile-nav">
@@ -153,17 +144,14 @@ const instagramUrl = 'https://www.instagram.com/jurecki.things/';
 	.site-brand span { display: block; }
 	.site-brand img { width: 1.25rem; height: 1.25rem; flex: 0 0 auto; object-fit: contain; image-rendering: pixelated; }
 	.site-nav-links { grid-column: 3; display: flex; align-items: center; justify-self: end; gap: clamp(1.25rem,3vw,3.2rem); }
-	.site-nav-links a,.site-nav-links button,.site-status { color: inherit; font: inherit; font-size: .78rem; font-weight: 650; letter-spacing: .03em; text-decoration: none; }
+	.site-nav-links a,.site-nav-links button { color: inherit; font: inherit; font-size: .78rem; font-weight: 650; letter-spacing: .03em; text-decoration: none; }
 	.site-nav-links a,.site-nav-links button { position: relative; white-space: nowrap; }
 	.site-nav-links button { padding: 0; display:inline-flex; align-items:center; gap:.35rem; background: none; border: 0; cursor: pointer; }
 	.copy-icon { width:1rem; height:1rem; flex:0 0 auto; fill:none; stroke:currentColor; stroke-width:1.4; stroke-linecap:round; stroke-linejoin:round; }
 	.site-nav-links a::after,.site-nav-links button::after { content: ""; position: absolute; left: 0; bottom: -.35rem; width: 100%; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform .25s ease; }
 	.site-nav-links a:hover::after,.site-nav-links a:focus-visible::after,.site-nav-links button:hover::after,.site-nav-links button:focus-visible::after { transform: scaleX(1); transform-origin: left; }
-	.site-header-actions { grid-column: 2; grid-row: 1; justify-self: end; margin-right: clamp(1.5rem,3vw,3.5rem); display: flex; align-items: center; gap: 1rem; }
-	.site-status { display: flex; align-items: center; gap: .55rem; white-space: nowrap; }
-	.site-status > span { width: .45rem; height: .45rem; flex: 0 0 auto; background: var(--color-accent); border-radius: 50%; box-shadow: 0 0 0 .3rem rgba(201,36,39,.12); }
 	.mobile-nav,.mobile-contact-panel { display: none; }
-	.site-brand:focus-visible,.site-nav-links a:focus-visible,.site-nav-links button:focus-visible,.site-status:focus-visible,.mobile-nav a:focus-visible,.mobile-nav button:focus-visible,.mobile-contact-panel a:focus-visible,.mobile-contact-panel button:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
+	.site-brand:focus-visible,.site-nav-links a:focus-visible,.site-nav-links button:focus-visible,.mobile-nav a:focus-visible,.mobile-nav button:focus-visible,.mobile-contact-panel a:focus-visible,.mobile-contact-panel button:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
 	.copy-toast { position:fixed; top:7rem; right:clamp(1rem,4vw,4.5rem); z-index:300; padding:.85rem 1rem; color:#fff; background:#111; border-radius:var(--radius-thumb); box-shadow:0 .8rem 2rem rgba(0,0,0,.2); font-size:.82rem; font-weight:750; }
 	.copy-toast[hidden] { display:none; }
 
@@ -171,7 +159,7 @@ const instagramUrl = 'https://www.instagram.com/jurecki.things/';
 		.site-header { min-height: 4.75rem; padding: .75rem 1rem; }
 		.site-header-inner { position: relative; grid-template-columns: auto minmax(0,1fr); gap: .75rem; }
 		.site-brand { width: max-content; }
-		.site-nav-links,.site-header-actions { display: none; }
+		.site-nav-links { display: none; }
 		.mobile-nav { min-width: 0; display: flex; justify-content: flex-end; gap: .45rem; }
 		.mobile-nav a,.mobile-nav button {
 			min-height: 2.75rem;
@@ -228,10 +216,6 @@ const instagramUrl = 'https://www.instagram.com/jurecki.things/';
 		.mobile-contact-panel i { justify-self:end; color:#fff; font-style:normal; }
 		.mobile-contact-panel .copy-icon { justify-self:end; }
 		.copy-toast { top:5.5rem; left:1rem; right:1rem; text-align:center; }
-	}
-
-	@media (min-width: 1025px) and (max-width: 1535px) {
-		.site-status { display: none; }
 	}
 
 	@media (max-width: 380px) {

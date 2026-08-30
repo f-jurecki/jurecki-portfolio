@@ -1,20 +1,4 @@
 (() => {
-	const translations = new Map([
-		['User Testing', 'Пользовательское тестирование'],
-		['Test the remaining flows', 'Протестировать оставшиеся сценарии'],
-		['Develop branding and UI', 'Разработать айдентику и интерфейс'],
-		['Полный User Testing в Notion', 'Полное пользовательское тестирование в Notion'],
-		['В списке "Хочу прочитать"', 'в списке "Хочу прочитать"'],
-	]);
-	const textNodes = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-	while (textNodes.nextNode()) {
-		const value = textNodes.currentNode.nodeValue;
-		const text = value.trim();
-		if (translations.has(text)) textNodes.currentNode.nodeValue = value.replace(text, translations.get(text));
-	}
-	const matrixCopy = document.querySelector('#killer .framer-1r3d4hn p');
-	if (matrixCopy) matrixCopy.innerHTML = 'Это слегка измененная <strong>матрица Эйзенхауэра</strong> для сортировки книг.';
-
 	if (!matchMedia('(max-width: 1024px)').matches) return;
 
 	const root = document.querySelector('[data-framer-root]');
@@ -29,11 +13,11 @@
 			gallery: true,
 			galleryClass: 'shelfr-mobile-gallery--phones',
 			captions: [
-				'Storygraph — прекрасное приложение: быстрый поиск, добавление книги в одно действие, интересные челленджи, статистика и точные рекомендации.',
-				'Turn — больше восьми шагов, чтобы добавить книгу в список.',
-				'Bookshelf — вкладка Explore одинаковая для всех, без персонализации.',
-				'Bookmory — плохой контраст, непонятные поля для ввода и стены текста. Слишком много функций: приложение-швейцарский нож.',
-				'Goodreads — устаревший UI. Домашняя страница показывает действия друзей и больше ничего.',
+				'Storygraph — наиболее сильный продукт в выборке: быстрый поиск, добавление книги в одно действие, продуманные челленджи, статистика и точные рекомендации.',
+				'Turn — более восьми действий, чтобы добавить книгу в список.',
+				'Bookshelf — раздел Explore не персонализируется и выглядит одинаково для всех пользователей.',
+				'Bookmory — низкий контраст, неочевидные поля ввода и перегруженные текстом экраны. Избыточный набор функций усложняет навигацию.',
+				'Goodreads — устаревший интерфейс. Домашняя страница почти полностью посвящена активности друзей.',
 			],
 			tableHeaders: ['Приложение', 'Аудитория', 'Рейтинг', 'Трекер чтения', 'Рекомендации', 'Статистика', 'Коллекции', 'Сообщество'],
 			table: [
@@ -48,14 +32,14 @@
 		},
 		{
 			id: 'survey',
-			title: 'UX Survey',
+			title: 'UX-опрос',
 			copy: ['.framer-knywju', '.framer-197frqy', '.framer-1vn7qkh', '.framer-50kav6', '.framer-1mobc36', '.framer-1w57i5x'],
 			surveyVisuals: true,
 			closing: '.framer-1kygq3w',
 		},
 		{
 			id: 'interview',
-			title: 'User Interview',
+			title: 'Интервью с пользователями',
 			copy: ['.framer-magty6', '.framer-1an88ng', '.framer-1dwfo28', '.framer-5ksj25', '.framer-1jm3i', '.framer-1e3de96', '.framer-1wvzjgi', '.framer-1j6ys85'],
 			allQuotes: true,
 		},
@@ -66,7 +50,7 @@
 			table: [
 				['Поиск', '13', '8', '16,25'],
 				['Коллекции', '13', '8', '16,25'],
-				['Книжный трекер', '20', '13', '15.38'],
+				['Книжный трекер', '20', '13', '15,38'],
 				['Рекомендации', '20', '20', '10'],
 				['Достижения', '8', '8', '10'],
 				['Статистика', '8', '20', '4'],
@@ -74,7 +58,7 @@
 		},
 		{
 			id: 'cjm',
-			title: 'Customer Journey Map',
+			title: 'Карта пути пользователя',
 			copy: ['.framer-czneqo', '.framer-3h6zjj', '.framer-16xbd2u', '.framer-1565t2t', '.framer-1myply3'],
 			gallery: true,
 		},
@@ -85,13 +69,13 @@
 		},
 		{
 			id: 'flows',
-			title: 'User Flow',
+			title: 'Пользовательские сценарии',
 			copy: ['.framer-i7jyd4'],
 			flowCarousel: true,
 		},
 		{
 			id: 'wireframes',
-			title: 'Wireframes',
+			title: 'Вайрфреймы',
 			copy: ['.framer-1tx37zh', '.framer-epdr6v', '.framer-otf1ve'],
 			gallery: true,
 			galleryClass: 'shelfr-mobile-gallery--phones shelfr-mobile-gallery--masonry',
@@ -112,11 +96,11 @@
 			gallery: true,
 			galleryClass: 'shelfr-mobile-gallery--phones shelfr-mobile-gallery--single',
 			captions: [
-				'Элемент книги: убрал рейтинг, чтобы разгрузить интерфейс.',
-				'Элемент списка был слишком похож на элемент книги, что мешало ориентироваться.',
-				'Поп-ап, который появляется, когда пользователь пытается редактировать чужой список. Он был слишком перегружен — я переписал формулировки. Он всё ещё загруженный и сложный, но меньше.',
-				'Начать челлендж: из поп-апа вынес на отдельную страницу, переработал иерархию. Эта стрелочка специально уродливая. Она мне нравится.',
-				'Категоризация в «Хочу прочитать»: переписал формулировки, добавил подсказку о том, что это вообще такое, и кнопку отмены последнего действия.',
+				'В карточке книги убрал рейтинг, чтобы снизить визуальную нагрузку.',
+				'Карточка списка была слишком похожа на карточку книги, что затрудняло навигацию.',
+				'Модальное окно редактирования чужого списка было перегружено. Я упростил формулировки и иерархию.',
+				'Запуск челленджа перенёс из модального окна на отдельную страницу и переработал иерархию. Стрелка намеренно сохраняет рукописный характер.',
+				'В категоризации списка «Хочу прочитать» упростил формулировки, добавил пояснение принципа работы и отмену последнего действия.',
 			],
 		},
 		{
@@ -148,7 +132,7 @@
 		},
 		{
 			id: 'killer',
-			title: 'Killer Feature',
+			title: 'Ключевая функция',
 			killerCopy: true,
 			gallery: true,
 		},
@@ -161,13 +145,13 @@
 		},
 		{
 			id: 'mort',
-			title: 'Post Mortem',
+			title: 'Ретроспектива',
 			copy: ['.framer-1rddoqj', '.framer-1icmfei', '.framer-mvroa8'],
 			cards: [
-				['I. Мало исследований', '.framer-1m7rqb8'],
-				['II. Много контроля', '.framer-exl0i5'],
-				['III. Компоненты и стили!!!', '.framer-1ja42qh'],
-				['IV. High Fidelity', '.framer-1k62u1w'],
+				['Недостаточная глубина исследований', '.framer-1m7rqb8'],
+				['Избыточное сопровождение', '.framer-exl0i5'],
+				['Поздняя систематизация компонентов', '.framer-1ja42qh'],
+				['Ранний переход к high-fidelity', '.framer-1k62u1w'],
 			],
 			closing: '.framer-1i7pbrk',
 		},
@@ -178,7 +162,7 @@
 	const hero = element('header', 'shelfr-mobile-hero');
 	hero.append(
 		textElement('h1', 'shelfr-mobile-title', 'Shelfr'),
-		textElement('p', 'shelfr-mobile-subtitle', 'Трекер книг моей мечты'),
+		textElement('p', 'shelfr-mobile-subtitle', 'Концепция книжного трекера'),
 	);
 	appendCopies(hero, root, ['.framer-1k1k0so']);
 
@@ -293,25 +277,25 @@
 
 	function buildFlowCarousel() {
 		const slides = [
-			['Sign-up', '/portfolio/shelfr/shelfr-13.webp'],
-			['Add a book to "Reading now"', '/portfolio/shelfr/shelfr-flow-02.webp'],
-			['Record a streak', '/portfolio/shelfr/shelfr-flow-03.png'],
-			['Start a challenge', '/portfolio/shelfr/shelfr-flow-04.png'],
-			['Add a book to any list', '/portfolio/shelfr/shelfr-flow-05.png'],
-			['Categorize books in "Want to read"', '/portfolio/shelfr/shelfr-flow-06.png'],
-			['Add a book to "Finished" or “Abandoned” list', '/portfolio/shelfr/shelfr-flow-07.png'],
-			['Write a review', '/portfolio/shelfr/shelfr-flow-08.png'],
-			['Create a list', '/portfolio/shelfr/shelfr-flow-09.png'],
-			['Find what to read', '/portfolio/shelfr/shelfr-flow-10.png'],
-			['Read reviews', '/portfolio/shelfr/shelfr-flow-11.png'],
-			['Use search', '/portfolio/shelfr/shelfr-flow-12.png'],
-			['Actions with others profiles', '/portfolio/shelfr/shelfr-flow-13.png'],
-			['Filling, editing the profile, privacy settings', '/portfolio/shelfr/shelfr-flow-14.png'],
-			['Achievements, stats', '/portfolio/shelfr/shelfr-flow-15.png'],
+			['Регистрация', '/portfolio/shelfr/shelfr-13.webp'],
+			['Добавить книгу в «Читаю сейчас»', '/portfolio/shelfr/shelfr-flow-02.webp'],
+			['Записать чтение и продолжить стрик', '/portfolio/shelfr/shelfr-flow-03.png'],
+			['Начать челлендж', '/portfolio/shelfr/shelfr-flow-04.png'],
+			['Добавить книгу в список', '/portfolio/shelfr/shelfr-flow-05.png'],
+			['Категоризировать книги в «Хочу прочитать»', '/portfolio/shelfr/shelfr-flow-06.png'],
+			['Перенести книгу в «Прочитано» или «Брошено»', '/portfolio/shelfr/shelfr-flow-07.png'],
+			['Написать отзыв', '/portfolio/shelfr/shelfr-flow-08.png'],
+			['Создать список', '/portfolio/shelfr/shelfr-flow-09.png'],
+			['Выбрать следующую книгу', '/portfolio/shelfr/shelfr-flow-10.png'],
+			['Читать отзывы', '/portfolio/shelfr/shelfr-flow-11.png'],
+			['Использовать поиск', '/portfolio/shelfr/shelfr-flow-12.png'],
+			['Действия с профилями других пользователей', '/portfolio/shelfr/shelfr-flow-13.png'],
+			['Редактирование профиля и настройки приватности', '/portfolio/shelfr/shelfr-flow-14.png'],
+			['Достижения и статистика', '/portfolio/shelfr/shelfr-flow-15.png'],
 		];
 		const carousel = element('div', 'shelfr-mobile-flow-carousel');
 		carousel.tabIndex = 0;
-		carousel.setAttribute('aria-label', 'Схемы User Flow');
+		carousel.setAttribute('aria-label', 'Схемы пользовательских сценариев');
 		const title = textElement('h3', '', '');
 		const counter = textElement('span', 'shelfr-mobile-flow-counter', '');
 		const figure = element('figure', 'shelfr-mobile-figure');
@@ -335,7 +319,7 @@
 			title.textContent = label;
 			counter.textContent = `${active + 1}/${slides.length}`;
 			image.src = src;
-			image.alt = `User Flow: ${label}`;
+			image.alt = `Пользовательский сценарий: ${label}`;
 		};
 		previous.addEventListener('click', () => show(active - 1));
 		next.addEventListener('click', () => show(active + 1));
@@ -376,10 +360,10 @@
 	function buildKillerCopy() {
 		const copy = element('div', 'shelfr-mobile-killer-copy');
 		copy.append(
-			textElement('h3', '', 'Категоризация книг в списке "Хочу прочитать"'),
+			textElement('h3', '', 'Категоризация книг в списке «Хочу прочитать»'),
 		);
 		const matrix = document.createElement('p');
-		matrix.append('Это слегка измененная ', textElement('strong', '', 'матрица Эйзенхауэра'), ' для сортировки книг.');
+		matrix.append('Это слегка изменённая ', textElement('strong', '', 'матрица Эйзенхауэра'), ' для сортировки книг.');
 		copy.append(
 			matrix,
 			textElement('p', '', 'Разделите книги на 4 категории, чтобы легче решить, что читать дальше.'),
@@ -405,8 +389,8 @@
 		pie.setAttribute('aria-label', '29,2 процента неинтересно отслеживать прочитанное; 70,8 процента ещё не нашли подходящий трекер');
 		const legend = element('div', 'shelfr-mobile-audience-legend');
 		legend.append(
-			textElement('p', '', '29.2% — Мне неинтересно отслеживать прочитанное'),
-			textElement('p', '', '70.8% — Я ещё не нашел подходящий трекер'),
+			textElement('p', '', '29,2% — Мне неинтересно отслеживать прочитанное'),
+			textElement('p', '', '70,8% — Я ещё не нашёл подходящий трекер'),
 		);
 		chart.append(pie, legend);
 		audience.append(chart);
@@ -526,7 +510,7 @@
 		return cards;
 	}
 
-	function buildTable(rows, headers = ['Feature', 'Value', 'Effort', 'Score'], className = '') {
+	function buildTable(rows, headers = ['Функция', 'Ценность', 'Трудозатраты', 'Оценка'], className = '') {
 		const wrap = element('div', 'shelfr-mobile-table-wrap');
 		const table = element('table', `shelfr-mobile-table ${className}`.trim());
 		const head = document.createElement('thead');

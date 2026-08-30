@@ -3,8 +3,8 @@ import SiteHeader from '../../../components/SiteHeader.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 
 const projects = [
-	{ title: 'Скрипты для Adobe', href: '/projects/vibecoding/adobe-scripts' },
-	{ title: 'Deepfries', href: '/projects/vibecoding/deepfries' },
+	{ title: 'Скрипты для Adobe', description: 'ускоряющие работу и автоматизирующие рутину', href: '/projects/vibecoding/adobe-scripts' },
+	{ title: 'Deepfries', description: 'Браузерный инструмент для обработки изображений и создания генеративного глитч-арта', href: '/projects/vibecoding/deepfries' },
 ];
 ---
 
@@ -25,7 +25,10 @@ const projects = [
 				{projects.map((project, index) => (
 					<a href={project.href} aria-label={`Открыть проект: ${project.title}`}>
 						<span>{String(index + 1).padStart(2, '0')}</span>
-						<h2>{project.title}</h2>
+						<div>
+							<h2>{project.title}</h2>
+							<p>{project.description}</p>
+						</div>
 						<b aria-hidden="true">↗</b>
 					</a>
 				))}
@@ -47,6 +50,7 @@ const projects = [
 	nav a:hover { background: #151515; }
 	nav span { color: var(--color-muted); font-size: .58rem; font-weight: 650; letter-spacing: .08em; }
 	nav h2 { margin: 0; font-size: clamp(1.55rem,2.5vw,2.5rem); font-weight: 600; line-height: .95; letter-spacing: -.055em; }
+	nav p { margin: .55rem 0 0; color: var(--color-muted); font-size: clamp(.7rem,1vw,.85rem); line-height: 1.35; }
 	nav b { width: 2.4rem; height: 2.4rem; display: grid; place-items: center; justify-self: end; border: 1px solid var(--color-border); font-size: .72rem; font-weight: 500; transition: transform .2s ease,background-color .2s ease,color .2s ease; }
 	nav a:hover b { color: #050505; background: #fff; transform: rotate(45deg); }
 	:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
