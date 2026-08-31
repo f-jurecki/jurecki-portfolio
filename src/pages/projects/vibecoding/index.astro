@@ -42,8 +42,8 @@ const projects = [
 	.vibecoding-page { min-height: calc(100svh - 6rem); padding: clamp(1rem,2vw,1.75rem) clamp(1rem,3vw,3rem); display: grid; align-items: center; }
 	.vibecoding-shell { width: min(100%,72rem); margin-inline: auto; display: grid; grid-template-columns: minmax(16rem,.72fr) minmax(28rem,1.28fr); gap: .8rem; }
 	header,nav { min-width: 0; background: var(--color-panel); border: 1px solid var(--color-border); }
-	header { min-height: 16rem; padding: clamp(1.25rem,2.2vw,2rem); display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start; gap: 1.25rem; }
-	h1 { margin: 0; font-size: var(--text-page-title); font-weight: var(--weight-page-title); line-height: var(--leading-page-title); letter-spacing: var(--tracking-page-title); }
+	header { min-height: 16rem; padding: clamp(1.25rem,2.2vw,2rem); display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start; gap: 1.25rem; container-type: inline-size; }
+	h1 { margin: 0; font-size: clamp(2.6rem,16cqi,4.8rem); font-weight: var(--weight-page-title); line-height: var(--leading-page-title); letter-spacing: var(--tracking-page-title); }
 	header p { max-width: 28rem; margin: 0; color: var(--color-muted); font-size: var(--text-body); line-height: 1.4; }
 	nav { display: grid; }
 	nav a { min-height: 8rem; padding: clamp(1rem,1.7vw,1.5rem); display: grid; grid-template-columns: 2rem minmax(0,1fr) 2.4rem; align-items: center; gap: clamp(.8rem,2vw,1.5rem); color: #fff; border-bottom: 1px solid var(--color-border); text-decoration: none; transition: background-color .2s ease; }

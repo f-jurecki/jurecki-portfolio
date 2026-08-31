@@ -182,6 +182,7 @@ const gallery = [
 	.news-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: .75rem; }
 	.news-grid img:nth-child(even) { transform: translateY(3rem); }
 	.closing-section { padding: clamp(8rem,14vw,14rem) 0 clamp(3rem,5vw,5rem); }
+	.closing-section :global(.case-results strong) { font-size: clamp(1.25rem,1.5vw,1.5rem); overflow-wrap: normal; }
 	.gallery-only-title { margin: 0 0 clamp(3rem,6vw,6rem); font-size: var(--text-display-section); line-height: var(--leading-display-section); letter-spacing: var(--tracking-display-section); }
 	@media (max-width:900px) {
 		.hero-row,.showcase-head { grid-template-columns: minmax(0,1fr); gap: 1.5rem; }

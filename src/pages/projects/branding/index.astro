@@ -260,14 +260,16 @@ function groupDocumentPages<T>(pages: T[]) {
 	.dialog-gallery :global(img) { width: 100%; height: auto; display: block; }
 	.dialog-gallery-single { grid-template-columns: minmax(0,1fr); }
 	.dialog-gallery-single figure { max-width: 60rem; margin-inline: auto; }
-	.document-reader { min-width: 0; }
-	.document-controls { position: sticky; top: 3.5rem; z-index: 1; margin-bottom: .75rem; padding: .35rem 0; display: flex; align-items: center; justify-content: flex-end; gap: .5rem; background: #090909; }
-	.document-controls strong { margin-right: auto; color: var(--color-muted); font-size: var(--text-caption); letter-spacing: var(--tracking-caption); }
+	.document-reader { min-width: 0; display: grid; grid-template: "counter counter counter" auto "previous gallery next" auto / 3rem minmax(0,1fr) 3rem; align-items: center; gap: .75rem; }
+	.document-controls { display: contents; }
+	.document-controls strong { grid-area: counter; color: var(--color-muted); font-size: var(--text-caption); letter-spacing: var(--tracking-caption); }
 	.document-controls button { width: 3rem; height: 3rem; padding: 0; color: #fff; background: #050505; border: 1px solid #454545; cursor: pointer; }
+	.document-controls button:first-of-type { grid-area: previous; }
+	.document-controls button:last-of-type { grid-area: next; }
 	.document-controls button:hover { color: #050505; background: #fff; border-color: #fff; }
 	.document-controls button:disabled { color: #555; background: #090909; border-color: #222; cursor: default; }
 	.document-controls button:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
-	.document-gallery { display: block; }
+	.document-gallery { grid-area: gallery; min-width: 0; display: block; }
 	.document-gallery figure { display: none; }
 	.document-gallery figure[data-active] { display: block; }
 	.document-spread { --spread-gap: .3rem; width: 100%; min-height: 0; display: flex; justify-content: center; align-items: center; gap: var(--spread-gap); }
@@ -292,6 +294,8 @@ function groupDocumentPages<T>(pages: T[]) {
 		.dialog-heading small { grid-column: auto; }
 		.dialog-heading h2 { font-size: clamp(2.6rem,13vw,3.8rem); }
 		.dialog-gallery { grid-template-columns: minmax(0,1fr); gap: .75rem; }
+		.document-reader { grid-template-columns: 2.5rem minmax(0,1fr) 2.5rem; gap: .35rem; }
+		.document-controls button { width: 2.5rem; height: 2.5rem; }
 		.document-spread { --spread-gap: .18rem; }
 		.document-spread :global(img) { max-height: calc(100dvh - 7rem); }
 	}

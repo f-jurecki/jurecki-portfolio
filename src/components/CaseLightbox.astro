@@ -73,6 +73,9 @@ const { id, variant = 'single', label } = Astro.props;
 </script>
 
 <style>
+	:global(html:has(.case-lightbox[open])),
+	:global(body:has(.case-lightbox[open])) { overflow: hidden; }
+
 	.case-lightbox {
 		max-width: none;
 		max-height: none;
