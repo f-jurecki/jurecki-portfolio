@@ -43,6 +43,7 @@ const projects = [
 		title: 'Иртыш Агросервис',
 		type: 'Многостраничная брошюра',
 		description: 'Двенадцатистраничная продуктовая брошюра для официального дистрибьютора Massey Ferguson. Технические характеристики собраны в устойчивую редакционную систему и дополнены крупными фотографиями техники.',
+		cover: '/portfolio/branding/irtysh-cover.webp',
 		document: true,
 		images: Array.from({ length: 12 }, (_, index) => ({
 			src: `/portfolio/branding/irtysh/page-${String(index + 1).padStart(2, '0')}.webp`,
@@ -54,6 +55,7 @@ const projects = [
 		title: 'Whisky Rum',
 		type: 'Винная карта',
 		description: 'Шестистраничная винная карта: лаконичная обложка, компактная типографика и последовательная навигация по регионам, категориям и позициям.',
+		cover: '/portfolio/branding/wine-cover.webp',
 		document: true,
 		images: Array.from({ length: 6 }, (_, index) => ({
 			src: `/portfolio/branding/wine/page-${String(index + 1).padStart(2, '0')}.webp`,
@@ -109,7 +111,7 @@ function groupDocumentPages<T>(pages: T[]) {
 				<button class="project-card" type="button" data-article-target={`article-${project.slug}`} aria-haspopup="dialog">
 					<span class="project-cover">
 						<ResponsiveImage
-							src={project.images[0].src}
+							src={'cover' in project ? project.cover : project.images[0].src}
 							alt=""
 							sizes="(max-width: 700px) 100vw, (max-width: 1050px) 50vw, 33vw"
 							aria-hidden="true"
@@ -154,10 +156,12 @@ function groupDocumentPages<T>(pages: T[]) {
 							</div>
 						</section>
 					) : (
-						<div class:list={['dialog-gallery', project.images.length === 1 && 'dialog-gallery-single']}>
+						<div class:list={['dialog-gallery', project.images.length === 1 && 'dialog-gallery-single', project.slug === 'frnds' && 'dialog-gallery-frnds']}>
 							{project.images.map((image) => (
 								<figure>
-									<ResponsiveImage src={image.src} alt={image.alt} sizes="(max-width: 700px) 100vw, 50vw" />
+									<button class="dialog-gallery-zoom" type="button" data-lightbox-target="case-image-lightbox" data-caption={image.alt} aria-label={`Увеличить: ${image.alt}`}>
+										<ResponsiveImage src={image.src} alt={image.alt} sizes="(max-width: 700px) 100vw, 50vw" />
+									</button>
 								</figure>
 							))}
 						</div>
@@ -258,8 +262,14 @@ function groupDocumentPages<T>(pages: T[]) {
 	.dialog-gallery { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: clamp(.6rem,1.25vw,1.2rem); align-items: start; }
 	.dialog-gallery figure { margin: 0; min-width: 0; background: #050505; }
 	.dialog-gallery :global(img) { width: 100%; height: auto; display: block; }
+	.dialog-gallery-zoom { width: 100%; padding: 0; display: block; background: transparent; border: 0; cursor: zoom-in; }
+	.dialog-gallery-zoom:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: calc(var(--focus-ring-offset) * -1); }
 	.dialog-gallery-single { grid-template-columns: minmax(0,1fr); }
 	.dialog-gallery-single figure { max-width: 60rem; margin-inline: auto; }
+	.dialog-gallery-frnds { grid-template-columns: minmax(0,2fr) minmax(15rem,1fr); }
+	.dialog-gallery-frnds figure:first-child { grid-row: span 2; }
+	.dialog-gallery-frnds figure:not(:first-child) { align-self: center; }
+	.dialog-gallery-frnds figure:not(:first-child) :global(img) { width: auto; max-width: 100%; max-height: 32rem; margin-inline: auto; }
 	.document-reader { min-width: 0; display: grid; grid-template: "counter counter counter" auto "previous gallery next" auto / 3rem minmax(0,1fr) 3rem; align-items: center; gap: .75rem; }
 	.document-controls { display: contents; }
 	.document-controls strong { grid-area: counter; color: var(--color-muted); font-size: var(--text-caption); letter-spacing: var(--tracking-caption); }
