@@ -113,8 +113,8 @@ const tools = [
 </BaseLayout>
 
 <style>
-	.home { min-height: calc(100svh - 6rem); padding: clamp(1rem,2vw,1.75rem) clamp(1rem,3vw,3rem); }
-	.hero-grid { width: min(100%,96rem); min-height: calc(100svh - 9rem); margin-inline: auto; display: grid; grid-template-columns: minmax(34rem,1.02fr) minmax(34rem,.98fr); gap: .8rem; align-content: center; align-items: stretch; }
+	.home { --home-padding-block: clamp(1rem,2vw,1.75rem); min-height: calc(100svh - 6rem); padding: var(--home-padding-block) clamp(1rem,3vw,3rem); }
+	.hero-grid { width: min(100%,96rem); min-height: calc(100svh - 6rem - var(--home-padding-block) - var(--home-padding-block)); margin-inline: auto; display: grid; grid-template-columns: minmax(34rem,1.02fr) minmax(34rem,.98fr); gap: .8rem; align-content: center; align-items: stretch; }
 	.profile-pane { min-width: 0; padding: clamp(1.15rem,1.8vw,1.75rem); display: flex; flex-direction: column; position: relative; background: rgba(8,8,8,.88); border: 1px solid var(--color-border); overflow: hidden; }
 	.tools-panel > p { margin: 0; color: var(--color-muted); font-size: .62rem; font-weight: 700; line-height: 1.4; letter-spacing: .1em; text-transform: uppercase; }
 	.personal-mark { width: 2.9rem; height: auto; flex: 0 0 auto; margin-top: .25rem; image-rendering: pixelated; }
@@ -155,7 +155,7 @@ const tools = [
 		.projects-grid { grid-template-rows: repeat(6,minmax(4.75rem,auto)); }
 	}
 	@media (max-width: 680px) {
-		.home { padding: .75rem; }
+		.home { --home-padding-block: .75rem; padding: .75rem; }
 		.profile-pane { display: contents; }
 		.profile-intro, .profile-details { padding: 1rem; background: rgba(8,8,8,.88); border: 1px solid var(--color-border); }
 		.profile-intro { order: 1; }

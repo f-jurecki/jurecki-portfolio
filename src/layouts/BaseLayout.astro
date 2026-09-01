@@ -31,7 +31,7 @@ const { title, description, image, imageAlt } = Astro.props;
 	}
 
 	* { box-sizing: border-box; }
-	html { scroll-behavior: smooth; }
+	html { scroll-behavior: smooth; overscroll-behavior-y: none; }
 	body { margin: 0; min-width: 0; overflow-x: clip; background: var(--color-surface); }
 	a { color: inherit; }
 	button { font: inherit; }

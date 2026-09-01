@@ -86,6 +86,7 @@ try {
 					});
 					return {
 						overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+						verticalOverflow: document.documentElement.scrollHeight - document.documentElement.clientHeight,
 						headerGap: (() => {
 							const brand = document.querySelector('.site-brand');
 							const nav = document.querySelector('.site-nav-links');
@@ -117,6 +118,7 @@ try {
 				const issues = [
 					!response?.ok() && `HTTP ${response?.status() ?? 'error'}`,
 					audit.overflow > 0 && `horizontal overflow ${audit.overflow}px`,
+					route === '/' && width > 1180 && audit.verticalOverflow > 0 && `unnecessary home scroll ${audit.verticalOverflow}px`,
 					audit.headerGap !== null && audit.headerGap < 0 && `header groups overlap ${Math.ceil(-audit.headerGap)}px`,
 					audit.brokenImages > 0 && `broken images ${audit.brokenImages}`,
 					audit.missingDimensions > 0 && `images without dimensions ${audit.missingDimensions}`,
