@@ -10,6 +10,8 @@ const { id, variant = 'single', label } = Astro.props;
 
 <dialog id={id} class:list={['case-lightbox', `case-lightbox-${variant}`]} data-case-lightbox={variant} aria-label={label}>
 	<button class="case-lightbox-close" type="button" aria-label="Закрыть"><span aria-hidden="true"></span></button>
+	<button class="case-lightbox-step case-lightbox-step-previous" type="button" data-lightbox-step="-1" aria-label="Предыдущее изображение" aria-keyshortcuts="ArrowLeft" hidden><span aria-hidden="true">←</span></button>
+	<button class="case-lightbox-step case-lightbox-step-next" type="button" data-lightbox-step="1" aria-label="Следующее изображение" aria-keyshortcuts="ArrowRight" hidden><span aria-hidden="true">→</span></button>
 	{variant === 'spread' ? (
 		<>
 			<div class="case-lightbox-pages"><img alt="" width="1000" height="1414" /><img alt="" width="1000" height="1414" /></div>
@@ -24,9 +26,62 @@ const { id, variant = 'single', label } = Astro.props;
 	if (!document.documentElement.dataset.caseLightboxReady) {
 		document.documentElement.dataset.caseLightboxReady = 'true';
 
+		const getTriggers = (dialog: HTMLDialogElement) => Array.from(document.querySelectorAll<HTMLElement>('[data-lightbox-target]')).filter((trigger) => (
+			trigger.dataset.lightboxTarget === dialog.id && trigger.getClientRects().length > 0
+		));
+
+		const showTrigger = (dialog: HTMLDialogElement, trigger: HTMLElement) => {
+			if (dialog.dataset.caseLightbox === 'spread') {
+				const sources = trigger.querySelectorAll<HTMLImageElement>('img');
+				const targets = dialog.querySelectorAll<HTMLImageElement>('.case-lightbox-pages img');
+				if (sources.length !== 2 || targets.length !== 2) return false;
+				targets.forEach((image, index) => {
+					image.src = sources[index].dataset.fullSrc || sources[index].currentSrc || sources[index].src;
+					image.alt = sources[index].alt;
+				});
+			} else {
+				const source = trigger.matches('img') ? trigger as HTMLImageElement : trigger.querySelector<HTMLImageElement>('img');
+				const image = dialog.querySelector<HTMLImageElement>('figure img');
+				if (!source || !image) return false;
+				image.src = source.dataset.fullSrc || trigger.dataset.src || source.currentSrc || source.src;
+				image.alt = source.alt;
+			}
+
+			const caption = trigger.dataset.caption ?? trigger.closest('figure')?.querySelector('figcaption')?.textContent?.trim() ?? '';
+			const captionNode = dialog.querySelector<HTMLElement>('.case-lightbox-caption, figcaption');
+			if (captionNode) {
+				captionNode.textContent = caption;
+				captionNode.hidden = !caption;
+			}
+
+			const triggers = getTriggers(dialog);
+			const currentIndex = triggers.indexOf(trigger);
+			dialog.dataset.lightboxIndex = String(Math.max(0, currentIndex));
+			dialog.querySelectorAll<HTMLButtonElement>('[data-lightbox-step]').forEach((button) => {
+				const nextIndex = currentIndex + Number(button.dataset.lightboxStep);
+				button.hidden = triggers.length < 2;
+				button.disabled = currentIndex < 0 || nextIndex < 0 || nextIndex >= triggers.length;
+			});
+			return true;
+		};
+
+		const stepDialog = (dialog: HTMLDialogElement, step: number) => {
+			const triggers = getTriggers(dialog);
+			const currentIndex = Number(dialog.dataset.lightboxIndex ?? 0);
+			const next = triggers[currentIndex + step];
+			if (next) showTrigger(dialog, next);
+		};
+
 		document.addEventListener('click', (event) => {
 			const target = event.target;
 			if (!(target instanceof Element)) return;
+
+			const stepButton = target.closest<HTMLButtonElement>('[data-lightbox-step]');
+			if (stepButton) {
+				const dialog = stepButton.closest<HTMLDialogElement>('[data-case-lightbox]');
+				if (dialog?.open && !stepButton.disabled) stepDialog(dialog, Number(stepButton.dataset.lightboxStep));
+				return;
+			}
 
 			const close = target.closest<HTMLButtonElement>('.case-lightbox-close');
 			if (close) {
@@ -38,36 +93,20 @@ const { id, variant = 'single', label } = Astro.props;
 			if (!trigger) return;
 			const dialog = document.getElementById(trigger.dataset.lightboxTarget ?? '');
 			if (!(dialog instanceof HTMLDialogElement)) return;
-
-			if (dialog.dataset.caseLightbox === 'spread') {
-				const sources = trigger.querySelectorAll<HTMLImageElement>('img');
-				const targets = dialog.querySelectorAll<HTMLImageElement>('.case-lightbox-pages img');
-				if (sources.length !== 2 || targets.length !== 2) return;
-				targets.forEach((image, index) => {
-					image.src = sources[index].dataset.fullSrc || sources[index].currentSrc || sources[index].src;
-					image.alt = sources[index].alt;
-				});
-			} else {
-				const source = trigger.matches('img') ? trigger as HTMLImageElement : trigger.querySelector<HTMLImageElement>('img');
-				const image = dialog.querySelector<HTMLImageElement>('figure img');
-				if (!source || !image) return;
-				image.src = source.dataset.fullSrc || trigger.dataset.src || source.currentSrc || source.src;
-				image.alt = source.alt;
-			}
-
-			const caption = trigger.dataset.caption ?? trigger.closest('figure')?.querySelector('figcaption')?.textContent?.trim() ?? '';
-			const captionNode = dialog.querySelector<HTMLElement>('.case-lightbox-caption, figcaption');
-			if (captionNode) {
-				captionNode.textContent = caption;
-				captionNode.hidden = !caption;
-			}
+			if (!showTrigger(dialog, trigger)) return;
 			dialog.showModal();
 		});
 
 		document.addEventListener('click', (event) => {
-			if (!(event.target instanceof Element)) return;
-			const dialog = event.target.closest<HTMLDialogElement>('[data-case-lightbox]');
-			if (dialog?.open) dialog.close();
+			if (event.target instanceof HTMLDialogElement && event.target.matches('[data-case-lightbox]')) event.target.close();
+		});
+
+		document.addEventListener('keydown', (event) => {
+			if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+			const dialog = document.querySelector<HTMLDialogElement>('[data-case-lightbox][open]');
+			if (!dialog) return;
+			event.preventDefault();
+			stepDialog(dialog, event.key === 'ArrowLeft' ? -1 : 1);
 		});
 	}
 </script>
@@ -99,8 +138,16 @@ const { id, variant = 'single', label } = Astro.props;
 	.case-lightbox-close span::before,.case-lightbox-close span::after { content: ''; width: 1.2rem; height: 1px; position: absolute; left: 0; top: 50%; background: #fff; }
 	.case-lightbox-close span::before { transform: rotate(45deg); }
 	.case-lightbox-close span::after { transform: rotate(-45deg); }
-	.case-lightbox-close:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
+	.case-lightbox-step { position: fixed; top: 50%; z-index: 2; width: 3rem; height: 3rem; display: grid; place-items: center; padding: 0; color: #fff; background: #050505; border: 1px solid #fff; border-radius: var(--radius-thumb); font: inherit; font-size: 1.35rem; line-height: 1; transform: translateY(-50%); cursor: pointer; }
+	.case-lightbox-step-previous { left: max(1rem,3vw); }
+	.case-lightbox-step-next { right: max(1rem,3vw); }
+	.case-lightbox-step:disabled { opacity: .3; cursor: default; }
+	.case-lightbox-step[hidden] { display: none; }
+	.case-lightbox-close:focus-visible,.case-lightbox-step:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
 
 	@media (max-width: 620px) {
+		.case-lightbox-step { width: 2.6rem; height: 2.6rem; }
+		.case-lightbox-step-previous { left: .45rem; }
+		.case-lightbox-step-next { right: .45rem; }
 	}
 </style>

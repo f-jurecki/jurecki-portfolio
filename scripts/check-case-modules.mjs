@@ -15,6 +15,7 @@ const pages = {
 };
 const shelfrMobile = await readFile('dist/projects/product-design/shelfr/mobile.css', 'utf8');
 const shelfrMobileScript = await readFile('dist/projects/product-design/shelfr/mobile.js', 'utf8');
+const lightboxComponent = await readFile('src/components/CaseLightbox.astro', 'utf8');
 
 assert.doesNotMatch(pages.kipd, /class="case-facts"/, 'kipd: facts module should be removed');
 assert.match(pages.kipd, /class="case-results"/, 'kipd: results module is missing');
@@ -53,6 +54,10 @@ assert.match(pages.infographics, /case-gallery-numbered/);
 assert.match(pages.iofs, /data-case-lightbox="spread"/);
 assert.match(pages.kipd, /data-case-lightbox="single"/);
 assert.match(pages.infographics, /data-case-lightbox="single"/);
+assert.match(lightboxComponent, /data-lightbox-step="-1"/, 'Lightbox: previous button is missing');
+assert.match(lightboxComponent, /data-lightbox-step="1"/, 'Lightbox: next button is missing');
+assert.match(lightboxComponent, /event\.key === 'ArrowLeft'/, 'Lightbox: keyboard navigation is missing');
+assert.match(lightboxComponent, /trigger\.getClientRects\(\)\.length > 0/, 'Lightbox: navigation must ignore hidden gallery items');
 
 assert.match(pages.presentations, /<h1\b[^>]*>Презентации<\/h1>/, 'Presentations: simplified title is missing');
 assert.match(pages.presentations, /понятную и выразительную инфографику/, 'Presentations: project introduction is missing');

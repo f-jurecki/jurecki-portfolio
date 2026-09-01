@@ -16,6 +16,9 @@ const { title, description, image, imageAlt } = Astro.props;
 <html lang="ru">
 	<head>
 		<SeoHead title={title} description={description} image={image} imageAlt={imageAlt} />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=TikTok+Sans:wght@300..900&display=swap" rel="stylesheet" />
 	</head>
 	<body id="top">
 		<slot />
@@ -33,6 +36,7 @@ const { title, description, image, imageAlt } = Astro.props;
 	* { box-sizing: border-box; }
 	html { scroll-behavior: smooth; overscroll-behavior-y: none; }
 	body { margin: 0; min-width: 0; overflow-x: clip; background: var(--color-surface); }
+	h1, h2, h3, h4, h5, h6 { font-family: "TikTok Sans", Inter, "Segoe UI", Arial, sans-serif; }
 	a { color: inherit; }
 	button { font: inherit; }
 </style>
