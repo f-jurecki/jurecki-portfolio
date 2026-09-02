@@ -1,30 +1,33 @@
 ---
 import SiteHeader from '../../../components/SiteHeader.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getLocale, localizedPath } from '../../../lib/i18n';
 
+const locale = getLocale(Astro.url.pathname);
+const isRussian = locale === 'ru';
 const projects = [
-	{ title: 'Скрипты для Adobe', description: 'ускоряющие работу и автоматизирующие рутину', href: '/projects/vibecoding/adobe-scripts' },
-	{ title: 'Deepfries', description: 'Браузерный инструмент для обработки изображений и создания генеративного глитч-арта', href: '/projects/vibecoding/deepfries' },
-	{ title: 'Sequence', description: 'Минималистичный тайм-трекер для заранее спланированных процессов', href: '/projects/vibecoding/sequence' },
+	{ title: isRussian ? 'Скрипты для Adobe' : 'Adobe Scripts', description: isRussian ? 'ускоряющие работу и автоматизирующие рутину' : 'tools that speed up my work and automate repetitive tasks', href: '/projects/vibecoding/adobe-scripts' },
+	{ title: 'Deepfries', description: isRussian ? 'Браузерный инструмент для обработки изображений и создания генеративного глитч-арта' : 'Browser-based image-processing tool for generative glitch art', href: '/projects/vibecoding/deepfries' },
+	{ title: 'Sequence', description: isRussian ? 'Минималистичный тайм-трекер для заранее спланированных процессов' : 'Minimalist time tracker for pre-planned processes', href: '/projects/vibecoding/sequence' },
 ];
 ---
 
 <BaseLayout
-	title="Вайбкодинг — Федор Юрецкий"
-	description="Скрипты для Adobe, Deepfries и тайм-трекер Sequence."
+	title={isRussian ? 'Вайбкодинг — Федор Юрецкий' : 'Vibe Coding — Fedor Jurecki'}
+	description={isRussian ? 'Скрипты для Adobe, Deepfries и тайм-трекер Sequence.' : 'Adobe scripts, Deepfries, and the Sequence time tracker.'}
 >
 	<SiteHeader />
 
 	<main class="vibecoding-page">
 		<div class="vibecoding-shell">
 			<header>
-				<h1>Вайбкодинг</h1>
-				<p>Этот сайт-портфолио тоже полностью собран с помощью вайбкодинга</p>
+				<h1>{isRussian ? 'Вайбкодинг' : 'Vibe Coding'}</h1>
+				<p>{isRussian ? 'Этот сайт-портфолио тоже полностью собран с помощью вайбкодинга' : 'This portfolio website was also built entirely through vibe coding.'}</p>
 			</header>
 
-			<nav aria-label="Проекты по вайбкодингу">
+			<nav aria-label={isRussian ? 'Проекты по вайбкодингу' : 'Vibe coding projects'}>
 				{projects.map((project, index) => (
-					<a href={project.href} aria-label={`Открыть проект: ${project.title}`}>
+					<a href={localizedPath(project.href, locale)} aria-label={`${isRussian ? 'Открыть проект' : 'Open project'}: ${project.title}`}>
 						<span>{String(index + 1).padStart(2, '0')}</span>
 						<div>
 							<h2>{project.title}</h2>

@@ -1,4 +1,6 @@
 ---
+import { getLocale, localizedPath } from '../lib/i18n';
+
 interface Props {
 	title: string;
 	description: string;
@@ -6,16 +8,19 @@ interface Props {
 	imageAlt?: string;
 }
 
+const locale = getLocale(Astro.url.pathname);
 const {
 	title,
 	description,
-	image = '/og/jurecki-portfolio.png',
-	imageAlt = 'Fedor Jurecki — арт-директор и графический дизайнер',
+	image = '/og/fedor-jurecki-portfolio-en.png',
+	imageAlt = locale === 'ru' ? 'Федор Юрецкий — графический дизайнер' : 'Fedor Jurecki — graphic designer',
 } = Astro.props;
 
 const site = Astro.site ?? new URL('https://jurecki-portfolio.vercel.app');
 const canonicalPath = Astro.url.pathname === '/' ? '/' : Astro.url.pathname.replace(/\/+$/, '');
 const canonical = new URL(canonicalPath, site).toString();
+const englishUrl = new URL(localizedPath(Astro.url.pathname, 'en'), site).toString();
+const russianUrl = new URL(localizedPath(Astro.url.pathname, 'ru'), site).toString();
 const socialImage = new URL(image, site).toString();
 const personId = new URL('/#fedor-jurecki', site).toString();
 const structuredData = {
@@ -25,11 +30,11 @@ const structuredData = {
 	name: 'Fedor Jurecki',
 	url: new URL('/', site).toString(),
 	image: socialImage,
-	description: 'Арт-директор и графический дизайнер с экспертизой в многостраничной вёрстке, инфографике и презентациях.',
-	jobTitle: 'Арт-директор и графический дизайнер',
+	description: locale === 'ru' ? 'Графический дизайнер с экспертизой в многостраничной вёрстке, инфографике и презентациях.' : 'Graphic designer specializing in editorial design, infographics, and presentations.',
+	jobTitle: locale === 'ru' ? 'Графический дизайнер' : 'Graphic Designer',
 	address: {
 		'@type': 'PostalAddress',
-		addressLocality: 'Астана',
+		addressLocality: locale === 'ru' ? 'Астана' : 'Astana',
 		addressCountry: 'KZ',
 	},
 };
@@ -41,6 +46,9 @@ const structuredData = {
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=2" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
 <link rel="canonical" href={canonical} />
+<link rel="alternate" hreflang="en" href={englishUrl} />
+<link rel="alternate" hreflang="ru" href={russianUrl} />
+<link rel="alternate" hreflang="x-default" href={englishUrl} />
 <link rel="sitemap" href={new URL('/sitemap.xml', site).toString()} />
 <meta name="description" content={description} />
 <meta name="robots" content="index, follow, max-image-preview:large" />
@@ -48,7 +56,7 @@ const structuredData = {
 <title>{title}</title>
 
 <meta property="og:type" content="website" />
-<meta property="og:locale" content="ru_KZ" />
+<meta property="og:locale" content={locale === 'ru' ? 'ru_KZ' : 'en_US'} />
 <meta property="og:site_name" content="Fedor Jurecki" />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />

@@ -1,20 +1,24 @@
 ---
 import SiteHeader from '../../components/SiteHeader.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getLocale, localizedPath } from '../../lib/i18n';
+
+const locale = getLocale(Astro.url.pathname);
+const isRu = locale === 'ru';
 ---
 
 <BaseLayout
-	title="Раздел в работе — Федор Юрецкий"
-	description="Новый раздел портфолио Федора Юрецкого находится в работе."
+	title={isRu ? 'Раздел в работе — Федор Юрецкий' : 'Section in progress — Fedor Jurecki'}
+	description={isRu ? 'Новый раздел портфолио Федора Юрецкого находится в работе.' : 'A new section of Fedor Jurecki’s portfolio is in progress.'}
 >
 	<SiteHeader />
 	<main class="placeholder-page">
 		<section>
-			<p>Портфолио</p>
-			<h1>Раздел<br />в работе</h1>
+			<p>{isRu ? 'Портфолио' : 'Portfolio'}</p>
+			<h1>{isRu ? <>Раздел<br />в работе</> : <>Section<br />in progress</>}</h1>
 			<div class="placeholder-rule" aria-hidden="true"></div>
-			<p class="placeholder-copy">Материалы для этого направления появятся позже.</p>
-			<a href="/#work">Вернуться к оглавлению <span aria-hidden="true">←</span></a>
+			<p class="placeholder-copy">{isRu ? 'Материалы для этого направления появятся позже.' : 'Work for this section will be added later.'}</p>
+			<a href={localizedPath('/#work', locale)}>{isRu ? 'Вернуться к оглавлению' : 'Back to contents'} <span aria-hidden="true">←</span></a>
 		</section>
 	</main>
 </BaseLayout>

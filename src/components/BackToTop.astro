@@ -1,4 +1,9 @@
-<a class="back-to-top" href="#top" aria-label="Вернуться в начало страницы" aria-hidden="true" tabindex="-1">↑</a>
+---
+import { getLocale } from '../lib/i18n';
+const isRussian = getLocale(Astro.url.pathname) === 'ru';
+---
+
+<a class="back-to-top" href="#top" aria-label={isRussian ? 'Вернуться в начало страницы' : 'Back to top'} aria-hidden="true" tabindex="-1">↑</a>
 
 <script>
 	const button = document.querySelector<HTMLAnchorElement>('.back-to-top');

@@ -1,21 +1,25 @@
 (() => {
+	const isRu = location.pathname === '/ru' || location.pathname.startsWith('/ru/');
 	const flowSlides = [
-		['Регистрация', '/portfolio/shelfr/shelfr-13.webp'],
-		['Добавить книгу в «Читаю сейчас»', '/portfolio/shelfr/shelfr-flow-02.webp'],
-		['Записать чтение и продолжить стрик', '/portfolio/shelfr/shelfr-flow-03.png'],
-		['Начать челлендж', '/portfolio/shelfr/shelfr-flow-04.png'],
-		['Добавить книгу в список', '/portfolio/shelfr/shelfr-flow-05.png'],
-		['Категоризировать книги в «Хочу прочитать»', '/portfolio/shelfr/shelfr-flow-06.png'],
-		['Перенести книгу в «Прочитано» или «Брошено»', '/portfolio/shelfr/shelfr-flow-07.png'],
-		['Написать отзыв', '/portfolio/shelfr/shelfr-flow-08.png'],
-		['Создать список', '/portfolio/shelfr/shelfr-flow-09.png'],
-		['Выбрать следующую книгу', '/portfolio/shelfr/shelfr-flow-10.png'],
-		['Читать отзывы', '/portfolio/shelfr/shelfr-flow-11.png'],
-		['Использовать поиск', '/portfolio/shelfr/shelfr-flow-12.png'],
-		['Действия с профилями других пользователей', '/portfolio/shelfr/shelfr-flow-13.png'],
-		['Редактирование профиля и настройки приватности', '/portfolio/shelfr/shelfr-flow-14.png'],
-		['Достижения и статистика', '/portfolio/shelfr/shelfr-flow-15.png'],
-	];
+		['Регистрация', 'Registration', '/portfolio/shelfr/shelfr-13.webp'],
+		['Добавить книгу в «Читаю сейчас»', 'Add a book to “Currently Reading”', '/portfolio/shelfr/shelfr-flow-02.webp'],
+		['Записать чтение и продолжить стрик', 'Log a reading session and continue the streak', '/portfolio/shelfr/shelfr-flow-03.png'],
+		['Начать челлендж', 'Start a challenge', '/portfolio/shelfr/shelfr-flow-04.png'],
+		['Добавить книгу в список', 'Add a book to a list', '/portfolio/shelfr/shelfr-flow-05.png'],
+		['Категоризировать книги в «Хочу прочитать»', 'Categorize books in “Want to Read”', '/portfolio/shelfr/shelfr-flow-06.png'],
+		['Перенести книгу в «Прочитано» или «Брошено»', 'Move a book to “Read” or “Abandoned”', '/portfolio/shelfr/shelfr-flow-07.png'],
+		['Написать отзыв', 'Write a review', '/portfolio/shelfr/shelfr-flow-08.png'],
+		['Создать список', 'Create a list', '/portfolio/shelfr/shelfr-flow-09.png'],
+		['Выбрать следующую книгу', 'Choose the next book', '/portfolio/shelfr/shelfr-flow-10.png'],
+		['Читать отзывы', 'Read reviews', '/portfolio/shelfr/shelfr-flow-11.png'],
+		['Использовать поиск', 'Use search', '/portfolio/shelfr/shelfr-flow-12.png'],
+		['Действия с профилями других пользователей', 'Interact with other users’ profiles', '/portfolio/shelfr/shelfr-flow-13.png'],
+		['Редактирование профиля и настройки приватности', 'Edit profile and privacy settings', '/portfolio/shelfr/shelfr-flow-14.png'],
+		['Достижения и статистика', 'Achievements and statistics', '/portfolio/shelfr/shelfr-flow-15.png'],
+	].map(([ru, en, src]) => [isRu ? ru : en, src]);
+	const flowUi = isRu
+		? { previous: 'Предыдущая схема', next: 'Следующая схема', alt: 'Пользовательский сценарий' }
+		: { previous: 'Previous flow', next: 'Next flow', alt: 'User flow' };
 	const main = document.querySelector('#main');
 	if (!main || document.querySelector('.portfolio-project-navigation')) return;
 	if (!matchMedia('(max-width: 1024px)').matches) {
@@ -310,8 +314,8 @@
 		const previous = textElement('button', '', '←');
 		const next = textElement('button', '', '→');
 		previous.type = next.type = 'button';
-		previous.setAttribute('aria-label', 'Предыдущая схема');
-		next.setAttribute('aria-label', 'Следующая схема');
+		previous.setAttribute('aria-label', flowUi.previous);
+		next.setAttribute('aria-label', flowUi.next);
 		const controls = element('div', 'shelfr-mobile-flow-controls');
 		controls.append(previous, next);
 		const head = element('div', 'shelfr-mobile-flow-head');
@@ -324,7 +328,7 @@
 			title.textContent = label;
 			counter.textContent = `${active + 1}/${flowSlides.length}`;
 			image.src = src;
-			image.alt = `Пользовательский сценарий: ${label}`;
+			image.alt = `${flowUi.alt}: ${label}`;
 		};
 		previous.addEventListener('click', () => show(active - 1));
 		next.addEventListener('click', () => show(active + 1));
@@ -352,7 +356,7 @@
 			image.removeAttribute('srcset');
 			image.removeAttribute('sizes');
 			image.src = src;
-			image.alt = `Пользовательский сценарий: ${label}`;
+			image.alt = `${flowUi.alt}: ${label}`;
 		};
 		const bind = (control, step, label) => {
 			control.setAttribute('role', 'button');
@@ -363,8 +367,8 @@
 				if (event.key === 'Enter' || event.key === ' ') show(active + step);
 			});
 		};
-		bind(previous, -1, 'Предыдущая схема');
-		bind(next, 1, 'Следующая схема');
+		bind(previous, -1, flowUi.previous);
+		bind(next, 1, flowUi.next);
 	}
 
 	function buildIterationSliders(source, groups) {
@@ -440,13 +444,15 @@
 		const group = source.querySelector('[data-framer-name="Group 75"]');
 		[...(group?.children || [])].forEach((item) => {
 			const message = element('figure', 'shelfr-mobile-message');
+			const liveText = item.textContent.trim();
+			if (liveText) message.append(textElement('p', '', liveText));
 			const image = item.querySelector('img');
-			if (image) {
+			if (!liveText && image) {
 				const clone = image.cloneNode(false);
 				clone.removeAttribute('style');
 				clone.loading = 'lazy';
 				message.append(clone);
-			} else {
+			} else if (!liveText) {
 				const svg = item.querySelector('svg')?.cloneNode(true);
 				if (svg) {
 					svg.removeAttribute('style');

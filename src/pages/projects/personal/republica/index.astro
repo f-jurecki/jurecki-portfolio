@@ -5,6 +5,9 @@ import ProjectFooter from '../../../../components/ProjectFooter.astro';
 import ResponsiveImage from '../../../../components/ResponsiveImage.astro';
 import SiteHeader from '../../../../components/SiteHeader.astro';
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { getLocale } from '../../../../lib/i18n';
+
+const isRu = getLocale(Astro.url.pathname) === 'ru';
 
 const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map((letter) => ({
 	letter,
@@ -13,12 +16,12 @@ const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map((letter) => ({
 
 const applications = [1, 2, 3].map((number) => ({
 	src: `/portfolio/republica/application-${number}.webp`,
-	alt: `Пример использования шрифта Republica ${number}`,
+	alt: isRu ? `Пример использования шрифта Republica ${number}` : `Republica usage example ${number}`,
 }));
 
 const specimens = [1, 2, 3].map((number) => ({
 	src: `/portfolio/republica/specimen-${number}.webp`,
-	alt: `Текстовый образец Republica ${number}`,
+	alt: isRu ? `Текстовый образец Republica ${number}` : `Republica typesetting specimen ${number}`,
 }));
 
 const origins = [
@@ -29,29 +32,29 @@ const origins = [
 ---
 
 <BaseLayout
-	title="Шрифт Republica — Федор Юрецкий"
-	description="Republica — авторский шрифт Федора Юрецкого, собранный из реальных объектов на улицах Астаны."
+	title={isRu ? 'Шрифт Republica — Федор Юрецкий' : 'Republica Typeface — Fedor Jurecki'}
+	description={isRu ? 'Republica — авторский шрифт Федора Юрецкого, собранный из реальных объектов на улицах Астаны.' : 'Republica is an original typeface built from objects found on the streets of Astana.'}
 >
 	<SiteHeader />
 
 	<main class="republica-page">
 		<section class="republica-intro" aria-labelledby="republica-title">
-			<h1 id="republica-title">Шрифт Republica</h1>
+			<h1 id="republica-title">{isRu ? 'Шрифт Republica' : 'Republica Typeface'}</h1>
 			<div class="republica-copy">
-				<p>Republica — шрифт, созданный из объектов на улицах Астаны. Каждая буква основана на отдельной реальной форме, найденной в городской среде.</p>
-				<p>Проект развивался полгода и существует в двух вариантах: как набор PNG-глифов и как живой шрифт.</p>
+				<p>{isRu ? 'Republica — шрифт, созданный из объектов на улицах Астаны. Каждая буква основана на отдельной реальной форме, найденной в городской среде.' : 'Republica is a typeface built from objects found on the streets of Astana. Each letter is based on a separate real-world form discovered in the urban environment.'}</p>
+				<p>{isRu ? 'Проект развивался полгода и существует в двух вариантах: как набор PNG-глифов и как живой шрифт.' : 'The project developed over six months and exists in two versions: as a set of PNG glyphs and as a functional typeface.'}</p>
 			</div>
 		</section>
 
-		<button class="alphabet-stage zoom-trigger" type="button" data-lightbox-target="republica-lightbox" data-caption="Алфавит Republica" aria-label="Увеличить алфавит Republica">
-			<ResponsiveImage src="/portfolio/republica/alphabet.webp" alt="Полный латинский алфавит Republica" widths={[640, 960, 1200]} sizes="(max-width: 700px) 100vw, 94vw" loading="eager" />
+		<button class="alphabet-stage zoom-trigger" type="button" data-lightbox-target="republica-lightbox" data-caption={isRu ? 'Алфавит Republica' : 'Republica alphabet'} aria-label={isRu ? 'Увеличить алфавит Republica' : 'Enlarge Republica alphabet'}>
+			<ResponsiveImage src="/portfolio/republica/alphabet.webp" alt={isRu ? 'Полный латинский алфавит Republica' : 'Complete Republica Latin alphabet'} widths={[640, 960, 1200]} sizes="(max-width: 700px) 100vw, 94vw" loading="eager" />
 		</button>
 
 		<section class="republica-section" aria-labelledby="applications-title">
-			<header class="section-heading"><h2 id="applications-title">Примеры использования</h2></header>
+			<header class="section-heading"><h2 id="applications-title">{isRu ? 'Примеры использования' : 'Usage examples'}</h2></header>
 			<div class="application-grid">
 				{applications.map((application) => (
-					<button class="zoom-trigger" type="button" data-lightbox-target="republica-lightbox" data-caption={application.alt} aria-label={`Увеличить: ${application.alt}`}>
+					<button class="zoom-trigger" type="button" data-lightbox-target="republica-lightbox" data-caption={application.alt} aria-label={`${isRu ? 'Увеличить' : 'Enlarge'}: ${application.alt}`}>
 						<ResponsiveImage src={application.src} alt={application.alt} widths={[420, 700, 900]} sizes="(max-width: 700px) 82vw, 31vw" />
 					</button>
 				))}
@@ -60,15 +63,15 @@ const origins = [
 
 		<section class="republica-section" aria-labelledby="specimens-title">
 			<div class="section-heading section-heading--split">
-				<h2 id="specimens-title">Живой шрифт</h2>
+				<h2 id="specimens-title">{isRu ? 'Живой шрифт' : 'Functional typeface'}</h2>
 				<div>
-					<p>В наборной версии Republica работает вместе с нейтральной гротескной основой: найденные формы заменяют отдельные буквы и меняют ритм привычного текста.</p>
-					<p>Я векторизировал найденные формы, исправил проблемные места и собрал из них полноценный шрифт в FontLab.</p>
+					<p>{isRu ? 'В наборной версии Republica работает вместе с нейтральной гротескной основой: найденные формы заменяют отдельные буквы и меняют ритм привычного текста.' : 'In its typeset version, Republica works alongside a neutral grotesque base: the found forms replace selected letters and disrupt the rhythm of otherwise familiar text.'}</p>
+					<p>{isRu ? 'Я векторизировал найденные формы, исправил проблемные места и собрал из них полноценный шрифт в FontLab.' : 'I vectorized the collected forms, corrected problematic details, and built them into a complete typeface in FontLab.'}</p>
 				</div>
 			</div>
 			<div class="specimen-grid">
 				{specimens.map((specimen) => (
-					<button class="zoom-trigger" type="button" data-lightbox-target="republica-lightbox" data-caption={specimen.alt} aria-label={`Увеличить: ${specimen.alt}`}>
+					<button class="zoom-trigger" type="button" data-lightbox-target="republica-lightbox" data-caption={specimen.alt} aria-label={`${isRu ? 'Увеличить' : 'Enlarge'}: ${specimen.alt}`}>
 						<ResponsiveImage src={specimen.src} alt={specimen.alt} widths={[480, 760, 1080]} sizes="(max-width: 700px) 88vw, 31vw" />
 					</button>
 				))}
@@ -77,15 +80,15 @@ const origins = [
 
 		<section class="republica-section" aria-labelledby="origins-title">
 			<div class="section-heading section-heading--split">
-				<h2 id="origins-title">Каждая буква — найденный объект</h2>
-				<p>Формы сначала находились и снимались в городе, затем отделялись от окружения и превращались в самостоятельные глифы.</p>
+				<h2 id="origins-title">{isRu ? 'Каждая буква — найденный объект' : 'Every letter is a found object'}</h2>
+				<p>{isRu ? 'Формы сначала находились и снимались в городе, затем отделялись от окружения и превращались в самостоятельные глифы.' : 'The forms were first discovered and photographed around the city, then isolated from their surroundings and turned into standalone glyphs.'}</p>
 			</div>
 			<div class="origin-grid">
 				{origins.map((origin) => (
 					<article class="origin-item">
-						<video src={origin.video} controls muted playsinline preload="metadata" aria-label={`Происхождение буквы ${origin.letter}`}></video>
+						<video src={origin.video} controls muted playsinline preload="metadata" aria-label={`${isRu ? 'Происхождение буквы' : 'Origin of the letter'} ${origin.letter}`}></video>
 						<div class="origin-letter">
-							<ResponsiveImage src={`/portfolio/republica/letters/${origin.letter.toLowerCase()}.webp`} alt={`Буква ${origin.letter} шрифта Republica`} widths={[240, 360, 480]} sizes="(max-width: 700px) 38vw, 14vw" />
+							<ResponsiveImage src={`/portfolio/republica/letters/${origin.letter.toLowerCase()}.webp`} alt={`${isRu ? 'Буква' : 'Letter'} ${origin.letter} ${isRu ? 'шрифта Republica' : 'in the Republica typeface'}`} widths={[240, 360, 480]} sizes="(max-width: 700px) 38vw, 14vw" />
 						</div>
 					</article>
 				))}
@@ -94,14 +97,14 @@ const origins = [
 
 		<section class="republica-section" aria-labelledby="glyphs-title">
 			<div class="section-heading section-heading--split">
-				<h2 id="glyphs-title">PNG-набор</h2>
-				<p>Все 26 знаков также существуют как отдельные изображения: их можно использовать независимо от наборной версии.</p>
+				<h2 id="glyphs-title">{isRu ? 'PNG-набор' : 'PNG set'}</h2>
+				<p>{isRu ? 'Все 26 знаков также существуют как отдельные изображения: их можно использовать независимо от наборной версии.' : 'All 26 characters also exist as separate images and can be used independently from the typeset version.'}</p>
 			</div>
-			<div class="letter-scroll" tabindex="0" aria-label="Алфавит Republica, 26 отдельных PNG-глифов">
+			<div class="letter-scroll" tabindex="0" aria-label={isRu ? 'Алфавит Republica, 26 отдельных PNG-глифов' : 'Republica alphabet, 26 individual PNG glyphs'}>
 				<div class="letter-grid">
 					{letters.map(({ letter, src }) => (
-						<button class="letter-button" type="button" data-lightbox-target="republica-lightbox" data-caption={`Republica · ${letter}`} aria-label={`Увеличить букву ${letter}`}>
-							<ResponsiveImage src={src} alt={`Буква ${letter} шрифта Republica`} widths={[160, 240, 480]} sizes="6rem" />
+						<button class="letter-button" type="button" data-lightbox-target="republica-lightbox" data-caption={`Republica · ${letter}`} aria-label={`${isRu ? 'Увеличить букву' : 'Enlarge letter'} ${letter}`}>
+							<ResponsiveImage src={src} alt={`${isRu ? 'Буква' : 'Letter'} ${letter} ${isRu ? 'шрифта Republica' : 'in the Republica typeface'}`} widths={[160, 240, 480]} sizes="6rem" />
 						</button>
 					))}
 				</div>
@@ -109,10 +112,10 @@ const origins = [
 		</section>
 	</main>
 
-	<CaseLightbox id="republica-lightbox" variant="single" label="Увеличенное изображение проекта Republica" />
+	<CaseLightbox id="republica-lightbox" variant="single" label={isRu ? 'Увеличенное изображение проекта Republica' : 'Enlarged Republica project image'} />
 	<CasePagination
-		previous={{ href: '/projects/personal/cards/', label: 'Колода карт Misprint' }}
-		next={{ href: '/projects/personal/posters/', label: 'Постеры' }}
+		previous={{ href: '/projects/personal/cards/', label: isRu ? 'Колода карт Misprint' : 'Misprint Playing Card Deck' }}
+		next={{ href: '/projects/personal/posters/', label: isRu ? 'Постеры' : 'Posters' }}
 	/>
 	<ProjectFooter />
 </BaseLayout>

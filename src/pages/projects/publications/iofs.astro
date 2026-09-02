@@ -8,14 +8,17 @@ import ProjectFooter from '../../../components/ProjectFooter.astro';
 import ResponsiveImage from '../../../components/ResponsiveImage.astro';
 import SiteHeader from '../../../components/SiteHeader.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getLocale } from '../../../lib/i18n';
+
+const isRu = getLocale(Astro.url.pathname) === 'ru';
 
 const gallery = [
-	['gallery-annual-a1.webp', 'gallery-annual-a2.webp', 'Годовой отчёт · Раздел 01', 'дополнительная полоса', 'продолжение раздела'],
-	['gallery-annual-b1.webp', 'gallery-annual-b2.webp', 'Годовой отчёт · Раздел 02', 'дополнительный разворот', 'продолжение дополнительного разворота'],
-	['gallery-fsh22-a1.webp', 'gallery-fsh22-a2.webp', 'Food Security Hub · Выпуск 22', 'дополнительная статья', 'продолжение статьи'],
-	['gallery-fsh22-b1.webp', 'gallery-fsh22-b2.webp', 'Food Security Hub · Выпуск 22', 'дополнительный материал', 'продолжение материала'],
-	['gallery-fsh23-a1.webp', 'gallery-fsh23-a2.webp', 'Food Security Hub · Выпуск 23', 'дополнительная полоса', 'продолжение полосы'],
-	['gallery-fsh23-b1.webp', 'gallery-fsh23-b2.webp', 'Food Security Hub · Выпуск 23', 'финальный дополнительный разворот', 'продолжение финального разворота'],
+	['gallery-annual-a1.webp', 'gallery-annual-a2.webp', isRu ? 'Годовой отчёт · Раздел 01' : 'Annual Report · Section 01', 'left page', 'right page'],
+	['gallery-annual-b1.webp', 'gallery-annual-b2.webp', isRu ? 'Годовой отчёт · Раздел 02' : 'Annual Report · Section 02', 'left page', 'right page'],
+	['gallery-fsh22-a2.webp', 'gallery-fsh22-a1.webp', isRu ? 'Food Security Hub · Выпуск 22' : 'Food Security Hub · Issue 22', 'left page', 'right page'],
+	['gallery-fsh22-b1.webp', 'gallery-fsh22-b2.webp', isRu ? 'Food Security Hub · Выпуск 22' : 'Food Security Hub · Issue 22', 'left page', 'right page'],
+	['gallery-fsh23-a1.webp', 'gallery-fsh23-a2.webp', isRu ? 'Food Security Hub · Выпуск 23' : 'Food Security Hub · Issue 23', 'left page', 'right page'],
+	['gallery-fsh23-b1.webp', 'gallery-fsh23-b2.webp', isRu ? 'Food Security Hub · Выпуск 23' : 'Food Security Hub · Issue 23', 'left page', 'right page'],
 ].map(([left, right, caption, leftAlt, rightAlt]) => ({
 	caption,
 	images: [
@@ -26,105 +29,105 @@ const gallery = [
 ---
 
 	<BaseLayout
-		title="IOFS — Федор Юрецкий"
-		description="IOFS — дизайн и вёрстка годового отчёта, ежеквартального журнала Food Security Hub и других многостраничных материалов."
+		title={isRu ? 'IOFS — Федор Юрецкий' : 'IOFS — Editorial Design by Fedor Jurecki'}
+	description={isRu ? 'IOFS — дизайн и вёрстка годового отчёта, ежеквартального журнала Food Security Hub и других многостраничных материалов.' : 'Editorial design and layout for the IOFS annual report, Food Security Hub publication, and other multi-page materials.'}
 	>
 		<SiteHeader />
 
 		<main>
 			<section class="project-hero">
-				<p class="eyebrow">Многостраничные издания · Редакционный дизайн</p>
+				<p class="eyebrow">{isRu ? 'Многостраничные издания · Редакционный дизайн' : 'Multi-page publications · Editorial design'}</p>
 				<div class="hero-row">
-					<h1>ИОПБ<br /><span class="title-accent">IOFS</span></h1>
+					<h1>{isRu ? <>ИОПБ<br /><span class="title-accent">IOFS</span></> : 'IOFS'}</h1>
 					<div class="summary">
-						<p>В работе над печатными материалами ИОПБ я выступаю ведущим дизайнером и отвечаю за развитие визуального направления организации. Опираясь на ранее созданные материалы, я развиваю существующий стиль, адаптирую его под новые форматы и задачи и поддерживаю визуальную целостность публикаций.</p>
-						<p>Последние отчёты, выпуски Food Security Hub и другие редакционные материалы были разработаны и арт-директированы мной: от структуры и вёрстки до инфографики и отдельных визуальных решений. При работе с новыми публикациями я сохраняю преемственность существующего визуального языка, постепенно расширяя и систематизируя его.</p>
+						<p>{isRu ? 'В работе над печатными материалами ИОПБ я выступаю ведущим дизайнером и отвечаю за развитие визуального направления организации. Опираясь на ранее созданные материалы, я развиваю существующий стиль, адаптирую его под новые форматы и задачи и поддерживаю визуальную целостность публикаций.' : 'I serve as lead designer for IOFS print and editorial materials and am responsible for developing the organization’s visual direction. Building on earlier work, I evolve the existing style, adapt it to new formats and needs, and maintain visual consistency across publications.'}</p>
+						<p>{isRu ? 'Последние отчёты, выпуски Food Security Hub и другие редакционные материалы были разработаны и арт-директированы мной: от структуры и вёрстки до инфографики и отдельных визуальных решений. При работе с новыми публикациями я сохраняю преемственность существующего визуального языка, постепенно расширяя и систематизируя его.' : 'The latest annual reports, Food Security Hub issues, and other editorial materials were designed and art-directed by me, from structure and layout to infographics and individual visual solutions. With each new publication, I preserve continuity with the established visual language while gradually expanding and systematizing it.'}</p>
 					</div>
 				</div>
 			</section>
 
 			<figure class="cover-stage">
-				<div class="cover cover-small"><ResponsiveImage src="/portfolio/iofs/fsh22-cover.webp" alt="Обложка журнала Food Security Hub, выпуск 22" sizes="(max-width: 700px) 32vw, 24vw" loading="eager" /></div>
-				<div class="cover cover-main"><ResponsiveImage src="/portfolio/iofs/annual-cover.webp" alt="Обложка годового отчёта IOFS за 2025 год" sizes="(max-width: 700px) 36vw, 28vw" loading="eager" fetchpriority="high" /></div>
-				<div class="cover cover-small"><ResponsiveImage src="/portfolio/iofs/fsh23-cover.webp" alt="Обложка журнала Food Security Hub, выпуск 23" sizes="(max-width: 700px) 32vw, 24vw" loading="eager" /></div>
+				<div class="cover cover-small"><ResponsiveImage src="/portfolio/iofs/fsh22-cover.webp" alt={isRu ? 'Обложка журнала Food Security Hub, выпуск 22' : 'Food Security Hub publication cover, edition 22'} sizes="(max-width: 700px) 32vw, 24vw" loading="eager" /></div>
+				<div class="cover cover-main"><ResponsiveImage src="/portfolio/iofs/annual-cover.webp" alt={isRu ? 'Обложка годового отчёта IOFS за 2025 год' : 'IOFS 2025 annual report cover'} sizes="(max-width: 700px) 36vw, 28vw" loading="eager" fetchpriority="high" /></div>
+				<div class="cover cover-small"><ResponsiveImage src="/portfolio/iofs/fsh23-cover.webp" alt={isRu ? 'Обложка журнала Food Security Hub, выпуск 23' : 'Food Security Hub publication cover, edition 23'} sizes="(max-width: 700px) 32vw, 24vw" loading="eager" /></div>
 			</figure>
 
 			<section class="overview section-grid" id="case-task" data-case-section>
-				<p class="section-label">Задача</p>
+				<p class="section-label">{isRu ? 'Задача' : 'Scope'}</p>
 				<div class="rich-text">
-					<h2>Журнал — раз в квартал.<br />Годовой отчёт — раз в год.</h2>
-					<p>Каждый квартал я верстаю новый выпуск Food Security Hub, раз в год — годовой отчёт о программах, показателях и географии работы IOFS.</p>
-					<p>Также оформляю материалы для мероприятий: баннеры, раздаточные материалы и роллапы. Для каждого формата адаптирую общую визуальную систему под содержание и задачу.</p>
+					<h2>{isRu ? <>Журнал — раз в квартал.<br />Годовой отчёт — раз в год.</> : <>Quarterly publication.<br />Annual report once a year.</>}</h2>
+					<p>{isRu ? 'Каждый квартал я верстаю новый выпуск Food Security Hub, раз в год — годовой отчёт о программах, показателях и географии работы IOFS.' : 'Every quarter, I design a new edition of Food Security Hub; once a year, I produce the annual report covering IOFS programs, performance indicators, and geographic reach.'}</p>
+					<p>{isRu ? 'Также оформляю материалы для мероприятий: баннеры, раздаточные материалы и роллапы. Для каждого формата адаптирую общую визуальную систему под содержание и задачу.' : 'I also design materials for events, including banners, handouts, and roll-up displays. For each format, I adapt the shared visual system to the specific content and purpose.'}</p>
 				</div>
 			</section>
 
 			<section class="showcase showcase-sky" id="case-report" data-case-section>
 				<div class="spread-pair">
-					<ResponsiveImage src="/portfolio/iofs/annual-glance-1.webp" alt="Разворот IOFS at a Glance: миссия и цели" sizes="(max-width: 700px) 50vw, 44vw" />
-					<ResponsiveImage src="/portfolio/iofs/annual-glance-2.webp" alt="Разворот IOFS at a Glance: ключевые показатели 2025 года" sizes="(max-width: 700px) 50vw, 44vw" />
+					<ResponsiveImage src="/portfolio/iofs/annual-glance-1.webp" alt={isRu ? 'Разворот IOFS at a Glance: миссия и цели' : 'IOFS at a Glance spread: mission and goals'} sizes="(max-width: 700px) 50vw, 44vw" />
+					<ResponsiveImage src="/portfolio/iofs/annual-glance-2.webp" alt={isRu ? 'Разворот IOFS at a Glance: ключевые показатели 2025 года' : 'IOFS at a Glance spread: 2025 key figures'} sizes="(max-width: 700px) 50vw, 44vw" />
 				</div>
 			</section>
 
 			<div class="spread-frame spread-frame-light">
 				<div class="spread-pair">
-					<ResponsiveImage src="/portfolio/iofs/annual-system-1.webp" alt="Инфографика результатов официальных миссий IOFS" sizes="(max-width: 700px) 50vw, 44vw" />
-					<ResponsiveImage src="/portfolio/iofs/annual-system-2.webp" alt="Инфографика стран-участниц IOFS" sizes="(max-width: 700px) 50vw, 44vw" />
+					<ResponsiveImage src="/portfolio/iofs/annual-system-1.webp" alt={isRu ? 'Инфографика результатов официальных миссий IOFS' : 'Infographic showing the results of IOFS official missions'} sizes="(max-width: 700px) 50vw, 44vw" />
+					<ResponsiveImage src="/portfolio/iofs/annual-system-2.webp" alt={isRu ? 'Инфографика стран-участниц IOFS' : 'Infographic showing IOFS member states'} sizes="(max-width: 700px) 50vw, 44vw" />
 				</div>
 			</div>
 
 			<section class="covers-section">
-				<div class="showcase-head showcase-head-light"><span>Серия</span><h2>Food Security<br />Hub</h2><p>Обложки сохраняют узнаваемую композицию, а аграрная фотография задаёт тему каждого выпуска.</p></div>
+				<div class="showcase-head showcase-head-light"><span>{isRu ? 'Серия' : 'Series'}</span><h2>Food Security<br />Hub</h2><p>{isRu ? 'Обложки сохраняют узнаваемую композицию, а аграрная фотография задаёт тему каждого выпуска.' : 'The covers retain a recognizable composition, while agricultural photography sets the theme for each issue.'}</p></div>
 				<div class="covers-grid">
-					<ResponsiveImage src="/portfolio/iofs/fsh22-cover.webp" alt="Обложка Food Security Hub №22" sizes="(max-width: 700px) 50vw, 28vw" />
-					<ResponsiveImage src="/portfolio/iofs/fsh23-cover.webp" alt="Обложка Food Security Hub №23" sizes="(max-width: 700px) 50vw, 28vw" />
+					<ResponsiveImage src="/portfolio/iofs/fsh22-cover.webp" alt={isRu ? 'Обложка Food Security Hub №22' : 'Food Security Hub issue 22 cover'} sizes="(max-width: 700px) 50vw, 28vw" />
+					<ResponsiveImage src="/portfolio/iofs/fsh23-cover.webp" alt={isRu ? 'Обложка Food Security Hub №23' : 'Food Security Hub issue 23 cover'} sizes="(max-width: 700px) 50vw, 28vw" />
 				</div>
 			</section>
 
 			<section class="journal-section" id="case-journal" data-case-section>
 				<div class="spread-frame spread-frame-white">
 					<div class="spread-pair">
-						<ResponsiveImage src="/portfolio/iofs/fsh23-feature-1.webp" alt="Текстовая полоса Food Security Hub" sizes="(max-width: 700px) 50vw, 44vw" />
-						<ResponsiveImage src="/portfolio/iofs/fsh23-feature-2.webp" alt="Полоса Food Security Hub с крупной аграрной фотографией" sizes="(max-width: 700px) 50vw, 44vw" />
+						<ResponsiveImage src="/portfolio/iofs/fsh23-feature-1.webp" alt={isRu ? 'Текстовая полоса Food Security Hub' : 'Food Security Hub editorial page'} sizes="(max-width: 700px) 50vw, 44vw" />
+						<ResponsiveImage src="/portfolio/iofs/fsh23-feature-2.webp" alt={isRu ? 'Полоса Food Security Hub с крупной аграрной фотографией' : 'Food Security Hub page with a large agricultural photograph'} sizes="(max-width: 700px) 50vw, 44vw" />
 					</div>
 				</div>
 			</section>
 
 			<section class="news-section">
 				<div class="news-grid">
-					<ResponsiveImage src="/portfolio/iofs/fsh23-news-1.webp" alt="Новостная полоса журнала IOFS" sizes="(max-width: 700px) 50vw, 25vw" />
-					<ResponsiveImage src="/portfolio/iofs/fsh23-news-2.webp" alt="Новостная полоса журнала IOFS" sizes="(max-width: 700px) 50vw, 25vw" />
-					<ResponsiveImage src="/portfolio/iofs/fsh23-chronicle-1.webp" alt="Фотохроника международных встреч IOFS" sizes="(max-width: 700px) 50vw, 25vw" />
-					<ResponsiveImage src="/portfolio/iofs/fsh23-chronicle-2.webp" alt="Фотохроника мероприятий IOFS" sizes="(max-width: 700px) 50vw, 25vw" />
+					<ResponsiveImage src="/portfolio/iofs/fsh23-news-1.webp" alt={isRu ? 'Новостная полоса журнала IOFS' : 'IOFS publication news page'} sizes="(max-width: 700px) 50vw, 25vw" />
+					<ResponsiveImage src="/portfolio/iofs/fsh23-news-2.webp" alt={isRu ? 'Новостная полоса журнала IOFS' : 'IOFS publication news page'} sizes="(max-width: 700px) 50vw, 25vw" />
+					<ResponsiveImage src="/portfolio/iofs/fsh23-chronicle-1.webp" alt={isRu ? 'Фотохроника международных встреч IOFS' : 'Photo chronicle of IOFS international meetings'} sizes="(max-width: 700px) 50vw, 25vw" />
+					<ResponsiveImage src="/portfolio/iofs/fsh23-chronicle-2.webp" alt={isRu ? 'Фотохроника мероприятий IOFS' : 'Photo chronicle of IOFS events'} sizes="(max-width: 700px) 50vw, 25vw" />
 				</div>
 			</section>
 
 			<section class="closing-section section-grid" id="case-result" data-case-section>
-				<p class="section-label">Результат</p>
+				<p class="section-label">{isRu ? 'Результат' : 'Result'}</p>
 				<div>
-					<div class="rich-text"><h2>Годовой отчёт и журнал на постоянном сопровождении.</h2><p>Я веду дизайн и вёрстку годового отчёта и периодического журнала Food Security Hub. Основной язык вёрстки — английский: я собираю длинные тексты, таблицы, фотографии и инфографику в единую систему, которую можно масштабировать на новые материалы.</p><p>Журнал находится на моём постоянном сопровождении. Для каждого выпуска я обновляю содержание и данные, сохраняю преемственность серии и развиваю дизайн-систему по мере появления новых задач.</p></div>
+					<div class="rich-text"><h2>{isRu ? 'Годовой отчёт и журнал на постоянном сопровождении.' : 'Ongoing design support for the annual report and publication.'}</h2><p>{isRu ? 'Я веду дизайн и вёрстку годового отчёта и периодического журнала Food Security Hub. Основной язык вёрстки — английский: я собираю длинные тексты, таблицы, фотографии и инфографику в единую систему, которую можно масштабировать на новые материалы.' : 'I lead the design and layout of the annual report and the recurring Food Security Hub publication. English is the primary working language: I bring long-form text, tables, photography, and infographics into a single system that can scale across new materials.'}</p><p>{isRu ? 'Журнал находится на моём постоянном сопровождении. Для каждого выпуска я обновляю содержание и данные, сохраняю преемственность серии и развиваю дизайн-систему по мере появления новых задач.' : 'The publication remains under my ongoing design support. For each edition, I update the content and data, preserve continuity across the series, and develop the design system as new needs emerge.'}</p></div>
 					<CaseResults items={[
-						['2 формата', 'годовой отчёт и журнал'],
-						['Английский', 'основной язык вёрстки'],
-						['Сопровождение', 'новые выпуски Food Security Hub'],
+						[isRu ? '2 формата' : '2 formats', isRu ? 'годовой отчёт и журнал' : 'annual report and publication'],
+						[isRu ? 'Английский' : 'English', isRu ? 'основной язык вёрстки' : 'primary layout language'],
+						[isRu ? 'Сопровождение' : 'Ongoing support', isRu ? 'новые выпуски Food Security Hub' : 'new Food Security Hub issues'],
 					]} />
 				</div>
 			</section>
 
 			<CaseGallery
-				label="Галерея"
+				label={isRu ? 'Галерея' : 'Gallery'}
 				title=""
 				items={gallery}
 				variant="spread"
 				lightboxId="case-gallery-lightbox"
 				showHeader={false}
 			>
-				<h2 slot="toolbar" class="gallery-only-title">ГАЛЕРЕЯ</h2>
+				<h2 slot="toolbar" class="gallery-only-title">{isRu ? 'ГАЛЕРЕЯ' : 'GALLERY'}</h2>
 			</CaseGallery>
-			<CaseLightbox id="case-gallery-lightbox" variant="spread" label="Увеличенный разворот" />
+			<CaseLightbox id="case-gallery-lightbox" variant="spread" label={isRu ? 'Увеличенный разворот' : 'Enlarged spread'} />
 
 			<CasePagination
 				previous={{ href: '/projects/vibecoding/sequence/', label: 'Sequence' }}
-				next={{ href: '/projects/publications/kipd', label: 'КИОР / KIPD' }}
+				next={{ href: '/projects/publications/kipd', label: isRu ? 'КИОР / KIPD' : 'KIPD' }}
 			/>
 			<ProjectFooter />
 		</main>

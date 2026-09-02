@@ -5,83 +5,86 @@ import ProjectFooter from '../../../components/ProjectFooter.astro';
 import ResponsiveImage from '../../../components/ResponsiveImage.astro';
 import SiteHeader from '../../../components/SiteHeader.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getLocale } from '../../../lib/i18n';
+
+const isRu = getLocale(Astro.url.pathname) === 'ru';
 
 const projects = [
 	{
 		slug: 'osce-box',
-		title: 'ОБСЕ',
-		type: 'Подарочная упаковка',
-		description: 'Подарочная коробка для кампании ОБСЕ «16 дней активизма против гендерного насилия». Орнаментальная графика встроена в заданную оранжевую палитру кампании.',
+		title: isRu ? 'ОБСЕ' : 'OSCE',
+		type: isRu ? 'Подарочная упаковка' : 'Gift Packaging',
+		description: isRu ? 'Подарочная коробка для кампании ОБСЕ «16 дней активизма против гендерного насилия». Орнаментальная графика встроена в заданную оранжевую палитру кампании.' : 'Gift box for the OSCE “16 Days of Activism against Gender-Based Violence” campaign. The ornamental graphics are integrated into the campaign’s established orange palette.',
 		images: [
-			{ src: '/portfolio/branding/osce-box.webp', alt: 'Подарочная коробка ОБСЕ для кампании 16 дней активизма' },
+			{ src: '/portfolio/branding/osce-box.webp', alt: isRu ? 'Подарочная коробка ОБСЕ для кампании 16 дней активизма' : 'OSCE gift box for the 16 Days of Activism campaign' },
 		],
 	},
 	{
 		slug: 'discovery-cups',
-		title: 'Стаканы Discovery Coffee',
-		type: 'Достопримечательности Казахстана',
-		description: 'Серия бумажных стаканов Discovery Coffee с иллюстрациями достопримечательностей и узнаваемых образов Казахстана. Каждый сюжет работает самостоятельно и остаётся частью общей яркой серии.',
+		title: isRu ? 'Стаканы Discovery Coffee' : 'Discovery Coffee Cups',
+		type: isRu ? 'Достопримечательности Казахстана' : 'Kazakhstan Landmarks',
+		description: isRu ? 'Серия бумажных стаканов Discovery Coffee с иллюстрациями достопримечательностей и узнаваемых образов Казахстана. Каждый сюжет работает самостоятельно и остаётся частью общей яркой серии.' : 'A series of Discovery Coffee paper cups featuring illustrations of landmarks and recognizable scenes from Kazakhstan. Each illustration works as a standalone piece while remaining part of a bright, cohesive series.',
 		images: [
-			{ src: '/portfolio/branding/discovery-cups-mountains.webp', alt: 'Бумажные стаканы Discovery Coffee с горным сюжетом' },
-			{ src: '/portfolio/branding/discovery-cups-lake.webp', alt: 'Бумажные стаканы Discovery Coffee с пейзажем у озера' },
-			{ src: '/portfolio/branding/discovery-cups-yurt.webp', alt: 'Бумажные стаканы Discovery Coffee с интерьером юрты' },
-			{ src: '/portfolio/branding/discovery-cup-pattern.webp', alt: 'Бумажный стакан Discovery Coffee с цветным паттерном' },
+			{ src: '/portfolio/branding/discovery-cups-mountains.webp', alt: isRu ? 'Бумажные стаканы Discovery Coffee с горным сюжетом' : 'Discovery Coffee paper cups with a mountain illustration' },
+			{ src: '/portfolio/branding/discovery-cups-lake.webp', alt: isRu ? 'Бумажные стаканы Discovery Coffee с пейзажем у озера' : 'Discovery Coffee paper cups with a lakeside landscape' },
+			{ src: '/portfolio/branding/discovery-cups-yurt.webp', alt: isRu ? 'Бумажные стаканы Discovery Coffee с интерьером юрты' : 'Discovery Coffee paper cups with a yurt interior' },
+			{ src: '/portfolio/branding/discovery-cup-pattern.webp', alt: isRu ? 'Бумажный стакан Discovery Coffee с цветным паттерном' : 'Discovery Coffee paper cup with a colorful pattern' },
 		],
 	},
 	{
 		slug: 'discovery-tea-coffee',
-		title: 'Чай и кофе Discovery Coffee',
-		type: 'Упаковка',
-		description: 'Упаковка чая и кофе Discovery Coffee. Иллюстративная система объединяет разные продукты бренда, сохраняя различия между категориями и заметность на полке.',
+		title: isRu ? 'Чай и кофе Discovery Coffee' : 'Discovery Coffee Tea & Coffee',
+		type: isRu ? 'Упаковка' : 'Packaging',
+		description: isRu ? 'Упаковка чая и кофе Discovery Coffee. Иллюстративная система объединяет разные продукты бренда, сохраняя различия между категориями и заметность на полке.' : 'Tea and coffee packaging for Discovery Coffee. The illustration system unifies different products across the brand while preserving category distinctions and strong shelf visibility.',
 		images: [
-			{ src: '/portfolio/branding/discovery-coffee-pack.webp', alt: 'Упаковка кофе Discovery Coffee' },
-			{ src: '/portfolio/branding/discovery-tea-pack.webp', alt: 'Упаковка чая Discovery Coffee' },
+			{ src: '/portfolio/branding/discovery-coffee-pack.webp', alt: isRu ? 'Упаковка кофе Discovery Coffee' : 'Discovery Coffee packaging' },
+			{ src: '/portfolio/branding/discovery-tea-pack.webp', alt: isRu ? 'Упаковка чая Discovery Coffee' : 'Discovery Coffee tea packaging' },
 		],
 	},
 	{
 		slug: 'irtysh-agroservice',
-		title: 'Иртыш Агросервис',
-		type: 'Многостраничная брошюра',
-		description: 'Двенадцатистраничная продуктовая брошюра для официального дистрибьютора Massey Ferguson. Технические характеристики собраны в устойчивую редакционную систему и дополнены крупными фотографиями техники.',
+		title: isRu ? 'Иртыш Агросервис' : 'Irtysh Agroservice',
+		type: isRu ? 'Многостраничная брошюра' : 'Multi-page Brochure',
+		description: isRu ? 'Двенадцатистраничная продуктовая брошюра для официального дистрибьютора Massey Ferguson. Технические характеристики собраны в устойчивую редакционную систему и дополнены крупными фотографиями техники.' : 'A 12-page product brochure for an official Massey Ferguson distributor. Technical specifications are organized into a consistent editorial system and paired with large-scale equipment photography.',
 		cover: '/portfolio/branding/irtysh-cover.webp',
 		document: true,
 		images: Array.from({ length: 12 }, (_, index) => ({
 			src: `/portfolio/branding/irtysh/page-${String(index + 1).padStart(2, '0')}.webp`,
-			alt: `Брошюра Иртыш Агросервис, страница ${index + 1}`,
+			alt: `${isRu ? 'Брошюра Иртыш Агросервис, страница' : 'Irtysh Agroservice brochure, page'} ${index + 1}`,
 		})),
 	},
 	{
 		slug: 'whisky-rum-wine',
 		title: 'Whisky Rum',
-		type: 'Винная карта',
-		description: 'Шестистраничная винная карта: лаконичная обложка, компактная типографика и последовательная навигация по регионам, категориям и позициям.',
+		type: isRu ? 'Винная карта' : 'Wine List',
+		description: isRu ? 'Шестистраничная винная карта: лаконичная обложка, компактная типографика и последовательная навигация по регионам, категориям и позициям.' : 'A six-page wine list with a restrained cover, compact typography, and consistent navigation across regions, categories, and individual selections.',
 		cover: '/portfolio/branding/wine-cover.webp',
 		document: true,
 		images: Array.from({ length: 6 }, (_, index) => ({
 			src: `/portfolio/branding/wine/page-${String(index + 1).padStart(2, '0')}.webp`,
-			alt: `Винная карта Whisky Rum, страница ${index + 1}`,
+			alt: `${isRu ? 'Винная карта Whisky Rum, страница' : 'Whisky Rum wine list, page'} ${index + 1}`,
 		})),
 	},
 	{
 		slug: 'frnds',
 		title: 'Frnds',
-		type: 'Листовка',
-		description: 'Двусторонняя листовка для пиццерии Frnds: лицевая сторона работает на аппетитный образ продукта, оборотная быстро сообщает меню, адрес и контакты.',
+		type: isRu ? 'Листовка' : 'Flyer',
+		description: isRu ? 'Двусторонняя листовка для пиццерии Frnds: лицевая сторона работает на аппетитный образ продукта, оборотная быстро сообщает меню, адрес и контакты.' : 'A double-sided flyer for Frnds pizzeria: the front focuses on an appetizing product image, while the reverse quickly communicates the menu, address, and contact details.',
 		images: [
-			{ src: '/portfolio/branding/frnds-flyer-mockup.webp', alt: 'Двусторонняя листовка Frnds' },
-			{ src: '/portfolio/branding/frnds-flyer-front.webp', alt: 'Лицевая сторона листовки Frnds' },
-			{ src: '/portfolio/branding/frnds-flyer-back.webp', alt: 'Оборотная сторона листовки Frnds' },
+			{ src: '/portfolio/branding/frnds-flyer-mockup.webp', alt: isRu ? 'Двусторонняя листовка Frnds' : 'Double-sided Frnds flyer' },
+			{ src: '/portfolio/branding/frnds-flyer-front.webp', alt: isRu ? 'Лицевая сторона листовки Frnds' : 'Front of the Frnds flyer' },
+			{ src: '/portfolio/branding/frnds-flyer-back.webp', alt: isRu ? 'Оборотная сторона листовки Frnds' : 'Back of the Frnds flyer' },
 		],
 	},
 	{
 		slug: 'lux-beauty',
 		title: 'Lux Beauty',
-		type: 'Подарочный сертификат',
-		description: 'Подарочный сертификат для студии Lux Beauty. Макет объединяет фирменный знак, спокойную палитру и понятную структуру для печати и последующего заполнения.',
+		type: isRu ? 'Подарочный сертификат' : 'Gift Certificate',
+		description: isRu ? 'Подарочный сертификат для студии Lux Beauty. Макет объединяет фирменный знак, спокойную палитру и понятную структуру для печати и последующего заполнения.' : 'A gift certificate for Lux Beauty studio. The layout combines the brand mark, a calm color palette, and a clear structure designed for print and later completion by hand.',
 		images: [
-			{ src: '/portfolio/branding/lux-certificate-mockup.webp', alt: 'Подарочный сертификат Lux Beauty в мокапе' },
-			{ src: '/portfolio/branding/lux-certificate-front.webp', alt: 'Лицевая сторона сертификата Lux Beauty' },
-			{ src: '/portfolio/branding/lux-certificate-back.webp', alt: 'Оборотная сторона сертификата Lux Beauty' },
+			{ src: '/portfolio/branding/lux-certificate-mockup.webp', alt: isRu ? 'Подарочный сертификат Lux Beauty в мокапе' : 'Lux Beauty gift-certificate mockup' },
+			{ src: '/portfolio/branding/lux-certificate-front.webp', alt: isRu ? 'Лицевая сторона сертификата Lux Beauty' : 'Front of the Lux Beauty gift certificate' },
+			{ src: '/portfolio/branding/lux-certificate-back.webp', alt: isRu ? 'Оборотная сторона сертификата Lux Beauty' : 'Back of the Lux Beauty gift certificate' },
 		],
 	},
 ];
@@ -96,17 +99,17 @@ function groupDocumentPages<T>(pages: T[]) {
 ---
 
 <BaseLayout
-	title="Упаковка и брендинг материалы — Федор Юрецкий"
-	description="Упаковка, листовки, сертификаты и другие брендинг-материалы в портфолио Федора Юрецкого."
+	title={isRu ? 'Упаковка и брендинг материалы — Федор Юрецкий' : 'Packaging & Brand Materials — Fedor Jurecki'}
+	description={isRu ? 'Упаковка, листовки, сертификаты и другие брендинг-материалы в портфолио Федора Юрецкого.' : 'Packaging, flyers, certificates, and other brand materials by Fedor Jurecki.'}
 >
 	<SiteHeader />
 
 	<main>
 		<header class="page-heading">
-			<h1>Упаковка и<br />брендинг материалы</h1>
+			<h1>{isRu ? <>Упаковка и<br />брендинг материалы</> : <>Packaging &<br />Brand Materials</>}</h1>
 		</header>
 
-		<section class="project-grid" aria-label="Проекты по упаковке и брендинг-материалам">
+		<section class="project-grid" aria-label={isRu ? 'Проекты по упаковке и брендинг-материалам' : 'Packaging and brand-material projects'}>
 			{projects.map((project) => (
 				<button class="project-card" type="button" data-article-target={`article-${project.slug}`} aria-haspopup="dialog">
 					<span class="project-cover">
@@ -125,7 +128,7 @@ function groupDocumentPages<T>(pages: T[]) {
 		{projects.map((project) => (
 			<dialog id={`article-${project.slug}`} class="project-dialog" aria-labelledby={`title-${project.slug}`}>
 				<div class="dialog-inner">
-					<button class="dialog-close" type="button" aria-label="Закрыть"><span aria-hidden="true"></span></button>
+					<button class="dialog-close" type="button" aria-label={isRu ? 'Закрыть' : 'Close'}><span aria-hidden="true"></span></button>
 					<header class="dialog-heading">
 						<small>{project.type}</small>
 						<h2 id={`title-${project.slug}`}>{project.title}</h2>
@@ -134,16 +137,16 @@ function groupDocumentPages<T>(pages: T[]) {
 					{'document' in project && project.document ? (
 						<section class="document-reader" data-document-reader>
 							<div class="document-controls">
-								<strong><span data-page-current>1</span> / {groupDocumentPages(project.images).length}</strong>
-								<button type="button" data-page-step="-1" aria-label="Предыдущая страница">←</button>
-								<button type="button" data-page-step="1" aria-label="Следующая страница">→</button>
+								<strong><span data-page-current>1</span> / <span data-page-total>{groupDocumentPages(project.images).length}</span></strong>
+								<button type="button" data-page-step="-1" aria-label={isRu ? 'Предыдущая страница' : 'Previous page'}>←</button>
+								<button type="button" data-page-step="1" aria-label={isRu ? 'Следующая страница' : 'Next page'}>→</button>
 							</div>
 							<div class="dialog-gallery document-gallery" data-document-gallery>
 								{groupDocumentPages(project.images).map((spread, spreadIndex) => (
 									<figure class:list={[spread.length === 1 && 'document-spread-single']} data-active={spreadIndex === 0 ? '' : undefined}>
 										<div class="document-spread">
 											{spread.map((image) => (
-												<ResponsiveImage src={image.src} alt={image.alt} sizes="(max-width: 700px) 50vw, 40vw" />
+												<ResponsiveImage src={image.src} alt={image.alt} sizes="(max-width: 700px) 100vw, 40vw" />
 											))}
 										</div>
 										<figcaption>
@@ -159,7 +162,7 @@ function groupDocumentPages<T>(pages: T[]) {
 						<div class:list={['dialog-gallery', project.images.length === 1 && 'dialog-gallery-single', project.slug === 'frnds' && 'dialog-gallery-frnds']}>
 							{project.images.map((image) => (
 								<figure>
-									<button class="dialog-gallery-zoom" type="button" data-lightbox-target="case-image-lightbox" data-caption={image.alt} aria-label={`Увеличить: ${image.alt}`}>
+									<button class="dialog-gallery-zoom" type="button" data-lightbox-target="case-image-lightbox" data-caption={image.alt} aria-label={`${isRu ? 'Увеличить' : 'Enlarge'}: ${image.alt}`}>
 										<ResponsiveImage src={image.src} alt={image.alt} sizes="(max-width: 700px) 100vw, 50vw" />
 									</button>
 								</figure>
@@ -171,7 +174,7 @@ function groupDocumentPages<T>(pages: T[]) {
 		))}
 
 		<CasePagination
-			previous={{ href: '/projects/presentations/', label: 'Презентации' }}
+			previous={{ href: '/projects/presentations/', label: isRu ? 'Презентации' : 'Presentations' }}
 			next={{ href: '/projects/product-design/shelfr/', label: 'Shelfr' }}
 		/>
 		<ProjectFooter />
@@ -186,22 +189,6 @@ function groupDocumentPages<T>(pages: T[]) {
 	document.addEventListener('click', (event) => {
 		const target = event.target;
 		if (!(target instanceof Element)) return;
-
-		const pageButton = target.closest<HTMLButtonElement>('[data-page-step]');
-		if (pageButton) {
-			const reader = pageButton.closest<HTMLElement>('[data-document-reader]');
-			const gallery = reader?.querySelector<HTMLElement>('[data-document-gallery]');
-			const pages = [...(gallery?.querySelectorAll<HTMLElement>('figure') ?? [])];
-			const index = Math.max(0, Math.min(pages.length - 1, Number(reader?.dataset.page ?? 0) + Number(pageButton.dataset.pageStep)));
-			pages.forEach((page, pageIndex) => page.toggleAttribute('data-active', pageIndex === index));
-			if (reader) reader.dataset.page = String(index);
-			const current = reader?.querySelector<HTMLElement>('[data-page-current]');
-			if (current) current.textContent = String(index + 1);
-			const buttons = [...(reader?.querySelectorAll<HTMLButtonElement>('[data-page-step]') ?? [])];
-			buttons[0].disabled = index === 0;
-			buttons[1].disabled = index === pages.length - 1;
-			return;
-		}
 
 		const trigger = target.closest<HTMLElement>('[data-article-target]');
 		if (trigger) {
@@ -224,9 +211,28 @@ function groupDocumentPages<T>(pages: T[]) {
 	});
 
 	document.querySelectorAll<HTMLElement>('[data-document-reader]').forEach((reader) => {
+		const mobile = matchMedia('(max-width: 700px)');
+		const spreads = [...reader.querySelectorAll<HTMLElement>('[data-document-gallery] figure')];
+		const pages = [...reader.querySelectorAll<HTMLImageElement>('[data-document-gallery] img')];
+		const current = reader.querySelector<HTMLElement>('[data-page-current]');
+		const total = reader.querySelector<HTMLElement>('[data-page-total]');
 		const buttons = [...reader.querySelectorAll<HTMLButtonElement>('[data-page-step]')];
-		reader.dataset.page = '0';
-		buttons[0].disabled = true;
+		let index = 0;
+
+		const update = (next: number) => {
+			const items = mobile.matches ? pages : spreads;
+			index = Math.max(0, Math.min(items.length - 1, next));
+			spreads.forEach((spread, spreadIndex) => spread.toggleAttribute('data-active', mobile.matches ? spread.contains(pages[index]) : spreadIndex === index));
+			pages.forEach((page, pageIndex) => page.toggleAttribute('data-mobile-active', mobile.matches && pageIndex === index));
+			if (current) current.textContent = String(index + 1);
+			if (total) total.textContent = String(items.length);
+			buttons[0].disabled = index === 0;
+			buttons[1].disabled = index === items.length - 1;
+		};
+
+		buttons.forEach((button) => button.addEventListener('click', () => update(index + Number(button.dataset.pageStep))));
+		mobile.addEventListener('change', () => update(0));
+		update(0);
 	});
 </script>
 
@@ -304,10 +310,13 @@ function groupDocumentPages<T>(pages: T[]) {
 		.dialog-heading small { grid-column: auto; }
 		.dialog-heading h2 { font-size: clamp(2.6rem,13vw,3.8rem); }
 		.dialog-gallery { grid-template-columns: minmax(0,1fr); gap: .75rem; }
-		.document-reader { grid-template-columns: 2.5rem minmax(0,1fr) 2.5rem; gap: .35rem; }
+		.document-reader { grid-template: "counter counter counter" auto "gallery gallery gallery" auto "previous . next" auto / 2.5rem minmax(0,1fr) 2.5rem; gap: .75rem .35rem; }
 		.document-controls button { width: 2.5rem; height: 2.5rem; }
-		.document-spread { --spread-gap: .18rem; }
-		.document-spread :global(img) { max-height: calc(100dvh - 7rem); }
+		.document-spread { display: block; width: 100%; }
+		.document-spread :global(img) { display: none; width: 100%; max-width: none; max-height: none; }
+		.document-spread :global(img[data-mobile-active]) { display: block; }
+		.document-spread-single .document-spread :global(img) { max-width: none; }
+		.document-gallery figcaption { display: none; }
 	}
 
 	@media (prefers-reduced-motion: reduce) {

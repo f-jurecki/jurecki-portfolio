@@ -5,26 +5,30 @@ import ProjectFooter from '../../../../components/ProjectFooter.astro';
 import ResponsiveImage from '../../../../components/ResponsiveImage.astro';
 import SiteHeader from '../../../../components/SiteHeader.astro';
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { getLocale, localizedPath } from '../../../../lib/i18n';
+
+const locale = getLocale(Astro.url.pathname);
+const isRu = locale === 'ru';
 
 const experiments = [
-	{ image: 'dataforge-01.webp', title: 'Оригинал' },
+	{ image: 'dataforge-01.webp', title: isRu ? 'Оригинал' : 'Original' },
 	{ image: 'dataforge-03.webp', title: 'ASCII art' },
-	{ image: 'dataforge-04.webp', title: 'Пиксельная сетка #1', detail: 'Сдвиг по RGB, CRT Scanlines' },
-	{ image: 'dataforge-05.webp', title: 'Ухудшение качества #1', detail: 'Растровая пикселизация, JPG артефакты' },
-	{ image: 'dataforge-06.webp', title: 'Пиксельная сетка #2', detail: 'Цветовая схема PICO-8' },
-	{ image: 'dataforge-07.webp', title: 'Пиксельная сетка #3', detail: 'Dithering, CGA Graphics' },
-	{ image: 'dataforge-08.webp', title: 'Пиксельная сетка #4', detail: 'Цветовая схема Classic MacOS' },
-	{ image: 'dataforge-09.webp', title: 'Пиксельная сетка #5' },
-	{ image: 'dataforge-10.webp', title: 'Ухудшение качества #2', detail: 'Много JPG артефактов' },
-	{ image: 'dataforge-02.webp', title: 'Пиксельная сетка #6', detail: 'Цветовая схема Nintendo Gameboy' },
+	{ image: 'dataforge-04.webp', title: isRu ? 'Пиксельная сетка #1' : 'Pixel Grid #1', detail: isRu ? 'Сдвиг по RGB, CRT Scanlines' : 'RGB shift, CRT scanlines' },
+	{ image: 'dataforge-05.webp', title: isRu ? 'Ухудшение качества #1' : 'Quality Loss #1', detail: isRu ? 'Растровая пикселизация, JPG артефакты' : 'Raster pixelation, JPEG artifacts' },
+	{ image: 'dataforge-06.webp', title: isRu ? 'Пиксельная сетка #2' : 'Pixel Grid #2', detail: isRu ? 'Цветовая схема PICO-8' : 'PICO-8 color palette' },
+	{ image: 'dataforge-07.webp', title: isRu ? 'Пиксельная сетка #3' : 'Pixel Grid #3', detail: isRu ? 'Dithering, CGA Graphics' : 'Dithering, CGA graphics' },
+	{ image: 'dataforge-08.webp', title: isRu ? 'Пиксельная сетка #4' : 'Pixel Grid #4', detail: isRu ? 'Цветовая схема Classic MacOS' : 'Classic Mac OS color palette' },
+	{ image: 'dataforge-09.webp', title: isRu ? 'Пиксельная сетка #5' : 'Pixel Grid #5' },
+	{ image: 'dataforge-10.webp', title: isRu ? 'Ухудшение качества #2' : 'Quality Loss #2', detail: isRu ? 'Много JPG артефактов' : 'Heavy JPEG artifacts' },
+	{ image: 'dataforge-02.webp', title: isRu ? 'Пиксельная сетка #6' : 'Pixel Grid #6', detail: isRu ? 'Цветовая схема Nintendo Gameboy' : 'Nintendo Game Boy color palette' },
 ];
 ---
 
 <BaseLayout
-	title="Deepfries — Федор Юрецкий"
-	description="Браузерное приложение для обработки изображений и создания генеративного глитч-арта."
+	title={isRu ? 'Deepfries — Федор Юрецкий' : 'Deepfries — Fedor Jurecki'}
+	description={isRu ? 'Браузерное приложение для обработки изображений и создания генеративного глитч-арта.' : 'A browser-based application for image processing and generative glitch art.'}
 	image="/portfolio/dataforge/dataforge-04.webp"
-	imageAlt="Изображение, обработанное в Deepfries"
+	imageAlt={isRu ? 'Изображение, обработанное в Deepfries' : 'Image processed in Deepfries'}
 >
 	<SiteHeader />
 
@@ -32,30 +36,30 @@ const experiments = [
 		<section class="dataforge-intro">
 			<div class="dataforge-heading">
 				<h1>Deepfries</h1>
-				<a href="https://deepfries.vercel.app" target="_blank" rel="noopener noreferrer">Открыть Deepfries <span aria-hidden="true">↗</span></a>
+				<a href="https://deepfries.vercel.app" target="_blank" rel="noopener noreferrer">{isRu ? 'Открыть Deepfries' : 'Open Deepfries'} <span aria-hidden="true">↗</span></a>
 			</div>
 
 			<div class="dataforge-description">
-				<p>Браузерное приложение для обработки изображений и создания генеративного глитч-арта.</p>
-				<p>Весь функционал программы делится на два основных направления.</p>
-				<p><strong>Первое — пикселизация:</strong> это гибкий набор визуальных фильтров, позволяющий перерисовывать изображение с использованием различных форм (от квадратов и кругов до ASCII-символов), накладывать ретро-палитры, дизеринг и эффект ЭЛТ-монитора.</p>
-				<p><strong>Второе направление — датамошинг:</strong> набор «деструктивных» эффектов, которые необратимо искажают исходник. Сюда входят сортировка пикселей, визуализация аудио-искажений, смещение RGB-каналов и имитация сильной потери качества при многократном пересохранении.</p>
-				<p>Deepfries активно использовался в работе над авторской <a href="/projects/personal/cards/">колодой карт Misprint</a>.</p>
-				<div class="misprint-preview" aria-label="Карты и рубашка Misprint">
-					<button class="zoom-trigger" type="button" data-lightbox-target="dataforge-lightbox" data-caption="Misprint · Валет червей" aria-label="Увеличить валета червей Misprint">
-						<ResponsiveImage src="/portfolio/cards/card-41.webp" alt="Валет червей из колоды Misprint" widths={[96, 160, 240, 373]} sizes="4.75rem" />
+				<p>{isRu ? 'Браузерное приложение для обработки изображений и создания генеративного глитч-арта.' : 'A browser-based application for image processing and generative glitch art.'}</p>
+				<p>{isRu ? 'Весь функционал программы делится на два основных направления.' : 'The program is organized around two main directions.'}</p>
+				<p><strong>{isRu ? 'Первое — пикселизация:' : 'The first is pixelation:'}</strong> {isRu ? 'это гибкий набор визуальных фильтров, позволяющий перерисовывать изображение с использованием различных форм (от квадратов и кругов до ASCII-символов), накладывать ретро-палитры, дизеринг и эффект ЭЛТ-монитора.' : 'a flexible set of visual filters that redraw an image using different forms, from squares and circles to ASCII characters, with options for retro palettes, dithering, and CRT-monitor effects.'}</p>
+				<p><strong>{isRu ? 'Второе направление — датамошинг:' : 'The second is datamoshing:'}</strong> {isRu ? 'набор «деструктивных» эффектов, которые необратимо искажают исходник. Сюда входят сортировка пикселей, визуализация аудио-искажений, смещение RGB-каналов и имитация сильной потери качества при многократном пересохранении.' : 'a set of destructive effects that irreversibly distort the source image. These include pixel sorting, audio-distortion visualization, RGB-channel displacement, and simulations of severe quality loss caused by repeated re-saving.'}</p>
+				<p>{isRu ? 'Deepfries активно использовался в работе над авторской ' : 'Deepfries was used extensively in the creation of the '}<a href={localizedPath('/projects/personal/cards/', locale)}>{isRu ? 'колодой карт Misprint' : 'Misprint playing-card deck'}</a>.</p>
+				<div class="misprint-preview" aria-label={isRu ? 'Карты и рубашка Misprint' : 'Misprint cards and card back'}>
+					<button class="zoom-trigger" type="button" data-lightbox-target="dataforge-lightbox" data-caption={isRu ? 'Misprint · Валет червей' : 'Misprint · Jack of Hearts'} aria-label={isRu ? 'Увеличить валета червей Misprint' : 'Enlarge the Misprint Jack of Hearts'}>
+						<ResponsiveImage src="/portfolio/cards/card-41.webp" alt={isRu ? 'Валет червей из колоды Misprint' : 'Jack of Hearts from the Misprint deck'} widths={[96, 160, 240, 373]} sizes="4.75rem" />
 					</button>
-					<button class="zoom-trigger" type="button" data-lightbox-target="dataforge-lightbox" data-caption="Misprint · Валет треф" aria-label="Увеличить валета треф Misprint">
-						<ResponsiveImage src="/portfolio/cards/card-44.webp" alt="Валет треф из колоды Misprint" widths={[96, 160, 240, 373]} sizes="4.75rem" />
+					<button class="zoom-trigger" type="button" data-lightbox-target="dataforge-lightbox" data-caption={isRu ? 'Misprint · Валет треф' : 'Misprint · Jack of Clubs'} aria-label={isRu ? 'Увеличить валета треф Misprint' : 'Enlarge the Misprint Jack of Clubs'}>
+						<ResponsiveImage src="/portfolio/cards/card-44.webp" alt={isRu ? 'Валет треф из колоды Misprint' : 'Jack of Clubs from the Misprint deck'} widths={[96, 160, 240, 373]} sizes="4.75rem" />
 					</button>
-					<button class="zoom-trigger" type="button" data-lightbox-target="dataforge-lightbox" data-caption="Misprint · Рубашка" aria-label="Увеличить рубашку Misprint">
-						<ResponsiveImage src="/portfolio/cards/card-53.webp" alt="Рубашка колоды Misprint" widths={[96, 160, 240, 373]} sizes="4.75rem" />
+					<button class="zoom-trigger" type="button" data-lightbox-target="dataforge-lightbox" data-caption={isRu ? 'Misprint · Рубашка' : 'Misprint · Card Back'} aria-label={isRu ? 'Увеличить рубашку Misprint' : 'Enlarge the Misprint card back'}>
+						<ResponsiveImage src="/portfolio/cards/card-53.webp" alt={isRu ? 'Рубашка колоды Misprint' : 'Misprint deck card back'} widths={[96, 160, 240, 373]} sizes="4.75rem" />
 					</button>
 				</div>
 			</div>
 		</section>
 
-		<section class="dataforge-experiments" aria-label="Примеры обработки изображений">
+		<section class="dataforge-experiments" aria-label={isRu ? 'Примеры обработки изображений' : 'Image-processing examples'}>
 			<div class="experiment-grid">
 				{experiments.map((experiment) => (
 					<figure>
@@ -64,9 +68,9 @@ const experiments = [
 							type="button"
 							data-lightbox-target="dataforge-lightbox"
 							data-caption={experiment.detail ? `${experiment.title} · ${experiment.detail}` : experiment.title}
-							aria-label={`Увеличить: ${experiment.title}`}
+							aria-label={`${isRu ? 'Увеличить' : 'Enlarge'}: ${experiment.title}`}
 						>
-							<img src={`/portfolio/dataforge/${experiment.image}`} alt={`${experiment.title}: собака Жулик после обработки в Deepfries`} width="1400" height="1400" loading="lazy" decoding="async" />
+							<img src={`/portfolio/dataforge/${experiment.image}`} alt={`${experiment.title}: ${isRu ? 'собака Жулик после обработки в Deepfries' : 'Zhulik the dog after processing in Deepfries'}`} width="1400" height="1400" loading="lazy" decoding="async" />
 						</button>
 						<figcaption>
 							<h2>{experiment.title}</h2>
@@ -75,28 +79,28 @@ const experiments = [
 					</figure>
 				))}
 			</div>
-			<p class="dog-note">*Наш подопытный, собака Жулик, в визуальных экспериментах никак не пострадал.</p>
+			<p class="dog-note">{isRu ? '*Наш подопытный, собака Жулик, в визуальных экспериментах никак не пострадал.' : '*Our test subject, Zhulik the dog, was completely unharmed during these visual experiments.'}</p>
 		</section>
 
-		<section class="dataforge-interface" aria-label="Интерфейс Deepfries">
+		<section class="dataforge-interface" aria-label={isRu ? 'Интерфейс Deepfries' : 'Deepfries interface'}>
 			<figure>
-				<button class="zoom-trigger" type="button" data-lightbox-target="dataforge-lightbox" data-caption="Интерфейс Deepfries · Пикселизация" aria-label="Увеличить интерфейс пикселизации">
-					<img src="/portfolio/dataforge/dataforge-ui-pixelate.png" alt="Панель настройки пикселизации в Deepfries" width="638" height="1520" loading="lazy" decoding="async" />
+				<button class="zoom-trigger" type="button" data-lightbox-target="dataforge-lightbox" data-caption={isRu ? 'Интерфейс Deepfries · Пикселизация' : 'Deepfries Interface · Pixelation'} aria-label={isRu ? 'Увеличить интерфейс пикселизации' : 'Enlarge the pixelation interface'}>
+					<img src="/portfolio/dataforge/dataforge-ui-pixelate.png" alt={isRu ? 'Панель настройки пикселизации в Deepfries' : 'Pixelation settings panel in Deepfries'} width="638" height="1520" loading="lazy" decoding="async" />
 				</button>
-				<figcaption>Пикселизация</figcaption>
+				<figcaption>{isRu ? 'Пикселизация' : 'Pixelation'}</figcaption>
 			</figure>
 			<figure>
-				<button class="zoom-trigger" type="button" data-lightbox-target="dataforge-lightbox" data-caption="Интерфейс Deepfries · Датамошинг" aria-label="Увеличить интерфейс датамошинга">
-					<img src="/portfolio/dataforge/dataforge-ui-datamosh.png" alt="Панель настройки датамошинга в Deepfries" width="640" height="1518" loading="lazy" decoding="async" />
+				<button class="zoom-trigger" type="button" data-lightbox-target="dataforge-lightbox" data-caption={isRu ? 'Интерфейс Deepfries · Датамошинг' : 'Deepfries Interface · Datamoshing'} aria-label={isRu ? 'Увеличить интерфейс датамошинга' : 'Enlarge the datamoshing interface'}>
+					<img src="/portfolio/dataforge/dataforge-ui-datamosh.png" alt={isRu ? 'Панель настройки датамошинга в Deepfries' : 'Datamoshing settings panel in Deepfries'} width="640" height="1518" loading="lazy" decoding="async" />
 				</button>
-				<figcaption>Датамошинг</figcaption>
+				<figcaption>{isRu ? 'Датамошинг' : 'Datamoshing'}</figcaption>
 			</figure>
 		</section>
 	</main>
 
-	<CaseLightbox id="dataforge-lightbox" variant="single" label="Увеличенное изображение Deepfries" />
+	<CaseLightbox id="dataforge-lightbox" variant="single" label={isRu ? 'Увеличенное изображение Deepfries' : 'Enlarged Deepfries image'} />
 	<CasePagination
-		previous={{ href: '/projects/vibecoding/adobe-scripts/', label: 'Скрипты для Adobe' }}
+		previous={{ href: '/projects/vibecoding/adobe-scripts/', label: isRu ? 'Скрипты для Adobe' : 'Adobe Scripts' }}
 		next={{ href: '/projects/vibecoding/sequence/', label: 'Sequence' }}
 	/>
 	<ProjectFooter />

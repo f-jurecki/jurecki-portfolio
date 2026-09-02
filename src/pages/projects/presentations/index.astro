@@ -6,13 +6,17 @@ import CasePagination from '../../../components/CasePagination.astro';
 import ProjectFooter from '../../../components/ProjectFooter.astro';
 import SiteHeader from '../../../components/SiteHeader.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getLocale, localizedPath } from '../../../lib/i18n';
+
+const locale = getLocale(Astro.url.pathname);
+const isRu = locale === 'ru';
 
 const tools = ['PowerPoint', 'Google Slides', 'Keynote', 'Figma'];
 
 const groups = [
-	{ folder: 'business', count: 9, caption: 'Бизнес-презентация' },
-	{ folder: 'infographics', slides: ['01', '02', '06'], caption: 'Инфографика' },
-	{ folder: 'education', count: 21, caption: 'Образовательная презентация' },
+	{ folder: 'business', count: 9, caption: isRu ? 'Бизнес-презентация' : 'Business Presentation' },
+	{ folder: 'infographics', slides: ['01', '02', '06'], caption: isRu ? 'Инфографика' : 'Infographics' },
+	{ folder: 'education', count: 21, caption: isRu ? 'Образовательная презентация' : 'Educational Presentation' },
 ];
 
 const galleryItems = groups.flatMap((group) => {
@@ -21,47 +25,47 @@ const galleryItems = groups.flatMap((group) => {
 		caption: group.caption,
 		images: [{
 			src: `/portfolio/presentations/${group.folder}/slide-${slide}.webp`,
-			alt: `${group.caption}: слайд ${slide}`,
+			alt: `${group.caption}: ${isRu ? 'слайд' : 'slide'} ${slide}`,
 		}],
 	}));
 }).map((item, index) => ({ ...item, number: String(index + 1).padStart(2, '0') }));
 ---
 
 <BaseLayout
-	title="Презентации — Федор Юрецкий"
-	description="Дизайн презентаций Федора Юрецкого: структура, визуальный язык, вёрстка и инфографика на казахском, русском и английском языках."
+	title={isRu ? 'Презентации — Федор Юрецкий' : 'Presentations — Fedor Jurecki'}
+	description={isRu ? 'Дизайн презентаций Федора Юрецкого: структура, визуальный язык, вёрстка и инфографика на казахском, русском и английском языках.' : 'Presentation design: structure, visual language, layout, and infographics in Kazakh, Russian, and English.'}
 >
 	<SiteHeader />
 
 	<main>
 		<section class="project-intro">
-			<h1>Презентации</h1>
+			<h1>{isRu ? 'Презентации' : 'Presentations'}</h1>
 			<div class="intro-copy">
-				<p>У меня большой опыт работы с презентациями на казахском, русском и английском языках — для самых разных сфер, задач и аудиторий. Работаю как с корпоративными и аналитическими материалами, так и с более визуальными и имиджевыми форматами.</p>
-				<p>Умею выстраивать последовательное повествование, структурировать большие объёмы информации и превращать сложные данные в <a href="/projects/infographics">понятную и выразительную инфографику</a>. Подбираю визуальный язык под содержание презентации, сохраняя баланс между ясностью, эстетикой и задачей материала.</p>
+				<p>{isRu ? 'У меня большой опыт работы с презентациями на казахском, русском и английском языках — для самых разных сфер, задач и аудиторий. Работаю как с корпоративными и аналитическими материалами, так и с более визуальными и имиджевыми форматами.' : 'I have extensive experience designing presentations in Kazakh, Russian, and English for a wide range of industries, objectives, and audiences. I work with both corporate and analytical materials as well as more visual, image-led formats.'}</p>
+				<p>{isRu ? <>Умею выстраивать последовательное повествование, структурировать большие объёмы информации и превращать сложные данные в <a href={localizedPath('/projects/infographics', locale)}>понятную и выразительную инфографику</a>. Подбираю визуальный язык под содержание презентации, сохраняя баланс между ясностью, эстетикой и задачей материала.</> : <>I build coherent narratives, structure large volumes of information, and turn complex data into <a href={localizedPath('/projects/infographics', locale)}>clear, expressive infographics</a>. I adapt the visual language to the content of each presentation while balancing clarity, aesthetics, and the purpose of the material.</>}</p>
 			</div>
 		</section>
 
-		<section class="experience" aria-label="Опыт работы с презентациями">
+		<section class="experience" aria-label={isRu ? 'Опыт работы с презентациями' : 'Presentation experience'}>
 			<div class="experience-main">
-				<div><strong>Любой объём</strong><span>от коротких питч-деков до презентаций для крупных проектов</span></div>
-				<div><strong>KZ · RU · EN</strong><span>казахский, русский и английский языки</span></div>
-				<div><strong>Любая аудитория</strong><span>команды, руководство, инвесторы, партнёры, клиенты и широкая публика</span></div>
+				<div><strong>{isRu ? 'Любой объём' : 'Any length'}</strong><span>{isRu ? 'от коротких питч-деков до презентаций для крупных проектов' : 'From short pitch decks to presentations for large-scale projects'}</span></div>
+				<div><strong>KZ · RU · EN</strong><span>{isRu ? 'казахский, русский и английский языки' : 'Kazakh, Russian, and English'}</span></div>
+				<div><strong>{isRu ? 'Любая аудитория' : 'Any audience'}</strong><span>{isRu ? 'команды, руководство, инвесторы, партнёры, клиенты и широкая публика' : 'Teams, executives, investors, partners, clients, and the general public'}</span></div>
 			</div>
 			<div class="experience-details">
-				<p><strong>Ответственность</strong><span>Самостоятельно выстраиваю структуру и логику презентации, работаю с заказчиком и аналитиками, собираю мастер-шаблон и адаптирую визуальную систему под бренд.</span></p>
-				<p><strong>Задачи</strong><span>Питч-деки, коммерческие и инвестиционные предложения, стратегии, тендерные защиты, отчёты для руководства, обучение и публичные выступления.</span></p>
-				<p><strong>Отрасли</strong><span>Финансы и инвестиции, нефтегаз, промышленность, девелопмент, IT и телеком, фармацевтика, ритейл, логистика и консалтинг.</span></p>
+				<p><strong>{isRu ? 'Ответственность' : 'Responsibility'}</strong><span>{isRu ? 'Самостоятельно выстраиваю структуру и логику презентации, работаю с заказчиком и аналитиками, собираю мастер-шаблон и адаптирую визуальную систему под бренд.' : 'I independently build the structure and logic of a presentation, work with clients and analysts, create master templates, and adapt the visual system to the brand.'}</span></p>
+				<p><strong>{isRu ? 'Задачи' : 'Typical assignments'}</strong><span>{isRu ? 'Питч-деки, коммерческие и инвестиционные предложения, стратегии, тендерные защиты, отчёты для руководства, обучение и публичные выступления.' : 'Pitch decks, commercial and investment proposals, strategy decks, tender presentations, executive reports, training materials, and public presentations.'}</span></p>
+				<p><strong>{isRu ? 'Отрасли' : 'Industries'}</strong><span>{isRu ? 'Финансы и инвестиции, нефтегаз, промышленность, девелопмент, IT и телеком, фармацевтика, ритейл, логистика и консалтинг.' : 'Finance and investment, oil and gas, industrial sectors, real estate development, IT and telecom, pharmaceuticals, retail, logistics, and consulting.'}</span></p>
 			</div>
 		</section>
 
 		<section class="tools" aria-labelledby="tools-title">
-			<h2 id="tools-title">Работаю во всех основных редакторах</h2>
+			<h2 id="tools-title">{isRu ? 'Работаю во всех основных редакторах' : 'I work in all major presentation tools'}</h2>
 			<ul>{tools.map((tool) => <li>{tool}</li>)}</ul>
 		</section>
 
 		<CaseGallery
-			label="Галерея презентаций"
+			label={isRu ? 'Галерея презентаций' : 'Presentation gallery'}
 			title=""
 			showHeader={false}
 			items={galleryItems}
@@ -70,10 +74,10 @@ const galleryItems = groups.flatMap((group) => {
 			imageSizes="(max-width: 620px) 100vw, (max-width: 900px) 50vw, 33vw"
 		/>
 
-		<CaseLightbox id="presentations-lightbox" variant="single" label="Увеличенный слайд презентации" />
+		<CaseLightbox id="presentations-lightbox" variant="single" label={isRu ? 'Увеличенный слайд презентации' : 'Enlarged presentation slide'} />
 		<CasePagination
-			previous={{ href: '/projects/infographics/', label: 'Инфографика' }}
-			next={{ href: '/projects/branding/', label: 'Упаковка и брендинг материалы' }}
+			previous={{ href: '/projects/infographics/', label: isRu ? 'Инфографика' : 'Infographics' }}
+			next={{ href: '/projects/branding/', label: isRu ? 'Упаковка и брендинг материалы' : 'Packaging & Brand Materials' }}
 		/>
 		<ProjectFooter />
 	</main>
@@ -106,16 +110,16 @@ const galleryItems = groups.flatMap((group) => {
 	.tools ul { margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); list-style: none; border-top: 1px solid #1112; border-bottom: 1px solid #1112; }
 	.tools li { min-height: clamp(6rem,9vw,8rem); padding: 1rem; display: flex; align-items: flex-end; border-right: 1px solid #1112; font-size: clamp(1.15rem,2vw,1.8rem); font-weight: 750; letter-spacing: -.035em; }
 	.tools li:last-child { border-right: 0; }
-	:global(.case-gallery-numbered .case-gallery-grid) { column-count: 3 !important; }
+	:global(.case-gallery-numbered .case-gallery-grid) { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: clamp(1.2rem,2vw,2rem) clamp(.65rem,1.2vw,1.2rem); column-count: auto !important; }
 	:global(.case-gallery-numbered .case-gallery-trigger) { padding: .35rem; background: #0b0b0b; }
-	:global(.case-gallery-numbered .case-gallery-item) { margin-bottom: clamp(1.2rem,2vw,2rem); }
+	:global(.case-gallery-numbered .case-gallery-item) { margin-bottom: 0; }
 
 	@media (max-width: 900px) {
 		.project-intro { grid-template-columns: minmax(0,1fr); gap: 2rem; }
 		.intro-copy { max-width: 48rem; }
 		.tools { grid-template-columns: minmax(0,1fr); gap: 1.5rem; }
 		.tools h2 { max-width: 25rem; }
-		:global(.case-gallery-numbered .case-gallery-grid) { column-count: 2 !important; }
+		:global(.case-gallery-numbered .case-gallery-grid) { grid-template-columns: repeat(2,minmax(0,1fr)); }
 	}
 
 	@media (max-width: 620px) {
@@ -134,7 +138,7 @@ const galleryItems = groups.flatMap((group) => {
 		.tools li { min-height: 6.5rem; }
 		.tools li:nth-child(2) { border-right: 0; }
 		.tools li:nth-child(-n+2) { border-bottom: 1px solid #1112; }
-		:global(.case-gallery-numbered .case-gallery-grid) { column-count: 1 !important; }
+		:global(.case-gallery-numbered .case-gallery-grid) { grid-template-columns: minmax(0,1fr); }
 	}
 
 	@media (prefers-reduced-motion: reduce) {

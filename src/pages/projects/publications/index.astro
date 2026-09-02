@@ -1,32 +1,35 @@
 ---
 import CategoryCatalog from '../../../components/CategoryCatalog.astro';
+import { getLocale } from '../../../lib/i18n';
+
+const isRussian = getLocale(Astro.url.pathname) === 'ru';
 ---
 
 <CategoryCatalog
-	title="Инфографика и вёрстка"
-	description="Многостраничные издания, отчёты, исследования и инфографика. Выстраиваю структуру, навигацию и визуальную логику материала — от первого макета до файлов для публикации."
+	title={isRussian ? 'Инфографика и вёрстка' : 'Infographics & Editorial Design'}
+	description={isRussian ? 'Многостраничные издания, отчёты, исследования и инфографика. Выстраиваю структуру, навигацию и визуальную логику материала — от первого макета до файлов для публикации.' : 'Multi-page publications, reports, research, and infographics. I build the structure, navigation, and visual logic of complex material, from the first layout through publication-ready files.'}
 	projects={[
 		{
 			title: 'IOFS',
-			description: 'Годовые отчёты и международные публикации',
+			description: isRussian ? 'Годовые отчёты и международные публикации' : 'Annual reports and international publications',
 			href: '/projects/publications/iofs',
 			images: ['/portfolio/iofs/fsh22-cover.webp', '/portfolio/iofs/annual-cover.webp', '/portfolio/iofs/fsh23-cover.webp'],
 		},
 		{
-			title: 'КИОР',
-			description: 'Исследования и аналитические доклады',
+			title: isRussian ? 'КИОР' : 'KIPD',
+			description: isRussian ? 'Исследования и аналитические доклады' : 'Research and analytical reports',
 			href: '/projects/publications/kipd',
 			images: ['/portfolio/kipd/identity-cover.webp', '/portfolio/kipd/legal-cover.webp', '/portfolio/kipd/citizenship-cover.webp'],
 		},
 		{
 			title: 'UNESCO',
-			description: 'Диагностические материалы и приложения',
+			description: isRussian ? 'Диагностические материалы и приложения' : 'Diagnostic reports and appendices',
 			href: '/projects/publications/unesco',
-			images: ['/portfolio/unesco/appendix-1-cover.webp', '/portfolio/unesco/diagnostic-cover.webp', '/portfolio/unesco/appendix-4-cover.webp'],
+			images: ['/portfolio/unesco/policy-01-cover.png', '/portfolio/unesco/policy-02-cover.png', '/portfolio/unesco/policy-03-cover.png', '/portfolio/unesco/policy-04-cover.png', '/portfolio/unesco/policy-05-cover.png'],
 		},
 		{
-			title: 'Инфографика',
-			description: 'Исследования, отчёты и социальные данные',
+			title: isRussian ? 'Инфографика' : 'Infographics',
+			description: isRussian ? 'Исследования, отчёты и социальные данные' : 'Research, reports, and social data',
 			href: '/projects/infographics',
 			images: ['/portfolio/infographics/graphic-017.webp', '/portfolio/infographics/graphic-040.webp', '/portfolio/infographics/graphic-083.webp'],
 		},

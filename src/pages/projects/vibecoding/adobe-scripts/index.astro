@@ -4,6 +4,9 @@ import ProjectFooter from '../../../../components/ProjectFooter.astro';
 import SiteHeader from '../../../../components/SiteHeader.astro';
 import ResponsiveImage from '../../../../components/ResponsiveImage.astro';
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { getLocale } from '../../../../lib/i18n';
+
+const isRu = getLocale(Astro.url.pathname) === 'ru';
 
 const contents = [
 	{ number: '01', title: 'Gridster', href: '#gridster' },
@@ -13,25 +16,25 @@ const contents = [
 ];
 
 const gridsterImages = [
-	{ src: 'gridster-columns.webp', alt: 'Колонная сетка, созданная Gridster' },
-	{ src: 'gridster-grid.webp', alt: 'Модульная сетка, созданная Gridster' },
-	{ src: 'gridster-frames.webp', alt: 'Сетка для фреймов, созданная Gridster' },
-	{ src: 'gridster-modular.webp', alt: 'Зелёная модульная сетка, созданная Gridster' },
-	{ src: 'gridster-radial.webp', alt: 'Радиальная сетка, созданная Gridster' },
-	{ src: 'gridster-margins.webp', alt: 'Сетка с полями, созданная Gridster' },
+	{ src: 'gridster-columns.webp', alt: isRu ? 'Колонная сетка, созданная Gridster' : 'Column grid created with Gridster' },
+	{ src: 'gridster-grid.webp', alt: isRu ? 'Модульная сетка, созданная Gridster' : 'Modular grid created with Gridster' },
+	{ src: 'gridster-frames.webp', alt: isRu ? 'Сетка для фреймов, созданная Gridster' : 'Frame grid created with Gridster' },
+	{ src: 'gridster-modular.webp', alt: isRu ? 'Зелёная модульная сетка, созданная Gridster' : 'Green modular grid created with Gridster' },
+	{ src: 'gridster-radial.webp', alt: isRu ? 'Радиальная сетка, созданная Gridster' : 'Radial grid created with Gridster' },
+	{ src: 'gridster-margins.webp', alt: isRu ? 'Сетка с полями, созданная Gridster' : 'Grid with margins created with Gridster' },
 ];
 ---
 
 <BaseLayout
-	title="Скрипты для Adobe — Федор Юрецкий"
-	description="Скрипты для Adobe Illustrator и InDesign: Gridster, ColorProofer, FrameSplitter и Book Styles."
+	title={isRu ? 'Скрипты для Adobe — Федор Юрецкий' : 'Adobe Scripts — Fedor Jurecki'}
+	description={isRu ? 'Скрипты для Adobe Illustrator и InDesign: Gridster, ColorProofer, FrameSplitter и Book Styles.' : 'Scripts for Adobe Illustrator and InDesign: Gridster, ColorProofer, FrameSplitter, and Book Styles.'}
 >
 	<SiteHeader />
 
 	<main class="scripts-page">
 		<section class="contents" id="contents" aria-labelledby="page-title">
-			<h1 id="page-title">Скрипты<br />для Adobe</h1>
-			<nav aria-label="Оглавление скриптов">
+			<h1 id="page-title">{isRu ? <>Скрипты<br />для Adobe</> : <>Adobe<br />Scripts</>}</h1>
+			<nav aria-label={isRu ? 'Оглавление скриптов' : 'Script contents'}>
 				{contents.map((item) => (
 					<a href={item.href}>
 						<span>{item.number}</span>
@@ -46,12 +49,12 @@ const gridsterImages = [
 			<div class="script-copy">
 				<h2 id="gridster-title">Gridster</h2>
 				<div class="body-copy">
-					<p>Инструмент для иллюстратора и индизайна, который позволяет накладывать разные пресеты сеток.</p>
-					<p>В иллюстраторе выносится на отдельный слой, блокируется и не мешает в работе. В индизайне — ставится на мастер слой.</p>
-					<p>Одним кликом удаляется без ущерба макету. Адаптируется под разные размеры, можно настраивать отступы от границ страницы и между самими направляющими.</p>
+					<p>{isRu ? 'Инструмент для иллюстратора и индизайна, который позволяет накладывать разные пресеты сеток.' : 'A tool for Illustrator and InDesign that applies different grid presets.'}</p>
+					<p>{isRu ? 'В иллюстраторе выносится на отдельный слой, блокируется и не мешает в работе. В индизайне — ставится на мастер слой.' : 'In Illustrator, the grid is placed on a separate locked layer so it does not interfere with the layout. In InDesign, it is placed on a master layer.'}</p>
+					<p>{isRu ? 'Одним кликом удаляется без ущерба макету. Адаптируется под разные размеры, можно настраивать отступы от границ страницы и между самими направляющими.' : 'The grid can be removed with one click without affecting the artwork. It adapts to different page sizes, with configurable margins and spacing between guides.'}</p>
 				</div>
-				<p class="note">*Толщины линий увеличены для репрезентации</p>
-				<ResponsiveImage class="gridster-dialog" src="/portfolio/adobe-scripts/gridster-dialog.webp" alt="Окно настроек Gridster" sizes="(max-width: 700px) 90vw, (max-width: 1100px) 50vw, 20vw" />
+				<p class="note">{isRu ? '*Толщины линий увеличены для репрезентации' : '*Line weights are increased here for presentation purposes.'}</p>
+				<ResponsiveImage class="gridster-dialog" src="/portfolio/adobe-scripts/gridster-dialog.webp" alt={isRu ? 'Окно настроек Gridster' : 'Gridster settings dialog'} sizes="(max-width: 700px) 90vw, (max-width: 1100px) 50vw, 20vw" />
 			</div>
 
 			<div class="gridster-gallery">
@@ -59,89 +62,89 @@ const gridsterImages = [
 					<ResponsiveImage src={`/portfolio/adobe-scripts/${image.src}`} alt={image.alt} sizes="(max-width: 700px) 50vw, (max-width: 1100px) 33vw, 18vw" />
 				))}
 			</div>
-			<a class="contents-link" href="#contents">Вернуться в оглавление ↑</a>
+			<a class="contents-link" href="#contents">{isRu ? 'Вернуться в оглавление' : 'Back to contents'} ↑</a>
 		</section>
 
 		<section class="script script-colorproofer" id="colorproofer" aria-labelledby="colorproofer-title">
 			<div class="script-copy">
 				<h2 id="colorproofer-title">ColorProofer</h2>
 				<div class="body-copy">
-					<p>Скрипт для индизайна, который делает цветопробу автоматически. Создает 7 рядов пронумерованных образцов цвета, чтобы подобрать при печати самый близкий к оригиналу на экране.</p>
+					<p>{isRu ? 'Скрипт для индизайна, который делает цветопробу автоматически. Создает 7 рядов пронумерованных образцов цвета, чтобы подобрать при печати самый близкий к оригиналу на экране.' : 'An InDesign script that automatically creates a color proof. It generates seven numbered rows of color variations to help find the closest printed match to the color shown on screen.'}</p>
 				</div>
 			</div>
 
 			<figure class="color-dialog">
-				<ResponsiveImage src="/portfolio/adobe-scripts/colorproofer-dialog.webp" alt="Окно настроек ColorProofer" sizes="(max-width: 700px) 80vw, (max-width: 1100px) 50vw, 25vw" />
+				<ResponsiveImage src="/portfolio/adobe-scripts/colorproofer-dialog.webp" alt={isRu ? 'Окно настроек ColorProofer' : 'ColorProofer settings dialog'} sizes="(max-width: 700px) 80vw, (max-width: 1100px) 50vw, 25vw" />
 			</figure>
 
 			<figure class="color-proof">
-				<ResponsiveImage src="/portfolio/adobe-scripts/colorproofer-proof.webp" alt="Лист цветопробы, созданный ColorProofer" sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 36vw" />
+				<ResponsiveImage src="/portfolio/adobe-scripts/colorproofer-proof.webp" alt={isRu ? 'Лист цветопробы, созданный ColorProofer' : 'Color-proof sheet created with ColorProofer'} sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 36vw" />
 			</figure>
 
 			<div class="color-vectors">
-				<article><h3>1. Cyan <i class="cyan" aria-hidden="true"></i></h3><p>Вектор c 1, m 0, y 0, k 0.<br />Скрипт прибавляет или отнимает проценты только у канала Cyan</p></article>
-				<article><h3>2. Magenta <i class="magenta" aria-hidden="true"></i></h3><p>Вектор c 0, m 1, y 0, k 0.<br />Изолированно меняет только канал Magenta</p></article>
-				<article><h3>3. Yellow <i class="yellow" aria-hidden="true"></i></h3><p>Вектор c 0, m 0, y 1, k 0.<br />Изолированно меняет только канал Yellow</p></article>
-				<article><h3>4. Black <i class="black" aria-hidden="true"></i></h3><p>Вектор c 0, m 0, y 0, k 1.<br />Добавляет или убирает только черную краску</p></article>
-				<article><h3>5. Warmth <i class="warmth" aria-hidden="true"></i></h3><p>Вектор c 0, m 1, y 1, k 0.<br />Меняет одновременно Magenta и Yellow на одинаковый шаг. Добавление этих красок делает итоговый цвет визуально теплее</p></article>
-				<article><h3>6. Coolness <i class="coolness" aria-hidden="true"></i></h3><p>Вектор c 1, m 0, y 0, k 0.<br />Добавление этих красок делает итоговый цвет визуально холоднее</p></article>
-				<article><h3>7. Darkness <i class="darkness" aria-hidden="true"></i></h3><p>Вектор c 1, m 1, y 1, k 1.<br />Меняет сразу все четыре канала. Шаги в плюс пропорционально заливают цвет всеми красками, уводя его в глубокую тень. Шаги в минус пропорционально вымывают цвет, делая его прозрачнее и ближе к цвету бумаги</p></article>
+				<article><h3>1. Cyan <i class="cyan" aria-hidden="true"></i></h3><p>{isRu ? <>Вектор c 1, m 0, y 0, k 0.<br />Скрипт прибавляет или отнимает проценты только у канала Cyan</> : 'Vector: C 1, M 0, Y 0, K 0. The script adds or subtracts percentages only from the Cyan channel.'}</p></article>
+				<article><h3>2. Magenta <i class="magenta" aria-hidden="true"></i></h3><p>{isRu ? <>Вектор c 0, m 1, y 0, k 0.<br />Изолированно меняет только канал Magenta</> : 'Vector: C 0, M 1, Y 0, K 0. Changes only the Magenta channel.'}</p></article>
+				<article><h3>3. Yellow <i class="yellow" aria-hidden="true"></i></h3><p>{isRu ? <>Вектор c 0, m 0, y 1, k 0.<br />Изолированно меняет только канал Yellow</> : 'Vector: C 0, M 0, Y 1, K 0. Changes only the Yellow channel.'}</p></article>
+				<article><h3>4. Black <i class="black" aria-hidden="true"></i></h3><p>{isRu ? <>Вектор c 0, m 0, y 0, k 1.<br />Добавляет или убирает только черную краску</> : 'Vector: C 0, M 0, Y 0, K 1. Adds or removes only black ink.'}</p></article>
+				<article><h3>5. Warmth <i class="warmth" aria-hidden="true"></i></h3><p>{isRu ? <>Вектор c 0, m 1, y 1, k 0.<br />Меняет одновременно Magenta и Yellow на одинаковый шаг. Добавление этих красок делает итоговый цвет визуально теплее</> : 'Vector: C 0, M 1, Y 1, K 0. Changes Magenta and Yellow by the same increment. Adding these inks makes the resulting color appear warmer.'}</p></article>
+				<article><h3>6. Coolness <i class="coolness" aria-hidden="true"></i></h3><p>{isRu ? <>Вектор c 1, m 0, y 0, k 0.<br />Добавление этих красок делает итоговый цвет визуально холоднее</> : 'Vector: C 1, M 0, Y 0, K 0. Increasing Cyan makes the resulting color appear cooler.'}</p></article>
+				<article><h3>7. Darkness <i class="darkness" aria-hidden="true"></i></h3><p>{isRu ? <>Вектор c 1, m 1, y 1, k 1.<br />Меняет сразу все четыре канала. Шаги в плюс пропорционально заливают цвет всеми красками, уводя его в глубокую тень. Шаги в минус пропорционально вымывают цвет, делая его прозрачнее и ближе к цвету бумаги</> : 'Vector: C 1, M 1, Y 1, K 1. Changes all four channels at once. Positive steps proportionally add all inks, pushing the color into a deeper shadow; negative steps wash the color out, making it lighter and closer to the paper color.'}</p></article>
 			</div>
-			<a class="contents-link" href="#contents">Вернуться в оглавление ↑</a>
+			<a class="contents-link" href="#contents">{isRu ? 'Вернуться в оглавление' : 'Back to contents'} ↑</a>
 		</section>
 
 		<section class="script script-framesplitter" id="framesplitter" aria-labelledby="framesplitter-title">
 			<div class="script-copy">
 				<h2 id="framesplitter-title">FrameSplitter</h2>
 				<div class="body-copy">
-					<p>Маленький инструмент для индизайна, который разбивает текстовые фреймы — на строки, слова, буквы.</p>
-					<p>Увидел такую фичу в кореле и решил реализовать в индизайне. Ай-яй-яй адобам, что за столько лет не сделали это сами.</p>
+					<p>{isRu ? 'Маленький инструмент для индизайна, который разбивает текстовые фреймы — на строки, слова, буквы.' : 'A small InDesign tool that splits text frames into paragraphs, lines, words, or individual characters.'}</p>
+					<p>{isRu ? 'Увидел такую фичу в кореле и решил реализовать в индизайне. Ай-яй-яй адобам, что за столько лет не сделали это сами.' : 'I saw a similar feature in CorelDRAW and decided to recreate it in InDesign. A little embarrassing for Adobe that they still have not built it in.'}</p>
 				</div>
-				<ResponsiveImage class="framesplitter-dialog" src="/portfolio/adobe-scripts/framesplitter-dialog.webp" alt="Окно настроек FrameSplitter" sizes="(max-width: 700px) 70vw, (max-width: 1100px) 45vw, 18vw" />
+				<ResponsiveImage class="framesplitter-dialog" src="/portfolio/adobe-scripts/framesplitter-dialog.webp" alt={isRu ? 'Окно настроек FrameSplitter' : 'FrameSplitter settings dialog'} sizes="(max-width: 700px) 70vw, (max-width: 1100px) 45vw, 18vw" />
 			</div>
 
-			<ResponsiveImage class="framesplitter-result" src="/portfolio/adobe-scripts/framesplitter-result.webp" alt="Текст, разбитый FrameSplitter на абзацы, строки, слова и буквы" sizes="(max-width: 700px) 100vw, (max-width: 1100px) 75vw, 47vw" />
-			<a class="contents-link" href="#contents">Вернуться в оглавление ↑</a>
+			<ResponsiveImage class="framesplitter-result" src="/portfolio/adobe-scripts/framesplitter-result.webp" alt={isRu ? 'Текст, разбитый FrameSplitter на абзацы, строки, слова и буквы' : 'Text split by FrameSplitter into paragraphs, lines, words, and characters'} sizes="(max-width: 700px) 100vw, (max-width: 1100px) 75vw, 47vw" />
+			<a class="contents-link" href="#contents">{isRu ? 'Вернуться в оглавление' : 'Back to contents'} ↑</a>
 		</section>
 
 		<section class="script script-book" id="book-styles" aria-labelledby="book-styles-title">
 			<div class="book-intro script-copy">
 				<h2 id="book-styles-title">Book Styles</h2>
 				<div class="body-copy">
-					<p>Создаёт готовую систему абзацных и символьных стилей. Скрипт определяет формат первой страницы (A5, A4 или A3), предлагает выбрать шрифтовую пару, профиль документа и язык текста, после чего рассчитывает кегли, интерлиньяж, отбивки и отступы.</p>
-					<h3>Что настраивается</h3>
+					<p>{isRu ? 'Создаёт готовую систему абзацных и символьных стилей. Скрипт определяет формат первой страницы (A5, A4 или A3), предлагает выбрать шрифтовую пару, профиль документа и язык текста, после чего рассчитывает кегли, интерлиньяж, отбивки и отступы.' : 'Creates a ready-made system of paragraph and character styles. The script detects the first-page format (A5, A4, or A3), lets the user choose a font pairing, document profile, and text language, then calculates type sizes, leading, spacing, and indents.'}</p>
+					<h3>{isRu ? 'Что настраивается' : 'Configurable options'}</h3>
 					<ul>
-						<li>шрифтовая пара из пресета или вручную;</li>
-						<li>профиль: Report, Magazine, Brochure или Modern Web;</li>
-						<li>язык текста; по умолчанию выбран Russian;</li>
-						<li>baseline grid;</li>
-						<li>тестовые страницы со всеми стилями;</li>
-						<li>поля и колонки документа — опционально, по умолчанию выключены</li>
+						<li>{isRu ? 'шрифтовая пара из пресета или вручную;' : 'Font pairing, from a preset or selected manually'}</li>
+						<li>{isRu ? 'профиль: Report, Magazine, Brochure или Modern Web;' : 'Profile: Report, Magazine, Brochure, or Modern Web'}</li>
+						<li>{isRu ? 'язык текста; по умолчанию выбран Russian;' : 'Text language; Russian is selected by default'}</li>
+						<li>{isRu ? 'baseline grid;' : 'Baseline grid'}</li>
+						<li>{isRu ? 'тестовые страницы со всеми стилями;' : 'Test pages containing every style'}</li>
+						<li>{isRu ? 'поля и колонки документа — опционально, по умолчанию выключены' : 'Document margins and columns; optional and disabled by default'}</li>
 					</ul>
-					<p>Есть отдельная версия для верстки на казахском языке — с шрифтами, поддерживающими казахскую кириллицу</p>
+					<p>{isRu ? 'Есть отдельная версия для верстки на казахском языке — с шрифтами, поддерживающими казахскую кириллицу' : 'There is a separate version for Kazakh-language layout using typefaces that support Kazakh Cyrillic.'}</p>
 				</div>
 			</div>
 
 			<div class="book-visuals">
-				<ResponsiveImage class="book-specimen" src="/portfolio/adobe-scripts/book-styles-specimen.webp" alt="Тестовая страница со стилями, созданная Book Styles" sizes="(max-width: 700px) 70vw, (max-width: 1100px) 62vw, 38vw" />
-				<ResponsiveImage class="book-dialog" src="/portfolio/adobe-scripts/book-styles-dialog.webp" alt="Окно настройки Book Styles" sizes="(max-width: 700px) 60vw, (max-width: 1100px) 54vw, 33vw" />
+				<ResponsiveImage class="book-specimen" src="/portfolio/adobe-scripts/book-styles-specimen.webp" alt={isRu ? 'Тестовая страница со стилями, созданная Book Styles' : 'Style specimen page created with Book Styles'} sizes="(max-width: 700px) 70vw, (max-width: 1100px) 62vw, 38vw" />
+				<ResponsiveImage class="book-dialog" src="/portfolio/adobe-scripts/book-styles-dialog.webp" alt={isRu ? 'Окно настройки Book Styles' : 'Book Styles settings dialog'} sizes="(max-width: 700px) 60vw, (max-width: 1100px) 54vw, 33vw" />
 			</div>
 
 			<div class="book-details">
-				<h3>Профили</h3>
+				<h3>{isRu ? 'Профили' : 'Profiles'}</h3>
 				<div class="profile-grid">
-					<article><h4>Report</h4><p>Для длинного последовательного текста. Основной рекомендуемый стиль — Body First Indent: красная строка 4 мм на A5, 4,5 мм на A4 или 5 мм на A3, без межабзацной отбивки. Body Spaced получает наиболее компактный Space After — 0,32 базовой строки.</p></article>
-					<article><h4>Magazine</h4><p>Для редакционной и журнальной вёрстки. Рекомендуется Body Spaced: без красной строки, с заметной межабзацной отбивкой 0,4 базовой строки.</p></article>
-					<article><h4>Brochure</h4><p>Для коротких рекламных и презентационных блоков. Использует Body Spaced с более открытой отбивкой — 0,52 базовой строки.</p></article>
-					<article><h4>Modern Web</h4><p>Display-first профиль с крупными заголовками и большим количеством капса. `H1`, `H2` и `H3` переводятся в ALL CAPS и получают специальный tracking. Размер `H1`: 72/63 pt на A5, 112/98 pt на A4 и 156/136 pt на A3.</p></article>
+					<article><h4>Report</h4><p>{isRu ? 'Для длинного последовательного текста. Основной рекомендуемый стиль — Body First Indent: красная строка 4 мм на A5, 4,5 мм на A4 или 5 мм на A3, без межабзацной отбивки. Body Spaced получает наиболее компактный Space After — 0,32 базовой строки.' : 'For long, continuous text. The recommended body style is Body First Indent: a 4 mm first-line indent on A5, 4.5 mm on A4, or 5 mm on A3, with no paragraph spacing. Body Spaced uses the tightest Space After value: 0.32 of the baseline.'}</p></article>
+					<article><h4>Magazine</h4><p>{isRu ? 'Для редакционной и журнальной вёрстки. Рекомендуется Body Spaced: без красной строки, с заметной межабзацной отбивкой 0,4 базовой строки.' : 'For editorial and magazine layout. Body Spaced is recommended: no first-line indent and a more visible paragraph gap of 0.4 of the baseline.'}</p></article>
+					<article><h4>Brochure</h4><p>{isRu ? 'Для коротких рекламных и презентационных блоков. Использует Body Spaced с более открытой отбивкой — 0,52 базовой строки.' : 'For short promotional and presentation blocks. Uses Body Spaced with a more open gap of 0.52 of the baseline.'}</p></article>
+					<article><h4>Modern Web</h4><p>{isRu ? 'Display-first профиль с крупными заголовками и большим количеством капса. H1, H2 и H3 переводятся в ALL CAPS и получают специальный tracking. Размер H1: 72/63 pt на A5, 112/98 pt на A4 и 156/136 pt на A3.' : 'A display-first profile with large headings and extensive use of caps. H1, H2, and H3 are converted to ALL CAPS and receive dedicated tracking. H1 size: 72/63 pt on A5, 112/98 pt on A4, and 156/136 pt on A3.'}</p></article>
 				</div>
 
 				<div class="font-presets">
-					<h3>Шрифтовые пресеты</h3>
-					<p>Основные пары: Source Serif 4 + Source Sans 3, PT Serif + PT Sans, Literata + Commissioner, Lora + IBM Plex Sans, Spectral + Montserrat и Noto Serif + Noto Sans. Отдельно доступны `Helvetica Solo` и `EB Garamond + Helvetica`.</p>
+					<h3>{isRu ? 'Шрифтовые пресеты' : 'Font presets'}</h3>
+					<p>{isRu ? 'Основные пары: Source Serif 4 + Source Sans 3, PT Serif + PT Sans, Literata + Commissioner, Lora + IBM Plex Sans, Spectral + Montserrat и Noto Serif + Noto Sans. Отдельно доступны Helvetica Solo и EB Garamond + Helvetica.' : 'Main pairings: Source Serif 4 + Source Sans 3, PT Serif + PT Sans, Literata + Commissioner, Lora + IBM Plex Sans, Spectral + Montserrat, and Noto Serif + Noto Sans. Helvetica Solo and EB Garamond + Helvetica are also available.'}</p>
 				</div>
 			</div>
-			<a class="contents-link" href="#contents">Вернуться в оглавление ↑</a>
+			<a class="contents-link" href="#contents">{isRu ? 'Вернуться в оглавление' : 'Back to contents'} ↑</a>
 		</section>
 	</main>
 	<CasePagination

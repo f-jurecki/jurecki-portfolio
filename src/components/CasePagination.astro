@@ -1,4 +1,6 @@
 ---
+import { getLocale, localizedPath } from '../lib/i18n';
+
 interface Link {
 	href: string;
 	label: string;
@@ -10,15 +12,17 @@ interface Props {
 }
 
 const { previous, next } = Astro.props;
+const locale = getLocale(Astro.url.pathname);
+const isRussian = locale === 'ru';
 ---
 
-<nav class="case-pagination" aria-label="Другие проекты">
-	<a class="case-pagination-link previous" href={previous.href}>
-		<span>← Предыдущий проект</span>
+<nav class="case-pagination" aria-label={isRussian ? 'Другие проекты' : 'Other projects'}>
+	<a class="case-pagination-link previous" href={localizedPath(previous.href, locale)}>
+		<span>← {isRussian ? 'Предыдущий проект' : 'Previous project'}</span>
 		<strong>{previous.label}</strong>
 	</a>
-	<a class="case-pagination-link next" href={next.href}>
-		<span>Следующий проект →</span>
+	<a class="case-pagination-link next" href={localizedPath(next.href, locale)}>
+		<span>{isRussian ? 'Следующий проект' : 'Next project'} →</span>
 		<strong>{next.label}</strong>
 	</a>
 </nav>

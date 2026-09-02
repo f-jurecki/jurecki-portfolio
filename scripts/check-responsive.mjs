@@ -12,14 +12,14 @@ const widths = [320, 360, 390, 430, 768, 978, 1024, 1025, 1280, 1440, 1501, 1536
 const productionOrigin = 'https://jurecki-portfolio.vercel.app';
 
 const files = await findAstroPages(pagesDirectory);
-const dynamicPages = files.filter((file) => relative(pagesDirectory, file).split(/[\\/]/).some((part) => part.startsWith('[')));
-if (dynamicPages.length) throw new Error(`Add concrete responsive-test URLs for dynamic pages:\n${dynamicPages.join('\n')}`);
 const routes = files
+	.filter((file) => !relative(pagesDirectory, file).split(/[\\/]/).some((part) => part.startsWith('[')))
 	.map((file) => relative(pagesDirectory, file).replaceAll('\\', '/'))
 	.map((file) => {
 		const path = file.replace(/\.astro$/, '').replace(/(^|\/)index$/, '$1');
 		return `/${path}`.replace(/\/{2,}/g, '/');
 	})
+	.flatMap((route) => route === '/' ? ['/', '/ru/'] : [route, `/ru${route}`])
 	.sort()
 	.filter((route) => !process.env.ROUTE_FILTER || route === process.env.ROUTE_FILTER);
 

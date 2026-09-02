@@ -5,29 +5,32 @@ import ProjectFooter from '../../../../components/ProjectFooter.astro';
 import ResponsiveImage from '../../../../components/ResponsiveImage.astro';
 import SiteHeader from '../../../../components/SiteHeader.astro';
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { getLocale } from '../../../../lib/i18n';
+
+const isRu = getLocale(Astro.url.pathname) === 'ru';
 
 const screenshots = [
 	{
 		src: '/portfolio/sequence/sequence-overview.png',
-		alt: 'Просмотр последовательности Creative starter в Sequence',
-		caption: 'Просмотр сиквенса',
+		alt: isRu ? 'Просмотр последовательности Creative starter в Sequence' : 'Creative starter sequence view in Sequence',
+		caption: isRu ? 'Просмотр сиквенса' : 'Sequence view',
 	},
 	{
 		src: '/portfolio/sequence/sequence-editor.png',
-		alt: 'Редактирование этапов последовательности в Sequence',
-		caption: 'Редактор этапов',
+		alt: isRu ? 'Редактирование этапов последовательности в Sequence' : 'Editing sequence steps in Sequence',
+		caption: isRu ? 'Редактор этапов' : 'Step editor',
 	},
 	{
 		src: '/portfolio/sequence/sequence-timer.png',
-		alt: 'Запущенный таймер текущего этапа в Sequence',
-		caption: 'Таймер процесса',
+		alt: isRu ? 'Запущенный таймер текущего этапа в Sequence' : 'Running timer for the current Sequence step',
+		caption: isRu ? 'Таймер процесса' : 'Process timer',
 	},
 ];
 ---
 
 <BaseLayout
-	title="Sequence — Федор Юрецкий"
-	description="Минималистичный тайм-трекер для заранее спланированных процессов."
+	title={isRu ? 'Sequence — Федор Юрецкий' : 'Sequence — Fedor Jurecki'}
+	description={isRu ? 'Минималистичный тайм-трекер для заранее спланированных процессов.' : 'A minimalist time tracker for pre-planned processes.'}
 >
 	<SiteHeader />
 
@@ -35,16 +38,16 @@ const screenshots = [
 		<section class="sequence-intro">
 			<div class="sequence-heading">
 				<h1>Sequence</h1>
-				<a href="https://sequence-rose.vercel.app" target="_blank" rel="noopener noreferrer">Открыть Sequence <span aria-hidden="true">↗</span></a>
+				<a href="https://sequence-rose.vercel.app" target="_blank" rel="noopener noreferrer">{isRu ? 'Открыть Sequence' : 'Open Sequence'} <span aria-hidden="true">↗</span></a>
 			</div>
 			<div class="sequence-description">
-				<p>Sequence — минималистичный тайм-трекер для заранее спланированных процессов. Вместо обычного списка задач здесь создаётся последовательность этапов: каждому можно задать название, описание, эмодзи и точное время.</p>
-				<p>После запуска Sequence ведёт по процессу шаг за шагом, показывает оставшееся время текущего этапа и всей последовательности, работает в фоновой вкладке, присылает системные уведомления и проигрывает звуковые сигналы. Таймер можно поставить на паузу или переключить вручную.</p>
-				<p>Сиквенсы хранятся локально в браузере, не требуют аккаунта или сервера и могут экспортироваться в JSON для переноса на другое устройство. Интерфейс адаптирован под десктоп и мобильные устройства.</p>
+				<p>{isRu ? 'Sequence — минималистичный тайм-трекер для заранее спланированных процессов. Вместо обычного списка задач здесь создаётся последовательность этапов: каждому можно задать название, описание, эмодзи и точное время.' : 'Sequence is a minimalist time tracker for pre-planned processes. Instead of a conventional task list, it lets you build a sequence of stages, each with its own title, description, emoji, and exact duration.'}</p>
+				<p>{isRu ? 'После запуска Sequence ведёт по процессу шаг за шагом, показывает оставшееся время текущего этапа и всей последовательности, работает в фоновой вкладке, присылает системные уведомления и проигрывает звуковые сигналы. Таймер можно поставить на паузу или переключить вручную.' : 'Once started, Sequence guides the user through the process step by step, shows the remaining time for both the current stage and the full sequence, continues working in a background tab, sends system notifications, and plays audio cues. The timer can be paused or advanced manually.'}</p>
+				<p>{isRu ? 'Сиквенсы хранятся локально в браузере, не требуют аккаунта или сервера и могут экспортироваться в JSON для переноса на другое устройство. Интерфейс адаптирован под десктоп и мобильные устройства.' : 'Sequences are stored locally in the browser, require no account or server, and can be exported as JSON for transfer to another device. The interface is adapted for both desktop and mobile.'}</p>
 			</div>
 		</section>
 
-		<section class="sequence-gallery" aria-label="Интерфейс Sequence">
+		<section class="sequence-gallery" aria-label={isRu ? 'Интерфейс Sequence' : 'Sequence interface'}>
 			{screenshots.map((screenshot) => (
 				<figure>
 					<button
@@ -52,7 +55,7 @@ const screenshots = [
 						type="button"
 						data-lightbox-target="sequence-lightbox"
 						data-caption={screenshot.caption}
-						aria-label={`Увеличить: ${screenshot.caption}`}
+						aria-label={`${isRu ? 'Увеличить' : 'Enlarge'}: ${screenshot.caption}`}
 					>
 						<ResponsiveImage
 							src={screenshot.src}
@@ -67,10 +70,10 @@ const screenshots = [
 		</section>
 	</main>
 
-	<CaseLightbox id="sequence-lightbox" variant="single" label="Увеличенный интерфейс Sequence" />
+	<CaseLightbox id="sequence-lightbox" variant="single" label={isRu ? 'Увеличенный интерфейс Sequence' : 'Enlarged Sequence interface'} />
 	<CasePagination
 		previous={{ href: '/projects/vibecoding/deepfries/', label: 'Deepfries' }}
-		next={{ href: '/projects/publications/iofs', label: 'ИОПБ / IOFS' }}
+		next={{ href: '/projects/publications/iofs', label: isRu ? 'ИОПБ / IOFS' : 'IOFS' }}
 	/>
 	<ProjectFooter />
 </BaseLayout>

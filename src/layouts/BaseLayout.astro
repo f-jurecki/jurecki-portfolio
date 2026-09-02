@@ -1,5 +1,7 @@
 ---
 import SeoHead from '../components/SeoHead.astro';
+import LanguageGate from '../components/LanguageGate.astro';
+import { getLocale } from '../lib/i18n';
 import '../styles/dark-theme.css';
 
 interface Props {
@@ -10,10 +12,11 @@ interface Props {
 }
 
 const { title, description, image, imageAlt } = Astro.props;
+const locale = getLocale(Astro.url.pathname);
 ---
 
 <!doctype html>
-<html lang="ru">
+<html lang={locale}>
 	<head>
 		<SeoHead title={title} description={description} image={image} imageAlt={imageAlt} />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -22,6 +25,7 @@ const { title, description, image, imageAlt } = Astro.props;
 	</head>
 	<body id="top">
 		<slot />
+		<LanguageGate />
 	</body>
 </html>
 

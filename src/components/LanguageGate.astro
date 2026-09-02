@@ -1,0 +1,75 @@
+---
+import { localizedPath } from '../lib/i18n';
+
+const englishHref = localizedPath(Astro.url.pathname, 'en');
+const russianHref = localizedPath(Astro.url.pathname, 'ru');
+---
+
+<dialog class="language-gate" data-language-gate aria-label="Choose language / Выберите язык">
+	<p>Language / Язык</p>
+	<div>
+		<a href={englishHref} data-language-choice="en">English</a>
+		<a href={russianHref} data-language-choice="ru">Русский</a>
+	</div>
+</dialog>
+
+<script>
+	const preferenceKey = 'fedor-jurecki-language';
+	const scrollKey = 'fedor-jurecki-language-scroll';
+	const dialog = document.querySelector<HTMLDialogElement>('[data-language-gate]');
+	let preference = '';
+	try { preference = localStorage.getItem(preferenceKey) ?? ''; } catch {}
+	if (dialog && !preference) dialog.showModal();
+
+	const saveScrollPosition = (href: string) => {
+		const maxScroll = document.documentElement.scrollHeight - innerHeight;
+		if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+		try { sessionStorage.setItem(scrollKey, JSON.stringify({ path: new URL(href).pathname, progress: maxScroll > 0 ? scrollY / maxScroll : 0 })); } catch {}
+	};
+
+	const restoreScrollPosition = () => {
+		let saved: { path?: string; progress?: number } | null = null;
+		try { saved = JSON.parse(sessionStorage.getItem(scrollKey) ?? 'null'); } catch {}
+		if (saved?.path !== location.pathname || !Number.isFinite(saved.progress)) {
+			try { sessionStorage.removeItem(scrollKey); } catch {}
+			return;
+		}
+		const apply = () => {
+			const previousBehavior = document.documentElement.style.scrollBehavior;
+			document.documentElement.style.scrollBehavior = 'auto';
+			scrollTo(0, (saved?.progress ?? 0) * Math.max(0, document.documentElement.scrollHeight - innerHeight));
+			document.documentElement.style.scrollBehavior = previousBehavior;
+		};
+		apply();
+		setTimeout(apply, 250);
+		setTimeout(() => {
+			apply();
+			try { sessionStorage.removeItem(scrollKey); } catch {}
+			if ('scrollRestoration' in history) history.scrollRestoration = 'auto';
+		}, 1000);
+	};
+
+	if (document.readyState === 'complete') restoreScrollPosition();
+	else addEventListener('load', restoreScrollPosition, { once: true });
+
+	document.querySelectorAll<HTMLAnchorElement>('[data-language-choice]').forEach((link) => {
+		link.addEventListener('click', (event) => {
+			try { localStorage.setItem(preferenceKey, link.dataset.languageChoice ?? 'en'); } catch {}
+			if (new URL(link.href).pathname !== location.pathname) return saveScrollPosition(link.href);
+			event.preventDefault();
+			dialog?.close();
+		});
+	});
+
+	dialog?.addEventListener('cancel', (event) => event.preventDefault());
+</script>
+
+<style>
+	.language-gate { width: fit-content; max-width: calc(100% - 2rem); padding: .5rem; color: #fff; background: #090909; border: 1px solid #444; border-radius: var(--radius-card); box-shadow: 0 2rem 7rem #000b; }
+	.language-gate::backdrop { background: #000c; backdrop-filter: blur(10px); }
+	.language-gate p { margin: .25rem .3rem .65rem; color: #999; font-size: .82rem; font-weight: 400; }
+	.language-gate div { display: flex; gap: .5rem; }
+	.language-gate a { min-height: 2.75rem; padding: .8rem 1.1rem; display: grid; place-items: center; color: #fff; border: 1px solid #333; border-radius: var(--radius-thumb); font-size: .82rem; font-weight: 750; text-decoration: none; }
+	.language-gate a:hover,.language-gate a:focus-visible { color: #050505; background: #fff; }
+	:global(html:has(.language-gate[open])),:global(body:has(.language-gate[open])) { overflow: hidden; }
+</style>

@@ -1,5 +1,6 @@
 ---
 import ResponsiveImage from './ResponsiveImage.astro';
+import { getLocale } from '../lib/i18n';
 
 interface GalleryImage {
 	src: string;
@@ -29,6 +30,7 @@ interface Props {
 }
 
 const { id = 'case-gallery', label, title, description, items, variant, lightboxId, showHeader = true, imageSizes } = Astro.props;
+const isRussian = getLocale(Astro.url.pathname) === 'ru';
 const titleId = `${id}-title`;
 const resolvedImageSizes = imageSizes ?? (variant === 'spread'
 	? '(max-width: 620px) 25vw, (max-width: 900px) 25vw, 17vw'
@@ -64,7 +66,7 @@ const resolvedImageSizes = imageSizes ?? (variant === 'spread'
 					type="button"
 					data-lightbox-target={lightboxId}
 					data-caption={number ? `${caption} · ${number}` : caption}
-					aria-label={`Увеличить: ${caption}`}
+					aria-label={`${isRussian ? 'Увеличить' : 'Enlarge'}: ${caption}`}
 				>
 					{images.map(({ src, alt }) => (
 						<ResponsiveImage src={src} alt={alt} sizes={resolvedImageSizes} loading="lazy" />
@@ -99,8 +101,9 @@ const resolvedImageSizes = imageSizes ?? (variant === 'spread'
 	.case-gallery-item figcaption span { min-width: 0; overflow-wrap: anywhere; }
 
 	.case-gallery-spread .case-gallery-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: clamp(1.25rem,2vw,2rem); }
-	.case-gallery-spread .case-gallery-trigger { aspect-ratio: 1.85; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .2rem; }
-	.case-gallery-spread .case-gallery-trigger img { height: 100%; object-fit: contain; }
+	.case-gallery-spread .case-gallery-trigger { padding: 0; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0; background: #090909; }
+	.case-gallery-spread .case-gallery-trigger img { height: auto; object-fit: contain; }
+	.case-gallery-spread .case-gallery-trigger img:only-child { grid-column: 1 / -1; }
 
 	.case-gallery-pages .case-gallery-grid,
 	.case-gallery-numbered .case-gallery-grid { columns: 5; column-gap: clamp(.65rem,1.2vw,1.2rem); }
@@ -124,7 +127,7 @@ const resolvedImageSizes = imageSizes ?? (variant === 'spread'
 		.case-gallery h2 { overflow-wrap: anywhere; }
 		.case-gallery-description { overflow-wrap: anywhere; }
 		.case-gallery-spread .case-gallery-grid { gap: .65rem; }
-		.case-gallery-spread .case-gallery-trigger { padding: .25rem; }
+		.case-gallery-spread .case-gallery-trigger { padding: 0; }
 		.case-gallery-pages .case-gallery-grid,
 		.case-gallery-numbered .case-gallery-grid { columns: 2; column-gap: .55rem; }
 		.case-gallery-pages .case-gallery-item,

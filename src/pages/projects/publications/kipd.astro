@@ -8,54 +8,56 @@ import ProjectFooter from '../../../components/ProjectFooter.astro';
 import ResponsiveImage from '../../../components/ResponsiveImage.astro';
 import SiteHeader from '../../../components/SiteHeader.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getLocale } from '../../../lib/i18n';
+
+const isRu = getLocale(Astro.url.pathname) === 'ru';
 
 const gallery = [
-	['identity-mobility.webp', 'Множественность идентичностей · Социальная мобильность'],
-	['identity-attitudes-1.webp', 'Множественность идентичностей · Сравнение показателей'],
-	['identity-attitudes-2.webp', 'Множественность идентичностей · Визуализация ответов'],
-	['legal-title.webp', 'Правовые реформы · Титульная страница'],
-	['legal-illustration-1.webp', 'Правовые реформы · Образование и правопорядок'],
-	['legal-data-3.webp', 'Правовые реформы · Данные исследования'],
-	['legal-data-4.webp', 'Правовые реформы · Сравнение показателей'],
-	['citizenship-illustration-kz.webp', 'Формирование гражданственности · Визуальная вставка'],
-	['citizenship-data-kz-2.webp', 'Формирование гражданственности · Данные опроса'],
-	['citizenship-data-ru-2.webp', 'Формирование гражданственности · Аналитическая полоса'],
-	['citizenship-data-ru-3.webp', 'Формирование гражданственности · Результаты исследования'],
+	['identity-mobility.webp', isRu ? 'Множественность идентичностей · Социальная мобильность' : 'Multiple Identities · Social Mobility'],
+	['identity-attitudes-1.webp', isRu ? 'Множественность идентичностей · Сравнение показателей' : 'Multiple Identities · Indicator Comparison'],
+	['identity-attitudes-2.webp', isRu ? 'Множественность идентичностей · Визуализация ответов' : 'Multiple Identities · Response Visualization'],
+	['legal-title.webp', isRu ? 'Правовые реформы · Титульная страница' : 'Legal Reform · Title Page'],
+	['legal-illustration-1.webp', isRu ? 'Правовые реформы · Образование и правопорядок' : 'Legal Reform · Education and Public Safety'],
+	['legal-data-3.webp', isRu ? 'Правовые реформы · Данные исследования' : 'Legal Reform · Research Data'],
+	['legal-data-4.webp', isRu ? 'Правовые реформы · Сравнение показателей' : 'Legal Reform · Indicator Comparison'],
+	['citizenship-illustration-kz.webp', isRu ? 'Формирование гражданственности · Визуальная вставка' : 'Civic Identity Formation · Visual Insert'],
+	['citizenship-data-kz-2.webp', isRu ? 'Формирование гражданственности · Данные опроса' : 'Civic Identity Formation · Survey Data'],
+	['citizenship-data-ru-2.webp', isRu ? 'Формирование гражданственности · Аналитическая полоса' : 'Civic Identity Formation · Analytical Spread'],
+	['citizenship-data-ru-3.webp', isRu ? 'Формирование гражданственности · Результаты исследования' : 'Civic Identity Formation · Research Findings'],
 ];
 ---
 
 	<BaseLayout
-		title="KIPD — Федор Юрецкий"
-		description="Казахстанский институт общественного развития: дизайн, вёрстка и инфографика аналитических докладов на казахском и русском языках."
+		title={isRu ? 'KIPD — Федор Юрецкий' : 'KIPD — Research Publications by Fedor Jurecki'}
+		description={isRu ? 'Казахстанский институт общественного развития: дизайн, вёрстка и инфографика аналитических докладов на казахском и русском языках.' : 'Visual direction, layout, and infographics for KIPD research publications in Kazakh and Russian.'}
 	>
 		<SiteHeader />
 
 		<main>
 			<section class="project-hero">
-				<p class="eyebrow">Многостраничные издания · Серия исследований</p>
+				<p class="eyebrow">{isRu ? 'Многостраничные издания · Серия исследований' : 'Multi-page publications · Research series'}</p>
 				<div class="hero-row">
-					<h1>КИОР<br /><span class="title-accent">KIPD</span></h1>
+					<h1>{isRu ? <>КИОР<br /><span class="title-accent">KIPD</span></> : 'KIPD'}</h1>
 					<div class="summary">
-						<p>В рамках трёх исследовательских проектов KIPD я самостоятельно вёл визуальное направление изданий: от разработки общей концепции и арт-дирекшена до финальной вёрстки и подготовки материалов к публикации. Для серии была создана единая редакционная система — модульные сетки, типографическая иерархия, принципы работы с изображениями и структура подачи больших объёмов аналитического материала.</p>
-						<p>Отдельной частью работы стала визуализация данных. Я разработал инфографику, диаграммы и способы представления результатов исследований, адаптируя их под содержание каждого доклада и сохраняя общую визуальную логику серии. В результате три разных по тематике исследования получили самостоятельный характер, оставаясь частью одной последовательной дизайн-системы.</p>
-						<p>Также я вёл журнал KIPD: разрабатывал обложки, выполнял вёрстку и инфографику.</p>
+						<p>{isRu ? 'В рамках трёх исследовательских проектов KIPD я самостоятельно вёл визуальное направление изданий: от разработки общей концепции и арт-дирекшена до финальной вёрстки и подготовки материалов к публикации. Для серии была создана единая редакционная система — модульные сетки, типографическая иерархия, принципы работы с изображениями и структура подачи больших объёмов аналитического материала.' : 'Across three KIPD research projects, I independently led the visual direction of the publications, from the overall concept and art direction through final layout and preparation for publication. I developed a unified editorial system for the series, including modular grids, typographic hierarchy, image principles, and a structure for presenting large volumes of analytical material.'}</p>
+						<p>{isRu ? 'Отдельной частью работы стала визуализация данных. Я разработал инфографику, диаграммы и способы представления результатов исследований, адаптируя их под содержание каждого доклада и сохраняя общую визуальную логику серии. В результате три разных по тематике исследования получили самостоятельный характер, оставаясь частью одной последовательной дизайн-системы.' : 'Data visualization was a separate major part of the work. I designed infographics, charts, and other ways of presenting research findings, adapting them to the content of each report while maintaining a consistent visual logic across the series. As a result, the three studies each retained their own character while remaining part of one coherent design system.'}</p>
 					</div>
 				</div>
 			</section>
 
 			<figure class="cover-stage">
-				<div class="cover cover-left"><ResponsiveImage src="/portfolio/kipd/identity-cover.webp" alt="Обложка доклада КИОР о множественности идентичностей" sizes="(max-width: 700px) 32vw, 24vw" loading="eager" /></div>
-				<div class="cover cover-main"><ResponsiveImage src="/portfolio/kipd/legal-cover.webp" alt="Обложка доклада КИОР о правовых реформах" sizes="(max-width: 700px) 36vw, 28vw" loading="eager" fetchpriority="high" /></div>
-				<div class="cover cover-right"><ResponsiveImage src="/portfolio/kipd/citizenship-cover.webp" alt="Обложка доклада КИОР о формировании гражданственности" sizes="(max-width: 700px) 32vw, 24vw" loading="eager" /></div>
+				<div class="cover cover-left"><ResponsiveImage src="/portfolio/kipd/identity-cover.webp" alt={isRu ? 'Обложка доклада КИОР о множественности идентичностей' : 'Cover of the KIPD report on multiple identities'} sizes="(max-width: 700px) 32vw, 24vw" loading="eager" /></div>
+				<div class="cover cover-main"><ResponsiveImage src="/portfolio/kipd/legal-cover.webp" alt={isRu ? 'Обложка доклада КИОР о правовых реформах' : 'Cover of the KIPD report on legal reform'} sizes="(max-width: 700px) 36vw, 28vw" loading="eager" fetchpriority="high" /></div>
+				<div class="cover cover-right"><ResponsiveImage src="/portfolio/kipd/citizenship-cover.webp" alt={isRu ? 'Обложка доклада КИОР о формировании гражданственности' : 'Cover of the KIPD report on civic identity formation'} sizes="(max-width: 700px) 32vw, 24vw" loading="eager" /></div>
 			</figure>
 
 			<section class="showcase showcase-dark" id="case-series" data-case-section>
 				<div class="identity-layout">
 					<div class="identity-pages">
-						<figure><button class="zoom-trigger" data-lightbox-target="case-gallery-lightbox" type="button" data-src="/portfolio/kipd/identity-demography-1.webp" data-caption="Множественность идентичностей · Демография"><ResponsiveImage src="/portfolio/kipd/identity-demography-1.webp" alt="Инфографика демографического профиля исследования" sizes="(max-width: 700px) 50vw, 25vw" /></button></figure>
-						<figure><button class="zoom-trigger" data-lightbox-target="case-gallery-lightbox" type="button" data-src="/portfolio/kipd/identity-demography-2.webp" data-caption="Множественность идентичностей · Социальный профиль"><ResponsiveImage src="/portfolio/kipd/identity-demography-2.webp" alt="Инфографика социального профиля исследования" sizes="(max-width: 700px) 50vw, 25vw" /></button></figure>
-						<figure><button class="zoom-trigger" data-lightbox-target="case-gallery-lightbox" type="button" data-src="/portfolio/kipd/identity-profile-1.webp" data-caption="Множественность идентичностей · Профиль респондентов"><ResponsiveImage src="/portfolio/kipd/identity-profile-1.webp" alt="Инфографика профиля респондентов" sizes="(max-width: 700px) 50vw, 25vw" /></button></figure>
-						<figure><button class="zoom-trigger" data-lightbox-target="case-gallery-lightbox" type="button" data-src="/portfolio/kipd/identity-profile-2.webp" data-caption="Множественность идентичностей · Период проживания"><ResponsiveImage src="/portfolio/kipd/identity-profile-2.webp" alt="Инфографика периода проживания респондентов" sizes="(max-width: 700px) 50vw, 25vw" /></button></figure>
+						<figure><button class="zoom-trigger" data-lightbox-target="case-gallery-lightbox" type="button" data-src="/portfolio/kipd/identity-demography-1.webp" data-caption={isRu ? 'Множественность идентичностей · Демография' : 'Multiple Identities · Demographics'}><ResponsiveImage src="/portfolio/kipd/identity-demography-1.webp" alt={isRu ? 'Инфографика демографического профиля исследования' : 'Research demographic-profile infographic'} sizes="(max-width: 700px) 50vw, 25vw" /></button></figure>
+						<figure><button class="zoom-trigger" data-lightbox-target="case-gallery-lightbox" type="button" data-src="/portfolio/kipd/identity-demography-2.webp" data-caption={isRu ? 'Множественность идентичностей · Социальный профиль' : 'Multiple Identities · Social Profile'}><ResponsiveImage src="/portfolio/kipd/identity-demography-2.webp" alt={isRu ? 'Инфографика социального профиля исследования' : 'Research social-profile infographic'} sizes="(max-width: 700px) 50vw, 25vw" /></button></figure>
+						<figure><button class="zoom-trigger" data-lightbox-target="case-gallery-lightbox" type="button" data-src="/portfolio/kipd/identity-profile-1.webp" data-caption={isRu ? 'Множественность идентичностей · Профиль респондентов' : 'Multiple Identities · Respondent Profile'}><ResponsiveImage src="/portfolio/kipd/identity-profile-1.webp" alt={isRu ? 'Инфографика профиля респондентов' : 'Respondent-profile infographic'} sizes="(max-width: 700px) 50vw, 25vw" /></button></figure>
+						<figure><button class="zoom-trigger" data-lightbox-target="case-gallery-lightbox" type="button" data-src="/portfolio/kipd/identity-profile-2.webp" data-caption={isRu ? 'Множественность идентичностей · Период проживания' : 'Multiple Identities · Residence Period'}><ResponsiveImage src="/portfolio/kipd/identity-profile-2.webp" alt={isRu ? 'Инфографика периода проживания респондентов' : 'Respondent residence-period infographic'} sizes="(max-width: 700px) 50vw, 25vw" /></button></figure>
 					</div>
 				</div>
 			</section>
@@ -63,37 +65,36 @@ const gallery = [
 			<section class="legal-section" id="case-system" data-case-section>
 				<div class="legal-stage">
 					<div class="legal-spread">
-						<figure><button class="zoom-trigger" data-lightbox-target="case-gallery-lightbox" type="button" data-src="/portfolio/kipd/legal-section-1.webp" data-caption="Правовые реформы · Раздел исследования"><ResponsiveImage src="/portfolio/kipd/legal-section-1.webp" alt="Вводная полоса раздела о правовых реформах" sizes="(max-width: 700px) 50vw, 25vw" /></button></figure>
-						<figure><button class="zoom-trigger" data-lightbox-target="case-gallery-lightbox" type="button" data-src="/portfolio/kipd/legal-section-2.webp" data-caption="Правовые реформы · Аналитическая полоса"><ResponsiveImage src="/portfolio/kipd/legal-section-2.webp" alt="Аналитическая полоса доклада о правовых реформах" sizes="(max-width: 700px) 50vw, 25vw" /></button></figure>
-						<figure><button class="zoom-trigger" data-lightbox-target="case-gallery-lightbox" type="button" data-src="/portfolio/kipd/legal-data-1.webp" data-caption="Правовые реформы · Диаграммы"><ResponsiveImage src="/portfolio/kipd/legal-data-1.webp" alt="Диаграммы исследования правовых реформ" sizes="(max-width: 700px) 50vw, 25vw" /></button></figure>
-						<figure><button class="zoom-trigger" data-lightbox-target="case-gallery-lightbox" type="button" data-src="/portfolio/kipd/legal-data-2.webp" data-caption="Правовые реформы · Сравнение данных"><ResponsiveImage src="/portfolio/kipd/legal-data-2.webp" alt="Сравнительные диаграммы исследования правовых реформ" sizes="(max-width: 700px) 50vw, 25vw" /></button></figure>
+						<figure><button class="zoom-trigger" data-lightbox-target="case-gallery-lightbox" type="button" data-src="/portfolio/kipd/legal-section-1.webp" data-caption={isRu ? 'Правовые реформы · Раздел исследования' : 'Legal Reform · Report Section'}><ResponsiveImage src="/portfolio/kipd/legal-section-1.webp" alt={isRu ? 'Вводная полоса раздела о правовых реформах' : 'Opening page of the legal-reform section'} sizes="(max-width: 700px) 50vw, 25vw" /></button></figure>
+						<figure><button class="zoom-trigger" data-lightbox-target="case-gallery-lightbox" type="button" data-src="/portfolio/kipd/legal-section-2.webp" data-caption={isRu ? 'Правовые реформы · Аналитическая полоса' : 'Legal Reform · Analytical Page'}><ResponsiveImage src="/portfolio/kipd/legal-section-2.webp" alt={isRu ? 'Аналитическая полоса доклада о правовых реформах' : 'Analytical page from the legal-reform report'} sizes="(max-width: 700px) 50vw, 25vw" /></button></figure>
+						<figure><button class="zoom-trigger" data-lightbox-target="case-gallery-lightbox" type="button" data-src="/portfolio/kipd/legal-data-1.webp" data-caption={isRu ? 'Правовые реформы · Диаграммы' : 'Legal Reform · Charts'}><ResponsiveImage src="/portfolio/kipd/legal-data-1.webp" alt={isRu ? 'Диаграммы исследования правовых реформ' : 'Charts from the legal-reform study'} sizes="(max-width: 700px) 50vw, 25vw" /></button></figure>
+						<figure><button class="zoom-trigger" data-lightbox-target="case-gallery-lightbox" type="button" data-src="/portfolio/kipd/legal-data-2.webp" data-caption={isRu ? 'Правовые реформы · Сравнение данных' : 'Legal Reform · Data Comparison'}><ResponsiveImage src="/portfolio/kipd/legal-data-2.webp" alt={isRu ? 'Сравнительные диаграммы исследования правовых реформ' : 'Comparative charts from the legal-reform study'} sizes="(max-width: 700px) 50vw, 25vw" /></button></figure>
 					</div>
 				</div>
 			</section>
 
 			<section class="citizenship showcase-dark">
 				<div class="citizenship-grid">
-					<figure class="citizen-title"><button class="zoom-trigger" data-lightbox-target="case-gallery-lightbox" type="button" data-src="/portfolio/kipd/citizenship-title-kz.webp" data-caption="Формирование гражданственности · Казахская версия"><ResponsiveImage src="/portfolio/kipd/citizenship-title-kz.webp" alt="Титульная страница казахской версии доклада" sizes="(max-width: 700px) 50vw, 25vw" /></button></figure>
-					<figure class="citizen-data"><button class="zoom-trigger" data-lightbox-target="case-gallery-lightbox" type="button" data-src="/portfolio/kipd/citizenship-data-kz-1.webp" data-caption="Формирование гражданственности · Данные исследования"><ResponsiveImage src="/portfolio/kipd/citizenship-data-kz-1.webp" alt="Инфографика казахской версии исследования" sizes="(max-width: 700px) 50vw, 25vw" /></button></figure>
-					<figure class="citizen-title"><button class="zoom-trigger" data-lightbox-target="case-gallery-lightbox" type="button" data-src="/portfolio/kipd/citizenship-title-ru.webp" data-caption="Формирование гражданственности · Русская версия"><ResponsiveImage src="/portfolio/kipd/citizenship-title-ru.webp" alt="Титульная страница русской версии доклада" sizes="(max-width: 700px) 50vw, 25vw" /></button></figure>
-					<figure class="citizen-data"><button class="zoom-trigger" data-lightbox-target="case-gallery-lightbox" type="button" data-src="/portfolio/kipd/citizenship-data-ru-1.webp" data-caption="Формирование гражданственности · Аналитическая полоса"><ResponsiveImage src="/portfolio/kipd/citizenship-data-ru-1.webp" alt="Инфографика русской версии исследования" sizes="(max-width: 700px) 50vw, 25vw" /></button></figure>
+					<figure class="citizen-title"><button class="zoom-trigger" data-lightbox-target="case-gallery-lightbox" type="button" data-src="/portfolio/kipd/citizenship-title-kz.webp" data-caption={isRu ? 'Формирование гражданственности · Казахская версия' : 'Civic Identity Formation · Kazakh Edition'}><ResponsiveImage src="/portfolio/kipd/citizenship-title-kz.webp" alt={isRu ? 'Титульная страница казахской версии доклада' : 'Title page of the Kazakh edition'} sizes="(max-width: 700px) 50vw, 25vw" /></button></figure>
+					<figure class="citizen-data"><button class="zoom-trigger" data-lightbox-target="case-gallery-lightbox" type="button" data-src="/portfolio/kipd/citizenship-data-kz-1.webp" data-caption={isRu ? 'Формирование гражданственности · Данные исследования' : 'Civic Identity Formation · Research Data'}><ResponsiveImage src="/portfolio/kipd/citizenship-data-kz-1.webp" alt={isRu ? 'Инфографика казахской версии исследования' : 'Infographic from the Kazakh edition'} sizes="(max-width: 700px) 50vw, 25vw" /></button></figure>
+					<figure class="citizen-title"><button class="zoom-trigger" data-lightbox-target="case-gallery-lightbox" type="button" data-src="/portfolio/kipd/citizenship-title-ru.webp" data-caption={isRu ? 'Формирование гражданственности · Русская версия' : 'Civic Identity Formation · Russian Edition'}><ResponsiveImage src="/portfolio/kipd/citizenship-title-ru.webp" alt={isRu ? 'Титульная страница русской версии доклада' : 'Title page of the Russian edition'} sizes="(max-width: 700px) 50vw, 25vw" /></button></figure>
+					<figure class="citizen-data"><button class="zoom-trigger" data-lightbox-target="case-gallery-lightbox" type="button" data-src="/portfolio/kipd/citizenship-data-ru-1.webp" data-caption={isRu ? 'Формирование гражданственности · Аналитическая полоса' : 'Civic Identity Formation · Analytical Page'}><ResponsiveImage src="/portfolio/kipd/citizenship-data-ru-1.webp" alt={isRu ? 'Инфографика русской версии исследования' : 'Infographic from the Russian edition'} sizes="(max-width: 700px) 50vw, 25vw" /></button></figure>
 				</div>
 			</section>
 
 			<section class="result" id="case-result" data-case-section>
 				<div class="rich-text">
-					<h2>Три темы на казахском и русском.</h2>
-					<p>Я подготовил доклады о множественности идентичностей, правовых реформах и формировании гражданственности на казахском и русском языках. Для каждого исследования я адаптировал шаблоны длинных текстов, таблиц, диаграмм и иллюстраций под тему и объём материала. Все версии я подготовил к публикации.</p>
+					<h2>{isRu ? 'Три темы на казахском и русском.' : 'Three topics in Kazakh and Russian.'}</h2>
+					<p>{isRu ? 'Я подготовил доклады о множественности идентичностей, правовых реформах и формировании гражданственности на казахском и русском языках. Для каждого исследования я адаптировал шаблоны длинных текстов, таблиц, диаграмм и иллюстраций под тему и объём материала. Все версии я подготовил к публикации.' : 'I produced reports on multiple identities, legal reform, and civic identity formation in both Kazakh and Russian. For each study, I adapted templates for long-form text, tables, charts, and illustrations to the topic and volume of the material. I prepared all versions for publication.'}</p>
 					<CaseResults items={[
-						['3 темы', 'идентичности · реформы · гражданственность'],
-						['2 версии', 'казахский и русский языки'],
-						['Шаблоны', 'для текста, таблиц и диаграмм'],
+						[isRu ? '3 аналитических доклада' : '3 analytical reports', isRu ? 'идентичности · реформы · гражданственность' : 'identities · reform · civic identity'],
+						[isRu ? '2 версии' : '2 versions', isRu ? 'казахский и русский языки' : 'Kazakh and Russian'],
 					]} />
 				</div>
 			</section>
 
 			<CaseGallery
-				label="Галерея"
+				label={isRu ? 'Галерея' : 'Gallery'}
 				title=""
 				items={gallery.map(([file, caption]) => ({
 					caption,
@@ -108,13 +109,13 @@ const gallery = [
 				lightboxId="case-gallery-lightbox"
 				showHeader={false}
 			>
-				<h2 slot="toolbar" class="gallery-only-title">ГАЛЕРЕЯ</h2>
+				<h2 slot="toolbar" class="gallery-only-title">{isRu ? 'ГАЛЕРЕЯ' : 'GALLERY'}</h2>
 			</CaseGallery>
-			<CaseLightbox id="case-gallery-lightbox" variant="single" label="Увеличенная страница проекта КИОР" />
+			<CaseLightbox id="case-gallery-lightbox" variant="single" label={isRu ? 'Увеличенная страница проекта КИОР' : 'Enlarged KIPD project page'} />
 
 			<CasePagination
-				previous={{ href: '/projects/publications/iofs', label: 'ИОПБ / IOFS' }}
-				next={{ href: '/projects/publications/unesco', label: 'ЮНЕСКО' }}
+				previous={{ href: '/projects/publications/iofs', label: isRu ? 'ИОПБ / IOFS' : 'IOFS' }}
+				next={{ href: '/projects/publications/unesco', label: 'UNESCO' }}
 			/>
 			<ProjectFooter />
 		</main>

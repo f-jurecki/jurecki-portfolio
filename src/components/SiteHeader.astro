@@ -1,6 +1,7 @@
 ---
 import '../styles/tokens.css';
 import personalMark from '../../links/my logo miniature white.png';
+import { getLocale, localizedPath } from '../lib/i18n';
 interface Props {
 	brandHref?: string;
 }
@@ -9,6 +10,15 @@ const {
 	brandHref = '/',
 } = Astro.props;
 
+const locale = getLocale(Astro.url.pathname);
+const isRussian = locale === 'ru';
+const resolvedBrandHref = brandHref.startsWith('#') ? brandHref : localizedPath(brandHref, locale);
+const englishHref = localizedPath(Astro.url.pathname, 'en');
+const russianHref = localizedPath(Astro.url.pathname, 'ru');
+const alternateLocale = isRussian ? 'en' : 'ru';
+const alternateHref = isRussian ? englishHref : russianHref;
+const alternateLabel = isRussian ? 'EN' : 'RU';
+
 const email = 'fedorjurecki@gmail.com';
 const linkedinUrl = 'https://www.linkedin.com/in/jurecki';
 const telegramUrl = 'https://t.me/jurecki';
@@ -16,27 +26,29 @@ const instagramUrl = 'https://www.instagram.com/jurecki.things/';
 ---
 
 <div class="site-header">
-	<nav class="site-header-inner" aria-label="Контакты Федора Юрецкого">
-		<a class="site-brand" href={brandHref} aria-label={brandHref.startsWith('#') ? 'Федор Юрецкий — наверх страницы' : 'Федор Юрецкий — на главную'}>
+	<nav class="site-header-inner" aria-label={isRussian ? 'Контакты Федора Юрецкого' : 'Fedor Jurecki contacts'}>
+		<a class="site-brand" href={resolvedBrandHref} aria-label={brandHref.startsWith('#') ? (isRussian ? 'Федор Юрецкий — наверх страницы' : 'Fedor Jurecki — back to top') : (isRussian ? 'Федор Юрецкий — на главную' : 'Fedor Jurecki — home')}>
 			<img src={personalMark.src} alt="" width="24" height="24" aria-hidden="true" />
-			<span>Федор Юрецкий</span>
+			<span>{isRussian ? 'Федор Юрецкий' : 'Fedor Jurecki'}</span>
 		</a>
 
 		<div class="site-nav-links">
-			<button type="button" data-copy-value={email} data-copy-message="Почта скопирована" aria-label={`Скопировать почту ${email}`}>Почта</button>
+			<a class="language-switch" href={alternateHref} data-language-choice={alternateLocale} aria-label={isRussian ? 'Перейти на английскую версию' : 'Switch to Russian'}>{alternateLabel}</a>
+			<button type="button" data-copy-value={email} data-copy-message={isRussian ? 'Почта скопирована' : 'Email copied'} aria-label={isRussian ? `Скопировать почту ${email}` : `Copy email ${email}`}>{isRussian ? 'Почта' : 'Email'}</button>
 			<a href={linkedinUrl} target="_blank" rel="noopener noreferrer">LinkedIn</a>
 			<a href={telegramUrl} target="_blank" rel="noopener noreferrer">Telegram</a>
 			<a href={instagramUrl} target="_blank" rel="noopener noreferrer">Instagram</a>
 		</div>
 
 		<div class="mobile-nav">
+			<a class="language-switch" href={alternateHref} data-language-choice={alternateLocale} aria-label={isRussian ? 'Перейти на английскую версию' : 'Switch to Russian'}>{alternateLabel}</a>
 			<button class="mobile-contacts-toggle" type="button" aria-expanded="false" aria-controls="mobile-contact-panel">
-				Контакты <span aria-hidden="true">+</span>
+				{isRussian ? 'Контакты' : 'Contacts'} <span aria-hidden="true">+</span>
 			</button>
 		</div>
 
 		<div class="mobile-contact-panel" id="mobile-contact-panel" hidden>
-			<button type="button" data-copy-value={email} data-copy-message="Почта скопирована" aria-label={`Скопировать почту ${email}`}><strong>Почта</strong><i aria-hidden="true">⎘</i></button>
+			<button type="button" data-copy-value={email} data-copy-message={isRussian ? 'Почта скопирована' : 'Email copied'} aria-label={isRussian ? `Скопировать почту ${email}` : `Copy email ${email}`}><strong>{isRussian ? 'Почта' : 'Email'}</strong><i aria-hidden="true">⎘</i></button>
 			<a href={telegramUrl} target="_blank" rel="noopener noreferrer"><strong>Telegram</strong><i aria-hidden="true">↗&#xfe0e;</i></a>
 			<a href={linkedinUrl} target="_blank" rel="noopener noreferrer"><strong>LinkedIn</strong><i aria-hidden="true">↗&#xfe0e;</i></a>
 			<a href={instagramUrl} target="_blank" rel="noopener noreferrer"><strong>Instagram</strong><i aria-hidden="true">↗&#xfe0e;</i></a>
@@ -44,7 +56,7 @@ const instagramUrl = 'https://www.instagram.com/jurecki.things/';
 	</nav>
 </div>
 
-<div class="copy-toast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+<div class="copy-toast" role="status" aria-live="polite" aria-atomic="true" data-copy-fallback={isRussian ? 'Скопировано' : 'Copied'} data-copy-error={isRussian ? 'Не удалось скопировать' : 'Could not copy'} hidden></div>
 
 <script>
 	const copyToast = document.querySelector<HTMLElement>('.copy-toast');
@@ -55,13 +67,13 @@ const instagramUrl = 'https://www.instagram.com/jurecki.things/';
 			try {
 				await navigator.clipboard.writeText(button.dataset.copyValue ?? '');
 				if (!copyToast) return;
-				copyToast.textContent = button.dataset.copyMessage ?? 'Скопировано';
+				copyToast.textContent = button.dataset.copyMessage ?? copyToast.dataset.copyFallback ?? 'Copied';
 				copyToast.hidden = false;
 				window.clearTimeout(copyToastTimer);
 				copyToastTimer = window.setTimeout(() => { copyToast.hidden = true; }, 3000);
 			} catch {
 				if (!copyToast) return;
-				copyToast.textContent = 'Не удалось скопировать';
+				copyToast.textContent = copyToast.dataset.copyError ?? 'Could not copy';
 				copyToast.hidden = false;
 			}
 		});
@@ -145,11 +157,12 @@ const instagramUrl = 'https://www.instagram.com/jurecki.things/';
 	.site-brand img { width: 1.25rem; height: 1.25rem; flex: 0 0 auto; object-fit: contain; image-rendering: pixelated; }
 	.site-nav-links { grid-column: 3; display: flex; align-items: center; justify-self: end; gap: clamp(1.25rem,3vw,3.2rem); }
 	.site-nav-links a,.site-nav-links button { color: inherit; font: inherit; font-size: .78rem; font-weight: 650; letter-spacing: .03em; text-decoration: none; }
+	.language-switch,.site-nav-links .language-switch { padding: .3rem .38rem; color: #777; border: 1px solid rgba(17,17,17,.22); font-size: .68rem; font-weight: 750; line-height: 1; text-decoration: none; }
 	.site-nav-links a,.site-nav-links button { position: relative; white-space: nowrap; }
 	.site-nav-links button { padding: 0; display:inline-flex; align-items:center; gap:.35rem; background: none; border: 0; cursor: pointer; }
 	.copy-icon { width:1rem; height:1rem; flex:0 0 auto; fill:none; stroke:currentColor; stroke-width:1.4; stroke-linecap:round; stroke-linejoin:round; }
-	.site-nav-links a::after,.site-nav-links button::after { content: ""; position: absolute; left: 0; bottom: -.35rem; width: 100%; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform .25s ease; }
-	.site-nav-links a:hover::after,.site-nav-links a:focus-visible::after,.site-nav-links button:hover::after,.site-nav-links button:focus-visible::after { transform: scaleX(1); transform-origin: left; }
+	.site-nav-links > a::after,.site-nav-links > button::after { content: ""; position: absolute; left: 0; bottom: -.35rem; width: 100%; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform .25s ease; }
+	.site-nav-links > a:hover::after,.site-nav-links > a:focus-visible::after,.site-nav-links > button:hover::after,.site-nav-links > button:focus-visible::after { transform: scaleX(1); transform-origin: left; }
 	.mobile-nav,.mobile-contact-panel { display: none; }
 	.site-brand:focus-visible,.site-nav-links a:focus-visible,.site-nav-links button:focus-visible,.mobile-nav a:focus-visible,.mobile-nav button:focus-visible,.mobile-contact-panel a:focus-visible,.mobile-contact-panel button:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
 	.copy-toast { position:fixed; top:7rem; right:clamp(1rem,4vw,4.5rem); z-index:300; padding:.85rem 1rem; color:#fff; background:#111; border-radius:var(--radius-thumb); box-shadow:0 .8rem 2rem rgba(0,0,0,.2); font-size:.82rem; font-weight:750; }

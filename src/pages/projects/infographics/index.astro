@@ -6,17 +6,20 @@ import CasePagination from '../../../components/CasePagination.astro';
 import ProjectFooter from '../../../components/ProjectFooter.astro';
 import SiteHeader from '../../../components/SiteHeader.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getLocale } from '../../../lib/i18n';
+
+const isRu = getLocale(Astro.url.pathname) === 'ru';
 
 const filters = [
-	{ id: 'all', label: 'Все работы' },
-	{ id: 'research', label: 'Исследования' },
-	{ id: 'reports', label: 'Отчёты' },
-	{ id: 'social', label: 'Социальные данные' },
-	{ id: 'science', label: 'Научные данные' },
-	{ id: 'illustrative', label: 'Иллюстративная инфографика' },
+	{ id: 'all', label: isRu ? 'Все работы' : 'All work' },
+	{ id: 'research', label: isRu ? 'Исследования' : 'Research' },
+	{ id: 'reports', label: isRu ? 'Отчёты' : 'Reports' },
+	{ id: 'social', label: isRu ? 'Социальные данные' : 'Social Data' },
+	{ id: 'science', label: isRu ? 'Научные данные' : 'Scientific Data' },
+	{ id: 'illustrative', label: isRu ? 'Иллюстративная инфографика' : 'Illustrative Infographics' },
 ];
 
-const removedNumbers = new Set([1, 2, 6, 8, 10, 11, 23, 24, 25, 26, 27, 28, 29, 30, 70, 72, 73, 74, 75, 76, 78, 80, 82]);
+const removedNumbers = new Set([1, 2, 6, 8, 10, 11, 23, 24, 25, 26, 27, 28, 29, 30, 70, 72, 73, 74, 75, 76, 78, 79, 80, 82]);
 const illustrativeNumbers = new Set([9, 14, 15, 17, 19, 20, 21, 32, 40, 41, 42, 43, 44, 45, 46, 47, 59, 62, 63, 64]);
 const curatedNumbers = [
 	102, 17, 110, 83, 3, 91,
@@ -31,14 +34,14 @@ const curatedNumbers = [
 ];
 const curatedRank = new Map(curatedNumbers.map((number, index) => [number, index]));
 const getGroup = (number: number) => {
-	if (number >= 110) return 'Образовательная инфографика';
-	if (number >= 102) return 'Бизнес-инфографика';
-	if (number <= 11) return 'Годовые отчёты и международная статистика';
-	if (number <= 21) return 'Социальные исследования и правовые реформы';
-	if (number <= 39) return 'Гражданские исследования';
-	if (number <= 69) return 'Социально-демографические исследования';
-	if (number <= 90) return 'Научные и климатические данные';
-	return 'Оценка образовательных программ';
+	if (number >= 110) return isRu ? 'Образовательная инфографика' : 'Educational Infographics';
+	if (number >= 102) return isRu ? 'Бизнес-инфографика' : 'Business Infographics';
+	if (number <= 11) return isRu ? 'Годовые отчёты и международная статистика' : 'Annual Reports & International Statistics';
+	if (number <= 21) return isRu ? 'Социальные исследования и правовые реформы' : 'Social Research & Legal Reform';
+	if (number <= 39) return isRu ? 'Гражданские исследования' : 'Civic Research';
+	if (number <= 69) return isRu ? 'Социально-демографические исследования' : 'Socio-Demographic Research';
+	if (number <= 90) return isRu ? 'Научные и климатические данные' : 'Scientific & Climate Data';
+	return isRu ? 'Оценка образовательных программ' : 'Educational Program Evaluation';
 };
 
 const getCategories = (number: number) => {
@@ -76,16 +79,16 @@ const initialGalleryCount = 24;
 ---
 
 <BaseLayout
-	title="Инфографика — Федор Юрецкий"
-	description="Инфографика и визуализация данных: диаграммы, схемы, карты и исследовательские материалы."
+	title={isRu ? 'Инфографика — Федор Юрецкий' : 'Infographics — Fedor Jurecki'}
+	description={isRu ? 'Инфографика и визуализация данных: диаграммы, схемы, карты и исследовательские материалы.' : 'Infographics and data visualization: charts, diagrams, maps, and research materials.'}
 >
 	<SiteHeader />
 
 	<main>
 		<section class="project-intro">
 			<div class="intro-heading">
-				<h1>Инфографика</h1>
-				<div class="tags" aria-label="Фильтры галереи">
+				<h1>{isRu ? 'Инфографика' : 'Infographics'}</h1>
+				<div class="tags" aria-label={isRu ? 'Фильтры галереи' : 'Gallery filters'}>
 					{filters.map(({ id, label }) => (
 						<button
 							class:list={['format-filter', { active: id === 'all' }]}
@@ -98,11 +101,11 @@ const initialGalleryCount = 24;
 					))}
 				</div>
 			</div>
-			<p>Превращаю сухие данные в ясную и выразительную графику: рисую вручную в Illustrator, работаю с RAWGraphs. Могу подсветить главное или сохранить максимально честную репрезентацию — в зависимости от задачи.</p>
+			<p>{isRu ? 'Превращаю сухие данные в ясную и выразительную графику: рисую вручную в Illustrator, работаю с RAWGraphs. Могу подсветить главное или сохранить максимально честную репрезентацию — в зависимости от задачи.' : 'I turn raw data into clear, expressive graphics: I draw manually in Illustrator and work with RAWGraphs. Depending on the task, I can emphasize the key point or preserve the data as neutrally and faithfully as possible.'}</p>
 		</section>
 
 		<CaseGallery
-			label="Галерея инфографики"
+			label={isRu ? 'Галерея инфографики' : 'Infographics gallery'}
 			title=""
 			showHeader={false}
 			items={galleryImages.map(({ src, group, categories }, index) => ({
@@ -110,24 +113,24 @@ const initialGalleryCount = 24;
 				number: String(index + 1).padStart(3, '0'),
 				categories,
 				hidden: index >= initialGalleryCount,
-				images: [{ src, alt: `${group}: пример инфографики ${index + 1}` }],
+				images: [{ src, alt: `${group}: ${isRu ? 'пример инфографики' : 'infographic example'} ${index + 1}` }],
 			}))}
 			variant="numbered"
 			lightboxId="case-gallery-lightbox"
 		>
 			<div slot="toolbar" class="gallery-toolbar">
-				<p class="gallery-status" aria-live="polite">Показано {initialGalleryCount} из {galleryImages.length}</p>
-				<button class="gallery-reset" type="button" hidden>Сбросить фильтр</button>
+				<p class="gallery-status" aria-live="polite" data-template={isRu ? 'Показано {shown} из {total}' : 'Showing {shown} of {total}'}>{isRu ? 'Показано' : 'Showing'} {initialGalleryCount} {isRu ? 'из' : 'of'} {galleryImages.length}</p>
+				<button class="gallery-reset" type="button" hidden>{isRu ? 'Сбросить фильтр' : 'Reset filter'}</button>
 			</div>
 			<div slot="actions" class="gallery-actions">
-				<button class="gallery-more" type="button">Показать ещё</button>
+				<button class="gallery-more" type="button">{isRu ? 'Показать ещё' : 'Show more'}</button>
 			</div>
 		</CaseGallery>
 
-		<CaseLightbox id="case-gallery-lightbox" variant="single" label="Увеличенное изображение инфографики" />
+		<CaseLightbox id="case-gallery-lightbox" variant="single" label={isRu ? 'Увеличенное изображение инфографики' : 'Enlarged infographic'} />
 		<CasePagination
-			previous={{ href: '/projects/publications/unesco', label: 'ЮНЕСКО' }}
-			next={{ href: '/projects/presentations/', label: 'Презентации' }}
+			previous={{ href: '/projects/publications/unesco', label: 'UNESCO' }}
+			next={{ href: '/projects/presentations/', label: isRu ? 'Презентации' : 'Presentations' }}
 		/>
 		<ProjectFooter />
 	</main>
@@ -138,11 +141,42 @@ const initialGalleryCount = 24;
 		const filterButtons = [...document.querySelectorAll<HTMLButtonElement>('.format-filter')];
 		const galleryItems = [...document.querySelectorAll<HTMLElement>('[data-gallery-item]')];
 		const galleryStatus = document.querySelector<HTMLElement>('.gallery-status');
+		const statusTemplate = galleryStatus?.dataset.template ?? 'Showing {shown} of {total}';
 		const galleryMore = document.querySelector<HTMLButtonElement>('.gallery-more');
 		const galleryReset = document.querySelector<HTMLButtonElement>('.gallery-reset');
 		const pageSize = 24;
 		let activeFilter = 'all';
 		let visibleCount = pageSize;
+
+		const updateReadingOrder = () => {
+			const columns = new Map<number, HTMLElement[]>();
+			galleryItems.filter((item) => !item.hidden).forEach((item) => {
+				const left = Math.round(item.getBoundingClientRect().left);
+				columns.set(left, [...(columns.get(left) ?? []), item]);
+			});
+
+			const orderedColumns = [...columns.entries()]
+				.sort(([leftA], [leftB]) => leftA - leftB)
+				.map(([, items]) => items.sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top));
+			const rowCount = Math.max(0, ...orderedColumns.map((column) => column.length));
+			let order = 0;
+			for (let row = 0; row < rowCount; row += 1) {
+				orderedColumns.forEach((column) => {
+					const item = column[row];
+					if (!item) return;
+					const number = String(order + 1).padStart(3, '0');
+					const caption = item.querySelector<HTMLElement>('figcaption span')?.textContent?.trim() ?? '';
+					const trigger = item.querySelector<HTMLElement>('[data-lightbox-target]');
+					const numberNode = item.querySelector<HTMLElement>('figcaption b');
+					if (trigger) {
+						trigger.dataset.lightboxOrder = String(order);
+						trigger.dataset.caption = `${caption} · ${number}`;
+					}
+					if (numberNode) numberNode.textContent = number;
+					order += 1;
+				});
+			}
+		};
 
 		const updateGallery = () => {
 			const matchingItems = galleryItems.filter((item) =>
@@ -155,9 +189,10 @@ const initialGalleryCount = 24;
 			});
 
 			const shownCount = Math.min(visibleCount, matchingItems.length);
-			if (galleryStatus) galleryStatus.textContent = `Показано ${shownCount} из ${matchingItems.length}`;
+			if (galleryStatus) galleryStatus.textContent = statusTemplate.replace('{shown}', String(shownCount)).replace('{total}', String(matchingItems.length));
 			if (galleryMore) galleryMore.hidden = shownCount >= matchingItems.length;
 			if (galleryReset) galleryReset.hidden = activeFilter === 'all';
+			updateReadingOrder();
 		};
 
 		const setFilter = (filter: string) => {
@@ -179,6 +214,7 @@ const initialGalleryCount = 24;
 			updateGallery();
 		});
 		galleryReset?.addEventListener('click', () => setFilter('all'));
+		window.addEventListener('resize', updateReadingOrder, { passive: true });
 		updateGallery();
 	</script>
 </BaseLayout>

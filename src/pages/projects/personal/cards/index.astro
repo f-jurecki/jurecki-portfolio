@@ -5,13 +5,16 @@ import ProjectFooter from '../../../../components/ProjectFooter.astro';
 import ResponsiveImage from '../../../../components/ResponsiveImage.astro';
 import SiteHeader from '../../../../components/SiteHeader.astro';
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { getLocale, localizedPath } from '../../../../lib/i18n';
 
-const ranks = ['Туз', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Валет', 'Дама', 'Король'];
+const locale = getLocale(Astro.url.pathname);
+const isRu = locale === 'ru';
+const ranks = isRu ? ['Туз', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Валет', 'Дама', 'Король'] : ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King'];
 const suits = [
-	{ name: 'Черви', files: [8, 4, 12, 16, 20, 24, 28, 32, 36, 40, 41, 43, 49] },
-	{ name: 'Пики', files: [7, 3, 11, 15, 19, 23, 27, 31, 35, 39, 42, 46, 50] },
-	{ name: 'Трефы', files: [5, 1, 9, 13, 17, 21, 25, 29, 33, 37, 44, 47, 51] },
-	{ name: 'Бубны', files: [6, 2, 10, 14, 18, 22, 26, 30, 34, 38, 45, 48, 52] },
+	{ name: isRu ? 'Черви' : 'Hearts', files: [8, 4, 12, 16, 20, 24, 28, 32, 36, 40, 41, 43, 49] },
+	{ name: isRu ? 'Пики' : 'Spades', files: [7, 3, 11, 15, 19, 23, 27, 31, 35, 39, 42, 46, 50] },
+	{ name: isRu ? 'Трефы' : 'Clubs', files: [5, 1, 9, 13, 17, 21, 25, 29, 33, 37, 44, 47, 51] },
+	{ name: isRu ? 'Бубны' : 'Diamonds', files: [6, 2, 10, 14, 18, 22, 26, 30, 34, 38, 45, 48, 52] },
 ].map((suit) => ({
 	...suit,
 	cards: suit.files.map((file, index) => ({
@@ -23,19 +26,19 @@ const suits = [
 ---
 
 <BaseLayout
-	title="Колода карт Misprint — Федор Юрецкий"
-	description="Misprint — авторская колода игральных карт Федора Юрецкого: четыре масти и четыре сценария цифрового искажения."
+	title={isRu ? 'Колода карт Misprint — Федор Юрецкий' : 'Misprint Playing Card Deck — Fedor Jurecki'}
+	description={isRu ? 'Misprint — авторская колода игральных карт Федора Юрецкого: четыре масти и четыре сценария цифрового искажения.' : 'An original playing-card deck combining a classic card system with four modes of digital distortion.'}
 >
 	<SiteHeader />
 
 	<main class="cards-page">
 		<section class="cards-intro" aria-labelledby="cards-title">
 			<div class="cards-heading">
-				<h1 id="cards-title">Колода карт Misprint</h1>
-				<button class="back-card" type="button" data-lightbox-target="cards-lightbox" data-caption="Рубашка колоды" aria-label="Увеличить рубашку колоды">
+				<h1 id="cards-title">{isRu ? <>Колода<br />карт<br />Misprint</> : <>Misprint<br />Playing Card<br />Deck</>}</h1>
+				<button class="back-card" type="button" data-lightbox-target="cards-lightbox" data-caption={isRu ? 'Рубашка колоды' : 'Card back'} aria-label={isRu ? 'Увеличить рубашку колоды' : 'Enlarge card back'}>
 					<ResponsiveImage
 						src="/portfolio/cards/card-53.webp"
-						alt="Рубашка авторской колоды"
+						alt={isRu ? 'Рубашка авторской колоды' : 'Back of the original playing-card deck'}
 						widths={[96, 160, 240, 373]}
 						sizes="(max-width: 800px) 6rem, 7vw"
 						loading="eager"
@@ -43,15 +46,24 @@ const suits = [
 				</button>
 			</div>
 
-			<div class="cards-copy">
-				<p>Этот пет-проект — авторская колода игральных карт, построенная на сочетании классической карточной системы и эстетики цифрового искажения. В рамках проекта я с нуля отрисовал всю колоду без использования ИИ: все четыре масти, все числовые и фигурные карты, а также рубашку.</p>
+			<section class="cards-process" aria-label={isRu ? 'Колода в движении' : 'The deck in motion'}>
+				<button class="process-button" type="button" data-lightbox-target="cards-lightbox" data-caption={isRu ? 'Колода Misprint в движении' : 'Misprint deck in motion'} aria-label={isRu ? 'Увеличить демонстрацию колоды' : 'Enlarge deck demonstration'}>
+					<img src="/portfolio/cards/process-01.gif" alt={isRu ? 'Демонстрация колоды карт Misprint' : 'Misprint playing-card deck demonstration'} width="272" height="480" loading="eager" decoding="async" />
+				</button>
+				<button class="process-button" type="button" data-lightbox-target="cards-lightbox" data-caption={isRu ? 'Карты Misprint крупным планом' : 'Misprint cards close-up'} aria-label={isRu ? 'Увеличить демонстрацию карт крупным планом' : 'Enlarge close-up card demonstration'}>
+					<img src="/portfolio/cards/process-02.gif" alt={isRu ? 'Демонстрация карт Misprint крупным планом' : 'Close-up demonstration of Misprint playing cards'} width="272" height="480" loading="eager" decoding="async" />
+				</button>
+			</section>
 
-				<p>После создания исходной графики я перешёл ко второму этапу — разработке и применению искажений. Для этого я собрал собственный инструмент <a href="/projects/vibecoding/deepfries/">Deepfries</a> с помощью вайбкодинга и использовал его как часть дизайн-процесса. Вместо одного универсального приёма для всей колоды я заложил отдельный тип деформации для каждой масти. За счёт этого каждая масть получила свой визуальный язык, а вся серия — дополнительную глубину и системность.</p>
+			<div class="cards-copy">
+				<p>{isRu ? 'Этот пет-проект — авторская колода игральных карт, построенная на сочетании классической карточной системы и эстетики цифрового искажения. В рамках проекта я с нуля отрисовал всю колоду без использования ИИ: все четыре масти, все числовые и фигурные карты, а также рубашку.' : 'This personal project is an original playing-card deck built around the contrast between a classic card system and the aesthetics of digital distortion. I drew the entire deck from scratch without using AI: all four suits, every number and face card, and the card back.'}</p>
+
+				<p>{isRu ? <>После создания исходной графики я перешёл ко второму этапу — разработке и применению искажений. Для этого я собрал собственный инструмент <a href={localizedPath('/projects/vibecoding/deepfries/', locale)}>Deepfries</a> с помощью вайбкодинга и использовал его как часть дизайн-процесса. Вместо одного универсального приёма для всей колоды я заложил отдельный тип деформации для каждой масти. За счёт этого каждая масть получила свой визуальный язык, а вся серия — дополнительную глубину и системность.</> : <>After creating the base artwork, I moved on to the second stage: developing and applying the distortions. I built my own tool, <a href={localizedPath('/projects/vibecoding/deepfries/', locale)}>Deepfries</a>, through vibe coding and used it as part of the design process. Rather than applying one universal effect to the whole deck, I created a different type of distortion for each suit. This gave each suit its own visual language while adding more depth and system to the series as a whole.</>}</p>
 			</div>
 		</section>
 
-		<div class="deck" aria-label="Колода из четырёх рядов карт">
-			<div class="deck-scroll" tabindex="0" aria-label="Четыре ряда карт, по одной масти в каждом">
+		<div class="deck" aria-label={isRu ? 'Колода из четырёх рядов карт' : 'Deck arranged in four rows'}>
+			<div class="deck-scroll" tabindex="0" aria-label={isRu ? 'Четыре ряда карт, по одной масти в каждом' : 'Four rows of cards, one suit per row'}>
 				<div class="deck-grid">
 					{suits.map((suit) => (
 						<div class="suit-row" role="group" aria-label={suit.name}>
@@ -61,7 +73,7 @@ const suits = [
 									type="button"
 									data-lightbox-target="cards-lightbox"
 									data-caption={card.caption}
-									aria-label={`Увеличить: ${card.caption}`}
+									aria-label={`${isRu ? 'Увеличить' : 'Enlarge'}: ${card.caption}`}
 								>
 									<ResponsiveImage
 										src={card.src}
@@ -77,23 +89,23 @@ const suits = [
 			</div>
 		</div>
 
-		<section class="deck-copy" aria-label="О визуальной системе колоды">
+		<section class="deck-copy" aria-label={isRu ? 'О визуальной системе колоды' : 'About the deck’s visual system'}>
 			<div class="suit-copy">
-				<p>Каждой масти соответствует собственный характер искажения:</p>
-				<p><strong>Черви —</strong> блочное, низкоразрешённое искажение, которое дробит форму на крупные растровые фрагменты, сохраняя при этом общий силуэт знака.</p>
-				<p><strong>Пики —</strong> более агрессивная помеха с горизонтальными сдвигами, рваными контурами и эффектом цифрового сбоя, будто изображение повреждено во время передачи сигнала.</p>
-				<p><strong>Трефы —</strong> монохромное искажение, вдохновлённое эстетикой многократного копирования, наложения и деградации отпечатка, где форма постепенно растворяется в шуме и фактуре.</p>
-				<p><strong>Бубны —</strong> цветоканальное смещение с разъездом контуров, создающее эффект нестабильной цифровой регистрации и визуальной вибрации.</p>
+				<p>{isRu ? 'Каждой масти соответствует собственный характер искажения:' : 'Each suit has its own distortion:'}</p>
+				<p><strong>{isRu ? 'Черви —' : 'Hearts —'}</strong> {isRu ? 'блочное, низкоразрешённое искажение, которое дробит форму на крупные растровые фрагменты, сохраняя при этом общий силуэт знака.' : 'blocky, low-resolution distortion that breaks the form into large raster fragments while preserving the overall silhouette of the symbol.'}</p>
+				<p><strong>{isRu ? 'Пики —' : 'Spades —'}</strong> {isRu ? 'более агрессивная помеха с горизонтальными сдвигами, рваными контурами и эффектом цифрового сбоя, будто изображение повреждено во время передачи сигнала.' : 'a more aggressive interference effect with horizontal shifts, broken contours, and the feel of a digital signal failure, as though the image were damaged in transmission.'}</p>
+				<p><strong>{isRu ? 'Трефы —' : 'Clubs —'}</strong> {isRu ? 'монохромное искажение, вдохновлённое эстетикой многократного копирования, наложения и деградации отпечатка, где форма постепенно растворяется в шуме и фактуре.' : 'monochrome distortion inspired by repeated copying, layering, and print degradation, where the form gradually dissolves into noise and texture.'}</p>
+				<p><strong>{isRu ? 'Бубны —' : 'Diamonds —'}</strong> {isRu ? 'цветоканальное смещение с разъездом контуров, создающее эффект нестабильной цифровой регистрации и визуальной вибрации.' : 'color-channel displacement with separated contours, creating the effect of unstable digital registration and visual vibration.'}</p>
 			</div>
 
-			<p>В итоге проект представляет собой цельную визуальную систему, где традиционная типология игральной колоды соединяется с разными сценариями цифровой деформации. Каждая масть подчиняется собственной логике, а композиция, ритм и карточная сетка объединяют всю колоду в единый законченный объект.</p>
+			<p>{isRu ? 'В итоге проект представляет собой цельную визуальную систему, где традиционная типология игральной колоды соединяется с разными сценариями цифровой деформации. Каждая масть подчиняется собственной логике, а композиция, ритм и карточная сетка объединяют всю колоду в единый законченный объект.' : 'The final project is a coherent visual system in which the traditional structure of a playing-card deck is combined with several modes of digital deformation. Each suit follows its own logic, while the composition, rhythm, and card grid unify the deck into a complete object.'}</p>
 		</section>
 	</main>
 
-	<CaseLightbox id="cards-lightbox" variant="single" label="Увеличенная карта" />
+	<CaseLightbox id="cards-lightbox" variant="single" label={isRu ? 'Увеличенная карта' : 'Enlarged card'} />
 	<CasePagination
 		previous={{ href: '/projects/product-design/shelfr/', label: 'Shelfr' }}
-		next={{ href: '/projects/personal/republica/', label: 'Шрифт Republica' }}
+		next={{ href: '/projects/personal/republica/', label: isRu ? 'Шрифт Republica' : 'Republica Typeface' }}
 	/>
 	<ProjectFooter />
 </BaseLayout>
@@ -107,15 +119,19 @@ const suits = [
 
 	.cards-intro {
 		display: grid;
-		grid-template-columns: minmax(18rem, .8fr) minmax(30rem, 1.2fr);
+		grid-template-columns: minmax(18rem, .85fr) minmax(25rem, .85fr) minmax(28rem, 1.25fr);
+		grid-template-areas: "heading process copy";
 		align-items: start;
-		gap: clamp(3rem, 8vw, 9rem);
+		gap: clamp(2rem, 4vw, 5rem);
 	}
 
 	.cards-heading {
+		grid-area: heading;
 		position: sticky;
 		top: 9rem;
 	}
+
+	.cards-copy { grid-area: copy; }
 
 	h1 {
 		margin: 0;
@@ -143,6 +159,9 @@ const suits = [
 	.suit-copy p { margin-bottom: .8rem; }
 	.suit-copy p:first-child { margin-bottom: 1.35rem; color: var(--color-text); }
 	.suit-copy strong { color: var(--color-text); font-weight: 700; }
+	.cards-process { grid-area: process; display: grid; grid-template-columns: repeat(2, minmax(0, 12rem)); gap: 1rem; }
+	.cards-process img { width: 100%; height: auto; display: block; }
+	.process-button { min-width: 0; padding: 0; background: transparent; border: 0; cursor: zoom-in; }
 
 	.back-card {
 		width: clamp(5rem, 7vw, 7.2rem);
@@ -199,16 +218,26 @@ const suits = [
 
 	.card-button:hover { transform: translateY(-.25rem); }
 	.card-button:focus-visible,
+	.process-button:focus-visible,
 	.back-card:focus-visible,
 	.deck-scroll:focus-visible,
 	.cards-copy a:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
 
+	@media (max-width: 1100px) {
+		.cards-intro { grid-template-columns: minmax(16rem, .75fr) minmax(28rem, 1.25fr); grid-template-areas: "heading copy" "process copy"; }
+	}
+
 	@media (max-width: 800px) {
 		.cards-page { padding-top: 3.5rem; }
-		.cards-intro { grid-template-columns: 1fr; gap: 3rem; }
+		.cards-intro { grid-template-columns: 1fr; grid-template-areas: "heading" "process" "copy"; gap: 3rem; }
 		.cards-heading { position: static; }
 		.back-card { width: 6rem; }
+		.cards-process { grid-template-columns: repeat(2, minmax(0, 9rem)); }
 		.deck-grid { min-width: 72rem; }
+	}
+
+	@media (max-width: 440px) {
+		.cards-process { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 	}
 
 	@media (prefers-reduced-motion: reduce) {

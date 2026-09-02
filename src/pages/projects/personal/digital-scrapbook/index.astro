@@ -4,10 +4,13 @@ import ProjectFooter from '../../../../components/ProjectFooter.astro';
 import ResponsiveImage from '../../../../components/ResponsiveImage.astro';
 import SiteHeader from '../../../../components/SiteHeader.astro';
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { getLocale } from '../../../../lib/i18n';
+
+const isRu = getLocale(Astro.url.pathname) === 'ru';
 
 const pages = Array.from({ length: 24 }, (_, index) => {
 	const number = String(index + 1).padStart(2, '0');
-	return { src: `/portfolio/personal/digital-scrapbook/page-${number}.webp`, alt: `Digital Scrapbook, страница ${index + 1}` };
+	return { src: `/portfolio/personal/digital-scrapbook/page-${number}.webp`, alt: `Digital Scrapbook, ${isRu ? 'страница' : 'page'} ${index + 1}` };
 });
 
 const spreads = pages.reduce<typeof pages[]>((result, page, index) => {
@@ -18,8 +21,8 @@ const spreads = pages.reduce<typeof pages[]>((result, page, index) => {
 ---
 
 <BaseLayout
-	title="Digital Scrapbook — Федор Юрецкий"
-	description="Digital Scrapbook — личный визуальный дневник Федора Юрецкого, собранный из фрагментов цифровой жизни."
+	title={isRu ? 'Digital Scrapbook — Федор Юрецкий' : 'Digital Scrapbook — Fedor Jurecki'}
+	description={isRu ? 'Digital Scrapbook — личный визуальный дневник Федора Юрецкого, собранный из фрагментов цифровой жизни.' : 'A personal visual diary assembled from screenshots, interfaces, memes, and other fragments of digital life.'}
 >
 	<SiteHeader />
 
@@ -27,24 +30,24 @@ const spreads = pages.reduce<typeof pages[]>((result, page, index) => {
 		<section class="scrapbook-intro" aria-labelledby="scrapbook-title">
 			<h1 id="scrapbook-title">Digital<br />Scrapbook</h1>
 			<div class="intro-copy">
-				<p>Я увидел референс цифрового скрапбука и захотел сделать что-то похожее — сохранить принцип традиционного скрапбука, но перенести его в цифровое пространство. Вместо бумажных вырезок здесь собраны скриншоты, интерфейсы, мемы и другие фрагменты повседневной жизни на экране. Получился личный визуальный дневник, собранный из цифровых находок.</p>
+				<p>{isRu ? 'Я увидел референс цифрового скрапбука и захотел сделать что-то похожее — сохранить принцип традиционного скрапбука, но перенести его в цифровое пространство. Вместо бумажных вырезок здесь собраны скриншоты, интерфейсы, мемы и другие фрагменты повседневной жизни на экране. Получился личный визуальный дневник, собранный из цифровых находок.' : 'I came across a digital-scrapbook reference and wanted to make something similar: keep the logic of traditional scrapbooking, but move it into a digital space. Instead of paper cut-outs, it collects screenshots, interfaces, memes, and other fragments of everyday life on a screen. The result is a personal visual diary assembled from digital finds.'}</p>
 				<ResponsiveImage
 					src="/portfolio/personal/digital-scrapbook/reference.jpg"
-					alt="Референс цифрового скрапбука"
+					alt={isRu ? 'Референс цифрового скрапбука' : 'Digital scrapbook reference'}
 					widths={[160, 240, 360]}
 					sizes="(max-width: 800px) 28vw, 11rem"
 				/>
 			</div>
 		</section>
 
-		<section class="book" aria-label="Digital Scrapbook, 24 страницы" data-book>
+		<section class="book" aria-label={`Digital Scrapbook, 24 ${isRu ? 'страницы' : 'pages'}`} data-book>
 			<div class="book-controls">
-				<strong aria-live="polite"><span data-current>1</span> / {spreads.length}</strong>
-				<button type="button" data-step="-1" aria-label="Предыдущий разворот">←</button>
-				<button type="button" data-step="1" aria-label="Следующий разворот">→</button>
+				<strong aria-live="polite"><span data-current>1</span> / <span data-total>{spreads.length}</span></strong>
+				<button type="button" data-step="-1" aria-label={isRu ? 'Предыдущий разворот' : 'Previous spread'}>←</button>
+				<button type="button" data-step="1" aria-label={isRu ? 'Следующий разворот' : 'Next spread'}>→</button>
 			</div>
 
-			<div class="book-gallery" data-gallery tabindex="0" aria-label="Листать Digital Scrapbook">
+			<div class="book-gallery" data-gallery tabindex="0" aria-label={isRu ? 'Листать Digital Scrapbook' : 'Browse Digital Scrapbook'}>
 				{spreads.map((spread, spreadIndex) => (
 					<figure class:list={[spread.length === 1 && 'book-single']} data-active={spreadIndex === 0 ? '' : undefined}>
 						<div class="book-spread">
@@ -53,7 +56,7 @@ const spreads = pages.reduce<typeof pages[]>((result, page, index) => {
 									src={page.src}
 									alt={page.alt}
 									widths={[320, 480, 720, 951]}
-									sizes="(max-width: 700px) 50vw, 42vw"
+									sizes="(max-width: 800px) 100vw, 42vw"
 									loading={spreadIndex === 0 && pageIndex === 0 ? 'eager' : 'lazy'}
 								/>
 							))}
@@ -69,37 +72,42 @@ const spreads = pages.reduce<typeof pages[]>((result, page, index) => {
 		</section>
 	</main>
 	<CasePagination
-		previous={{ href: '/projects/personal/posters/', label: 'Постеры' }}
-		next={{ href: '/projects/vibecoding/adobe-scripts/', label: 'Скрипты для Adobe' }}
+		previous={{ href: '/projects/personal/posters/', label: isRu ? 'Постеры' : 'Posters' }}
+		next={{ href: '/projects/vibecoding/adobe-scripts/', label: isRu ? 'Скрипты для Adobe' : 'Adobe Scripts' }}
 	/>
 	<ProjectFooter />
 </BaseLayout>
 
 <script>
 	document.querySelectorAll<HTMLElement>('[data-book]').forEach((book) => {
+		const mobile = matchMedia('(max-width: 800px)');
 		const gallery = book.querySelector<HTMLElement>('[data-gallery]');
 		const spreads = [...(gallery?.querySelectorAll<HTMLElement>('figure') ?? [])];
+		const pages = [...(gallery?.querySelectorAll<HTMLImageElement>('img') ?? [])];
 		const current = book.querySelector<HTMLElement>('[data-current]');
+		const total = book.querySelector<HTMLElement>('[data-total]');
 		const buttons = [...book.querySelectorAll<HTMLButtonElement>('[data-step]')];
+		let index = 0;
 
-		const update = (index: number) => {
-			spreads.forEach((spread, spreadIndex) => spread.toggleAttribute('data-active', spreadIndex === index));
-			book.dataset.page = String(index);
+		const update = (next: number) => {
+			const items = mobile.matches ? pages : spreads;
+			index = Math.max(0, Math.min(items.length - 1, next));
+			spreads.forEach((spread, spreadIndex) => spread.toggleAttribute('data-active', mobile.matches ? spread.contains(pages[index]) : spreadIndex === index));
+			pages.forEach((page, pageIndex) => page.toggleAttribute('data-mobile-active', mobile.matches && pageIndex === index));
 			if (current) current.textContent = String(index + 1);
+			if (total) total.textContent = String(items.length);
 			buttons[0].disabled = index === 0;
-			buttons[1].disabled = index === spreads.length - 1;
+			buttons[1].disabled = index === items.length - 1;
 		};
 
-		buttons.forEach((button) => button.addEventListener('click', () => {
-			const index = Math.max(0, Math.min(spreads.length - 1, Number(book.dataset.page ?? 0) + Number(button.dataset.step)));
-			update(index);
-		}));
+		buttons.forEach((button) => button.addEventListener('click', () => update(index + Number(button.dataset.step))));
 
 		gallery?.addEventListener('keydown', (event) => {
 			if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
 			event.preventDefault();
-			update(Math.max(0, Math.min(spreads.length - 1, Number(book.dataset.page ?? 0) + (event.key === 'ArrowRight' ? 1 : -1))));
+			update(index + (event.key === 'ArrowRight' ? 1 : -1));
 		});
+		mobile.addEventListener('change', () => update(0));
 		update(0);
 	});
 </script>
@@ -132,9 +140,12 @@ const spreads = pages.reduce<typeof pages[]>((result, page, index) => {
 		.scrapbook-page { padding-top: 3.5rem; }
 		.scrapbook-intro { grid-template-columns: 1fr; gap: 2rem; }
 		.intro-copy { grid-template-columns: minmax(0,1fr) minmax(6rem,28vw); }
-		.book { margin-top: 3.5rem; grid-template-columns: 2.5rem minmax(0,1fr) 2.5rem; gap: .35rem; }
+		.book { margin-top: 3.5rem; grid-template: "counter counter counter" auto "gallery gallery gallery" auto "previous . next" auto / 2.5rem minmax(0,1fr) 2.5rem; gap: .75rem .35rem; }
 		.book-controls button { width: 2.5rem; height: 2.5rem; }
-		.book-spread { --spread-gap: .18rem; padding: .4rem; }
-		.book-spread :global(img) { max-height: calc(100dvh - 7rem); }
+		.book-spread { display: block; padding: .4rem; }
+		.book-spread :global(img) { display: none; width: 100%; max-width: none; max-height: none; }
+		.book-spread :global(img[data-mobile-active]) { display: block; }
+		.book-single .book-spread :global(img) { max-width: none; }
+		.book-gallery figcaption { display: none; }
 	}
 </style>

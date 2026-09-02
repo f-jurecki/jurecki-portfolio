@@ -48,6 +48,11 @@ a[href="https://www.linkedin.com/in/bogdan-goncharenko/"] * {
 		height: 1743px !important;
 	}
 
+	.framer-h3sPI .framer-11tj4iv {
+		width: max-content !important;
+		white-space: nowrap !important;
+	}
+
 	.framer-h3sPI .framer-ihtygk {
 		height: 1228px !important;
 	}
@@ -72,7 +77,7 @@ a[href="https://www.linkedin.com/in/bogdan-goncharenko/"] * {
 	}
 
 	.framer-h3sPI .framer-3935ut {
-		width: 520px !important;
+		width: 233px !important;
 		white-space: normal !important;
 	}
 
@@ -84,7 +89,7 @@ a[href="https://www.linkedin.com/in/bogdan-goncharenko/"] * {
 		display: grid !important;
 		grid-template-columns: repeat(12, minmax(0, 1fr));
 		grid-template-rows: auto auto auto auto 1fr auto;
-		gap: 24px 40px;
+		gap: 24px 40px !important;
 		width: 1351px !important;
 	}
 
@@ -95,6 +100,24 @@ a[href="https://www.linkedin.com/in/bogdan-goncharenko/"] * {
 		width: auto !important;
 		min-width: 0;
 		white-space: normal !important;
+	}
+
+	.framer-h3sPI .framer-8ffarl > * p {
+		max-width: 100%;
+		white-space: normal !important;
+		overflow-wrap: break-word;
+	}
+
+	.framer-h3sPI .framer-1icmfei,
+	.framer-h3sPI .framer-mvroa8,
+	.framer-h3sPI .framer-1m7rqb8 {
+		display: block !important;
+	}
+
+	.framer-h3sPI .framer-1icmfei > p,
+	.framer-h3sPI .framer-mvroa8 > p,
+	.framer-h3sPI .framer-1m7rqb8 > p {
+		display: inline !important;
 	}
 
 	.framer-h3sPI .framer-6p3rzb,
@@ -120,28 +143,25 @@ a[href="https://www.linkedin.com/in/bogdan-goncharenko/"] * {
 		width: 520px !important;
 	}
 
+	.framer-h3sPI .framer-yseeya {
+		left: 50% !important;
+		width: 50% !important;
+		transform: translateX(-50%);
+	}
+
+	.framer-h3sPI .framer-1gu2ji7 {
+		height: 1475px !important;
+	}
+
+	.framer-h3sPI .framer-rr0y7j {
+		height: 1459px !important;
+	}
+
 	.framer-h3sPI .framer-wtimuh,
 	.framer-h3sPI .framer-1h5dmm {
 		top: 600px !important;
 	}
 
-	.framer-h3sPI .framer-jgnhpw {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		border-radius: 18px;
-		background: #1b5bff;
-		color: #fff !important;
-		font: 400 16px/1.2 Inter, Arial, sans-serif;
-	}
-
-	.framer-h3sPI .framer-jgnhpw .svgContainer {
-		display: none;
-	}
-
-	.framer-h3sPI .framer-jgnhpw::after {
-		content: "Алгоритм как у Нетфликс,";
-	}
 }
 
 @media (max-width: 1024px) {
@@ -586,6 +606,29 @@ a[href="https://www.linkedin.com/in/bogdan-goncharenko/"] * {
 
 	.shelfr-mobile-message:nth-child(even) {
 		justify-self: end;
+	}
+
+	.shelfr-mobile-message p {
+		position: relative;
+		box-sizing: border-box;
+		margin: 0;
+		padding: .85rem 1rem;
+		color: #fff;
+		background: #245eff;
+		border-radius: 1rem;
+		font-size: 1rem;
+		line-height: 1.2;
+	}
+
+	.shelfr-mobile-message p::after {
+		content: "";
+		position: absolute;
+		bottom: -.4rem;
+		left: .8rem;
+		width: 1rem;
+		height: .8rem;
+		background: inherit;
+		clip-path: polygon(0 0, 100% 0, 0 100%);
 	}
 
 	.shelfr-mobile-message img,

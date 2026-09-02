@@ -3,6 +3,9 @@ import CasePagination from '../../../../components/CasePagination.astro';
 import ProjectFooter from '../../../../components/ProjectFooter.astro';
 import SiteHeader from '../../../../components/SiteHeader.astro';
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { getLocale } from '../../../../lib/i18n';
+
+const isRu = getLocale(Astro.url.pathname) === 'ru';
 
 const posterCount = 35;
 const posters = Array.from({ length: posterCount }, (_, index) => {
@@ -10,21 +13,21 @@ const posters = Array.from({ length: posterCount }, (_, index) => {
 	return {
 		full: `/portfolio/posters/poster-${number}.webp`,
 		thumb: `/portfolio/posters/thumbs/poster-${number}.webp`,
-		alt: `Постер ${index + 1} из ${posterCount}`,
+		alt: `${isRu ? 'Постер' : 'Poster'} ${index + 1} ${isRu ? 'из' : 'of'} ${posterCount}`,
 	};
 });
 ---
 
 <BaseLayout
-	title="Постеры — Федор Юрецкий"
-	description="Экспериментальные постеры Федора Юрецкого."
+	title={isRu ? 'Постеры — Федор Юрецкий' : 'Posters — Fedor Jurecki'}
+	description={isRu ? 'Экспериментальные постеры Федора Юрецкого.' : 'Experimental posters by Fedor Jurecki.'}
 >
 	<SiteHeader />
 
 	<main class="poster-page">
-		<section class="poster-gallery" aria-label="Галерея постеров" data-poster-gallery>
+		<section class="poster-gallery" aria-label={isRu ? 'Галерея постеров' : 'Poster gallery'} data-poster-gallery data-status-template={isRu ? 'Показан постер {current} из {total}' : 'Showing poster {current} of {total}'}>
 			<div class="poster-stage">
-				<button class="poster-arrow poster-arrow--previous" type="button" aria-label="Предыдущий постер" data-previous>
+				<button class="poster-arrow poster-arrow--previous" type="button" aria-label={isRu ? 'Предыдущий постер' : 'Previous poster'} data-previous>
 					<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7" /></svg>
 				</button>
 
@@ -32,17 +35,17 @@ const posters = Array.from({ length: posterCount }, (_, index) => {
 					<img src={posters[0].full} alt={posters[0].alt} fetchpriority="high" decoding="async" data-main-poster />
 				</div>
 
-				<button class="poster-arrow poster-arrow--next" type="button" aria-label="Следующий постер" data-next>
+				<button class="poster-arrow poster-arrow--next" type="button" aria-label={isRu ? 'Следующий постер' : 'Next poster'} data-next>
 					<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg>
 				</button>
 			</div>
 
-			<div class="poster-thumbnails" role="list" aria-label="Выбрать постер" data-thumbnails>
+			<div class="poster-thumbnails" role="list" aria-label={isRu ? 'Выбрать постер' : 'Choose a poster'} data-thumbnails>
 				{posters.map((poster, index) => (
 					<button
 						type="button"
 						role="listitem"
-						aria-label={`Показать постер ${index + 1}`}
+						aria-label={`${isRu ? 'Показать постер' : 'Show poster'} ${index + 1}`}
 						aria-current={index === 0 ? 'true' : undefined}
 						data-poster-index={index}
 						data-poster-src={poster.full}
@@ -53,17 +56,17 @@ const posters = Array.from({ length: posterCount }, (_, index) => {
 				))}
 			</div>
 
-			<p class="visually-hidden" aria-live="polite" data-poster-status>Показан постер 1 из {posterCount}</p>
+			<p class="visually-hidden" aria-live="polite" data-poster-status>{isRu ? `Показан постер 1 из ${posterCount}` : `Showing poster 1 of ${posterCount}`}</p>
 		</section>
 
-		<section class="poster-copy" aria-label="О проекте">
-			<p><strong>Моя отдушина!</strong></p>
-			<p>Люблю отработать на постере новые фишки, методы и инструменты, отразить какую-то эмоцию. Каждый постер — в каком-то смысле эксперимент.</p>
-			<p>Инструменты, которые использовались: Illustrator, Photoshop, Procreate, Affinity, металлический лист, майнкрафт, pilot parallel pen, мои фотоработы, каллиграфия, карандаши, и что только не.</p>
+		<section class="poster-copy" aria-label={isRu ? 'О проекте' : 'About the project'}>
+			<p><strong>{isRu ? 'Моя отдушина!' : 'My creative outlet.'}</strong></p>
+			<p>{isRu ? 'Люблю отработать на постере новые фишки, методы и инструменты, отразить какую-то эмоцию. Каждый постер — в каком-то смысле эксперимент.' : 'I like using posters to test new techniques, methods, and tools, or simply to capture a particular emotion. Each poster is an experiment in one way or another.'}</p>
+			<p>{isRu ? 'Инструменты, которые использовались: Illustrator, Photoshop, Procreate, Affinity, металлический лист, майнкрафт, pilot parallel pen, мои фотоработы, каллиграфия, карандаши, и что только не.' : 'Tools and materials used across the series include Illustrator, Photoshop, Procreate, Affinity, sheet metal, Minecraft, a Pilot Parallel Pen, my own photography, calligraphy, pencils, and plenty of other things.'}</p>
 		</section>
 	</main>
 	<CasePagination
-		previous={{ href: '/projects/personal/republica/', label: 'Шрифт Republica' }}
+		previous={{ href: '/projects/personal/republica/', label: isRu ? 'Шрифт Republica' : 'Republica Typeface' }}
 		next={{ href: '/projects/personal/digital-scrapbook/', label: 'Digital Scrapbook' }}
 	/>
 	<ProjectFooter />
@@ -74,11 +77,15 @@ const posters = Array.from({ length: posterCount }, (_, index) => {
 	const mainPoster = gallery?.querySelector<HTMLImageElement>('[data-main-poster]');
 	const thumbnails = Array.from(gallery?.querySelectorAll<HTMLButtonElement>('[data-poster-index]') ?? []);
 	const status = gallery?.querySelector<HTMLElement>('[data-poster-status]');
+	const statusTemplate = gallery?.dataset.statusTemplate ?? 'Showing poster {current} of {total}';
+	const storageKey = 'fedor-jurecki-poster-index';
 	let currentIndex = 0;
+	try { currentIndex = Number(sessionStorage.getItem(storageKey)) || 0; } catch {}
 
 	const showPoster = (nextIndex: number, moveFocus = false) => {
 		if (!mainPoster || thumbnails.length === 0) return;
 		currentIndex = (nextIndex + thumbnails.length) % thumbnails.length;
+		try { sessionStorage.setItem(storageKey, String(currentIndex)); } catch {}
 		const activeThumbnail = thumbnails[currentIndex];
 		mainPoster.src = activeThumbnail.dataset.posterSrc ?? '';
 		mainPoster.alt = activeThumbnail.dataset.posterAlt ?? '';
@@ -88,12 +95,13 @@ const posters = Array.from({ length: posterCount }, (_, index) => {
 		});
 		activeThumbnail.scrollIntoView({ block: 'nearest', inline: 'center' });
 		if (moveFocus) activeThumbnail.focus();
-		if (status) status.textContent = `Показан постер ${currentIndex + 1} из ${thumbnails.length}`;
+		if (status) status.textContent = statusTemplate.replace('{current}', String(currentIndex + 1)).replace('{total}', String(thumbnails.length));
 	};
 
 	gallery?.querySelector('[data-previous]')?.addEventListener('click', () => showPoster(currentIndex - 1));
 	gallery?.querySelector('[data-next]')?.addEventListener('click', () => showPoster(currentIndex + 1));
 	thumbnails.forEach((thumbnail, index) => thumbnail.addEventListener('click', () => showPoster(index)));
+	showPoster(currentIndex);
 
 	document.addEventListener('keydown', (event) => {
 		if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;

@@ -7,71 +7,108 @@ import ProjectFooter from '../../../components/ProjectFooter.astro';
 import ResponsiveImage from '../../../components/ResponsiveImage.astro';
 import SiteHeader from '../../../components/SiteHeader.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getLocale } from '../../../lib/i18n';
+
+const isRu = getLocale(Astro.url.pathname) === 'ru';
+
+const covers = [
+	['policy-01-cover.png', isRu ? 'Обложка аналитического доклада о криосфере Центральной Азии' : 'Cover of the Central Asia cryosphere policy brief'],
+	['policy-02-cover.png', isRu ? 'Обложка аналитического доклада об отступлении ледников' : 'Cover of the glacier retreat policy brief'],
+	['policy-03-cover.png', isRu ? 'Обложка аналитического доклада о снежном покрове' : 'Cover of the melting snow policy brief'],
+	['policy-04-cover.png', isRu ? 'Обложка аналитического доклада о платформе знаний' : 'Cover of the cryosphere knowledge platform policy brief'],
+	['policy-05-cover.png', isRu ? 'Обложка аналитического доклада об образовании' : 'Cover of the cryosphere personnel training policy brief'],
+];
+
+const reportCovers = [
+	['report-appendix-1-cover.png', isRu ? 'Обложка приложения 1' : 'Cover of Appendix 1'],
+	['report-appendix-2-cover.png', isRu ? 'Обложка приложения 2' : 'Cover of Appendix 2'],
+	['report-main-cover.png', isRu ? 'Обложка основного диагностического анализа' : 'Cover of the main diagnostic assessment'],
+	['report-appendix-3-cover.png', isRu ? 'Обложка приложения 3' : 'Cover of Appendix 3'],
+	['report-appendix-4-cover.png', isRu ? 'Обложка приложения 4' : 'Cover of Appendix 4'],
+];
 
 const gallery = [
-	['gallery-a1.webp', 'gallery-a2.webp', 'Данные о криосфере'],
-	['gallery-b1.webp', 'gallery-b2.webp', 'Анализ состояния криосферы'],
-	['gallery-c1.webp', 'gallery-c2.webp', 'Карты криосферы'],
-	['gallery-d1.webp', 'gallery-d2.webp', 'Сценарии изменений'],
-	['gallery-e1.webp', 'gallery-e2.webp', 'Индикаторы состояния'],
-	['gallery-f1.webp', 'gallery-f2.webp', 'Рекомендации по криосфере'],
-	['appendix-system-1.webp', 'appendix-system-2.webp', 'Система аналитических материалов'],
-	['climate-map-1.webp', 'climate-map-2.webp', 'Климатические карты'],
-	['diagnostic-analysis-1.webp', 'diagnostic-analysis-2.webp', 'Диагностический анализ'],
-	['diagnostic-data-1.webp', 'diagnostic-data-2.webp', 'Данные диагностического исследования'],
-	['indicators-1.webp', 'indicators-2.webp', 'Ключевые индикаторы'],
+	['policy-01-page-02.png', '', isRu ? 'Криосфера Центральной Азии' : 'The Cryosphere of Central Asia'],
+	['policy-01-page-03.png', '', isRu ? 'Криосфера Центральной Азии' : 'The Cryosphere of Central Asia'],
+	['policy-02-page-02.png', 'policy-02-page-03.png', isRu ? 'Отступление ледников' : 'Glacier Retreat'],
+	['policy-02-page-06.png', 'policy-02-page-07.png', isRu ? 'Отступление ледников' : 'Glacier Retreat'],
+	['policy-03-page-02.png', 'policy-03-page-03.png', isRu ? 'Таяние снежного покрова' : 'Melting Snow'],
+	['policy-03-page-04.png', 'policy-03-page-05.png', isRu ? 'Таяние снежного покрова' : 'Melting Snow'],
+	['policy-03-page-06.png', 'policy-03-page-07.png', isRu ? 'Таяние снежного покрова' : 'Melting Snow'],
+	['policy-04-page-02.png', 'policy-04-page-03.png', isRu ? 'Платформа знаний о криосфере' : 'Cryosphere Knowledge Platform'],
+	['policy-04-page-04.png', 'policy-04-page-05.png', isRu ? 'Платформа знаний о криосфере' : 'Cryosphere Knowledge Platform'],
+	['policy-05-page-02.png', 'policy-05-page-03.png', isRu ? 'Подготовка специалистов' : 'Personnel Training'],
+	['gallery-a1.webp', 'gallery-a2.webp', isRu ? 'Данные о криосфере' : 'Cryosphere Data'],
+	['gallery-b1.webp', 'gallery-b2.webp', isRu ? 'Анализ состояния криосферы' : 'Cryosphere Condition Assessment'],
+	['gallery-c1.webp', 'gallery-c2.webp', isRu ? 'Карты криосферы' : 'Cryosphere Maps'],
+	['gallery-d1.webp', 'gallery-d2.webp', isRu ? 'Сценарии изменений' : 'Change Scenarios'],
+	['gallery-e1.webp', 'gallery-e2.webp', isRu ? 'Индикаторы состояния' : 'Condition Indicators'],
+	['gallery-f1.webp', 'gallery-f2.webp', isRu ? 'Рекомендации по криосфере' : 'Cryosphere Recommendations'],
+	['appendix-system-1.webp', 'appendix-system-2.webp', isRu ? 'Система аналитических материалов' : 'Analytical Materials System'],
+	['climate-map-1.webp', 'climate-map-2.webp', isRu ? 'Климатические карты' : 'Climate Maps'],
+	['diagnostic-analysis-1.webp', 'diagnostic-analysis-2.webp', isRu ? 'Диагностический анализ' : 'Diagnostic Assessment'],
+	['diagnostic-data-1.webp', 'diagnostic-data-2.webp', isRu ? 'Данные диагностического исследования' : 'Diagnostic Study Data'],
+	['indicators-1.webp', 'indicators-2.webp', isRu ? 'Ключевые индикаторы' : 'Key Indicators'],
 ];
 ---
 
 	<BaseLayout
-		title="UNESCO — анализ криосферы Центральной Азии"
-		description="UNESCO — дизайн и вёрстка диагностического анализа о криосфере Центральной Азии и четырёх тематических приложений."
+		title={isRu ? 'UNESCO — анализ криосферы Центральной Азии' : 'UNESCO — Central Asia Cryosphere Assessment'}
+		description={isRu ? 'UNESCO — дизайн и вёрстка диагностического анализа о криосфере Центральной Азии и четырёх тематических приложений.' : 'Design and layout for UNESCO’s diagnostic assessment of the Central Asian cryosphere and its four thematic appendices.'}
 	>
 		<SiteHeader />
 
 		<main>
 			<section class="project-hero">
-				<p class="eyebrow">Многостраничные издания · Научные данные</p>
+				<p class="eyebrow">{isRu ? 'Многостраничные издания · Научные данные' : 'Multi-page publications · Scientific data'}</p>
 				<div class="hero-row">
-					<h1>ЮНЕСКО <span class="title-accent">Диагностический<br /> анализ о криосфере<br /> Центральной Азии</span></h1>
+					<h1>{isRu ? <>ЮНЕСКО <span class="title-accent">Диагностический<br /> анализ о криосфере<br /> Центральной Азии</span></> : <>UNESCO <span class="title-accent">Diagnostic Assessment of the Central Asian Cryosphere</span></>}</h1>
 					<div class="summary">
-						<p>Над серией крупных аналитических докладов ЮНЕСКО о криосфере Центральной Азии я работал в составе дизайн-команды. Я участвовал в формировании визуального направления на раннем этапе, верстал значительную часть русской и английской версий материалов и разработал большую часть инфографики — диаграмм, индикаторов и других способов представления научных данных.</p>
-						<p>Также я отвечал за генерацию и последующую ручную доработку системы иконок и участвовал в разработке сопутствующих стикеров. В результате работа охватывала сразу несколько уровней проекта: от арт-дирекшена и развития визуального языка до редакционной вёрстки и детализации отдельных графических элементов.</p>
+						<p>{isRu ? 'Над серией крупных аналитических докладов ЮНЕСКО о криосфере Центральной Азии я работал в составе дизайн-команды. Я участвовал в формировании визуального направления на раннем этапе, верстал значительную часть русской и английской версий материалов и разработал большую часть инфографики — диаграмм, индикаторов и других способов представления научных данных.' : 'I worked as part of the design team on a series of major UNESCO analytical reports on the cryosphere of Central Asia. I contributed to the visual direction at the early stage, laid out a substantial share of both the Russian and English editions, and designed most of the infographics, including charts, indicators, and other forms of scientific data visualization.'}</p>
 					</div>
 				</div>
 			</section>
 
 			<figure class="cover-stage">
-				<div class="cover cover-small"><ResponsiveImage src="/portfolio/unesco/appendix-1-cover.webp" alt="Обложка приложения 1 к анализу криосферы ЮНЕСКО" sizes="(max-width: 700px) 32vw, 24vw" loading="eager" /></div>
-				<div class="cover cover-main"><ResponsiveImage src="/portfolio/unesco/diagnostic-cover.webp" alt="Обложка диагностического анализа о криосфере Центральной Азии ЮНЕСКО" sizes="(max-width: 700px) 36vw, 28vw" loading="eager" fetchpriority="high" /></div>
-				<div class="cover cover-small"><ResponsiveImage src="/portfolio/unesco/appendix-4-cover.webp" alt="Обложка приложения 4 к анализу криосферы ЮНЕСКО" sizes="(max-width: 700px) 32vw, 24vw" loading="eager" /></div>
+				{[covers, reportCovers].map((row) => (
+					<div class="cover-row">
+						{row.map(([file, alt], index) => (
+							<div class="cover"><ResponsiveImage src={`/portfolio/unesco/${file}`} alt={alt} sizes="(max-width: 700px) 24vw, 19vw" loading="eager" fetchpriority={index === 2 ? 'high' : undefined} /></div>
+						))}
+					</div>
+				))}
 			</figure>
 
 			<section class="overview" id="case-task" data-case-section>
-				<p>Основной доклад и четыре приложения объединяют большой объём данных о состоянии криосферы Центральной Азии: аналитику, карты, графики, таблицы и рекомендации. Нужно было сохранить научную точность материалов и при этом сделать каждую страницу понятной для последовательного чтения.</p>
+				<p>{isRu ? 'В рамках проекта было подготовлено три типа многостраничных материалов:' : 'The project included three types of multi-page publications:'}</p>
+				<ul>
+					<li><strong>{isRu ? '1 диагностический анализ' : '1 diagnostic assessment'}</strong> — {isRu ? 'основной документ' : 'the main document'}</li>
+					<li><strong>{isRu ? '4 приложения' : '4 appendices'}</strong> — {isRu ? 'крупные дополнительные документы' : 'substantial supplementary documents'}</li>
+					<li><strong>{isRu ? '5 аналитических записок' : '5 policy briefs'}</strong> — {isRu ? 'тематические аналитические материалы' : 'focused analytical publications'}</li>
+				</ul>
 			</section>
 
 			<CaseGallery
-				label="Галерея"
+				label={isRu ? 'Галерея' : 'Gallery'}
 				title=""
 				items={gallery.map(([left, right, caption]) => ({
 					caption,
 					images: [
-						{ src: `/portfolio/unesco/${left}`, alt: `${caption}, левая полоса` },
-						{ src: `/portfolio/unesco/${right}`, alt: `${caption}, правая полоса` },
+						{ src: `/portfolio/unesco/${left}`, alt: `${caption}, ${right ? (isRu ? 'левая полоса' : 'left page') : (isRu ? 'разворот' : 'spread')}` },
+						...(right ? [{ src: `/portfolio/unesco/${right}`, alt: `${caption}, ${isRu ? 'правая полоса' : 'right page'}` }] : []),
 					],
 				}))}
 				variant="spread"
 				lightboxId="case-gallery-lightbox"
 				showHeader={false}
 			>
-				<h2 slot="toolbar" class="gallery-only-title">ГАЛЕРЕЯ</h2>
+				<h2 slot="toolbar" class="gallery-only-title">{isRu ? 'ГАЛЕРЕЯ' : 'GALLERY'}</h2>
 			</CaseGallery>
-			<CaseLightbox id="case-gallery-lightbox" variant="spread" label="Увеличенный разворот" />
+			<CaseLightbox id="case-gallery-lightbox" variant="spread" label={isRu ? 'Увеличенный разворот' : 'Enlarged spread'} />
 
 			<CasePagination
-				previous={{ href: '/projects/publications/kipd', label: 'КИОР / KIPD' }}
-				next={{ href: '/projects/infographics/', label: 'Инфографика' }}
+				previous={{ href: '/projects/publications/kipd', label: isRu ? 'КИОР / KIPD' : 'KIPD' }}
+				next={{ href: '/projects/infographics/', label: isRu ? 'Инфографика' : 'Infographics' }}
 			/>
 			<ProjectFooter />
 		</main>
@@ -98,14 +135,20 @@ const gallery = [
 	.summary { margin:0; color:#5d5d5d; font-size:var(--text-page-intro); font-weight:var(--weight-page-intro); line-height:var(--leading-page-intro); }
 	.summary p { margin:0; }
 	.summary p+p { margin-top:1.25rem; }
-	.cover-stage { width:min(100%,88rem); height:clamp(34rem,64vw,63rem); margin:0 auto; padding:clamp(1.5rem,5vw,5rem); display:flex; align-items:center; justify-content:center; gap:clamp(.75rem,2.4vw,2.5rem); position:relative; overflow:hidden; background:#0b0b0b; border-radius:var(--radius-shell); }
-	.cover { flex:0 1 24%; z-index:1; filter:drop-shadow(0 2rem 2.5rem #000a); }
-	.cover-main { flex-basis:31%; z-index:2; transform:translateY(-2%); }
-	.cover-small:first-of-type { transform:rotate(-7deg) translateY(5%); }
-	.cover-small:last-of-type { transform:rotate(7deg) translateY(5%); }
+	.cover-stage { width:min(100%,88rem); height:clamp(46rem,72vw,58rem); margin:0 auto; padding:clamp(1.5rem,4vw,4rem); display:grid; align-content:center; gap:clamp(2rem,4vw,4rem); position:relative; overflow:hidden; background:#0b0b0b; border-radius:var(--radius-shell); }
+	.cover-row { min-width:0; display:flex; align-items:center; justify-content:center; }
+	.cover { flex:0 0 20.5%; margin-inline:-1%; z-index:1; filter:drop-shadow(0 2rem 2.5rem #000a); }
+	.cover:nth-child(1) { transform:rotate(-8deg) translateY(7%); }
+	.cover:nth-child(2) { transform:rotate(-4deg) translateY(2%); }
+	.cover:nth-child(3) { z-index:3; transform:translateY(-3%); }
+	.cover:nth-child(4) { z-index:2; transform:rotate(4deg) translateY(2%); }
+	.cover:nth-child(5) { transform:rotate(8deg) translateY(7%); }
 	.cover img { width:100%; height:auto; display:block; border-radius:var(--radius-thumb); }
 	.overview { width:min(100%,62rem); margin:0 auto; padding:clamp(5rem,9vw,9rem) 0; }
 	.overview p { margin:0; color:#666; font-size:var(--text-body-lg); line-height:var(--leading-body-lg); }
+	.overview ul { margin:2rem 0 0; padding-left:1.25em; color:#666; font-size:var(--text-body-lg); line-height:var(--leading-body-lg); }
+	.overview li+li { margin-top:.8rem; }
+	.overview strong { color:#fff; font-weight:650; }
 	.gallery-only-title { margin:0 0 clamp(3rem,6vw,6rem); font-size:var(--text-display-section); line-height:var(--leading-display-section); letter-spacing:var(--tracking-display-section); }
 	@media (max-width:900px) {
 		.hero-row { grid-template-columns:minmax(0,1fr); gap:1.5rem; }
@@ -119,10 +162,10 @@ const gallery = [
 		.eyebrow { overflow-wrap:anywhere; }
 		h1 { max-width:100%; margin-top:1.5rem; font-size:clamp(2.5rem,11.5vw,var(--text-page-title)); }
 		.summary { max-width:100%; overflow-wrap:anywhere; }
-		.cover-stage { height:27rem; padding:1rem; gap:.5rem; }
-		.cover { flex-basis:29%; }
-		.cover-main { flex-basis:42%; }
+		.cover-stage { height:34rem; padding:.75rem; gap:1.5rem; }
+		.cover { flex-basis:27%; margin-inline:-3.5%; }
 		.overview p { overflow-wrap:anywhere; }
+		.overview li { overflow-wrap:anywhere; }
 	}
 	@media (prefers-reduced-motion:reduce) { * { scroll-behavior:auto!important; transition-duration:.01ms!important; } }
 	:focus-visible { outline:var(--focus-ring-width) solid var(--focus-ring-color); outline-offset:var(--focus-ring-offset); }

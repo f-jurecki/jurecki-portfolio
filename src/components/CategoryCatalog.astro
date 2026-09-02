@@ -2,6 +2,7 @@
 import ResponsiveImage from './ResponsiveImage.astro';
 import SiteHeader from './SiteHeader.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getLocale, localizedPath } from '../lib/i18n';
 
 interface CatalogProject {
 	title: string;
@@ -17,11 +18,13 @@ interface Props {
 }
 
 const { title, description, projects } = Astro.props;
+const locale = getLocale(Astro.url.pathname);
+const isRussian = locale === 'ru';
 ---
 
 <BaseLayout
-	title={`${title} — Федор Юрецкий`}
-	description={`${title}: проекты Федора Юрецкого.`}
+	title={`${title} — ${isRussian ? 'Федор Юрецкий' : 'Fedor Jurecki'}`}
+	description={isRussian ? `${title}: проекты Федора Юрецкого.` : `${title}: projects by Fedor Jurecki.`}
 >
 	<SiteHeader />
 
@@ -32,10 +35,10 @@ const { title, description, projects } = Astro.props;
 				<p class="catalog-intro">{description}</p>
 			</header>
 
-			<section class="projects" aria-label="Проекты по инфографике и вёрстке">
+			<section class="projects" aria-label={isRussian ? 'Проекты по инфографике и вёрстке' : 'Infographics and editorial design projects'}>
 				{projects.map((project, index) => (
-					<a class="project" href={project.href} aria-label={`Открыть проект: ${project.title}`}>
-						<div class="project-visual" aria-hidden="true">
+					<a class="project" href={localizedPath(project.href, locale)} aria-label={`${isRussian ? 'Открыть проект' : 'Open project'}: ${project.title}`}>
+						<div class:list={['project-visual', project.images.length === 5 && 'project-visual-five']} aria-hidden="true">
 							{project.images.map((src, imageIndex) => (
 								<ResponsiveImage
 									src={src}
@@ -74,9 +77,20 @@ const { title, description, projects } = Astro.props;
 	.project-visual :global(img:first-child) { z-index: 1; transform: translate(-112%,-44%) rotate(-7deg); }
 	.project-visual :global(img:nth-child(2)) { z-index: 3; width: 38%; transform: translate(-50%,-52%); }
 	.project-visual :global(img:last-child) { z-index: 2; transform: translate(12%,-44%) rotate(7deg); }
+	.project-visual-five :global(img) { width: 24%; }
+	.project-visual-five :global(img:nth-child(1)) { z-index: 1; transform: translate(-220%,-44%) rotate(-9deg); }
+	.project-visual-five :global(img:nth-child(2)) { z-index: 2; width: 24%; transform: translate(-135%,-49%) rotate(-4deg); }
+	.project-visual-five :global(img:nth-child(3)) { z-index: 4; width: 29%; transform: translate(-50%,-53%); }
+	.project-visual-five :global(img:nth-child(4)) { z-index: 3; transform: translate(35%,-49%) rotate(4deg); }
+	.project-visual-five :global(img:nth-child(5)) { z-index: 1; transform: translate(120%,-44%) rotate(9deg); }
 	.project:hover .project-visual :global(img:first-child) { transform: translate(-116%,-47%) rotate(-3deg); }
 	.project:hover .project-visual :global(img:nth-child(2)) { transform: translate(-50%,-55%) scale(1.025); }
 	.project:hover .project-visual :global(img:last-child) { transform: translate(16%,-47%) rotate(3deg); }
+	.project:hover .project-visual-five :global(img:nth-child(1)) { transform: translate(-225%,-47%) rotate(-6deg); }
+	.project:hover .project-visual-five :global(img:nth-child(2)) { transform: translate(-138%,-52%) rotate(-2deg); }
+	.project:hover .project-visual-five :global(img:nth-child(3)) { transform: translate(-50%,-56%) scale(1.025); }
+	.project:hover .project-visual-five :global(img:nth-child(4)) { transform: translate(38%,-52%) rotate(2deg); }
+	.project:hover .project-visual-five :global(img:nth-child(5)) { transform: translate(125%,-47%) rotate(6deg); }
 	.project-bottom { display: grid; grid-template-columns: minmax(0,1fr) 2.35rem; align-items: end; gap: 1rem; }
 	.project-bottom h2 { margin: 0; font-size: clamp(1.35rem,1.8vw,1.8rem); font-weight: 650; line-height: .95; letter-spacing: -.045em; }
 	.project-bottom p { margin: .55rem 0 0; color: var(--color-muted); font-size: .62rem; font-weight: 430; line-height: 1.4; }

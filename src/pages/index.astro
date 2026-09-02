@@ -1,6 +1,7 @@
 ---
 import SiteHeader from '../components/SiteHeader.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getLocale, localizedPath } from '../lib/i18n';
 import { Image } from 'astro:assets';
 import personalMark from '../../links/my logo miniature white.png';
 import indesignLogo from '../../links/id.svg';
@@ -18,14 +19,32 @@ import lightroomLogo from '../../links/lr.svg';
 import arcgisLogo from '../../links/Ag.svg';
 import codexLogo from '../../links/Codex.svg';
 
-const roles = ['Графический дизайнер', 'Верстальщик'];
-const capabilities = [
+const locale = getLocale(Astro.url.pathname);
+const isRussian = locale === 'ru';
+const roles = isRussian ? ['Графический дизайнер', 'Верстальщик'] : ['Graphic Designer', 'Layout Designer'];
+const capabilities = isRussian ? [
 	{ title: ['Editorial &', 'Layout'], text: 'издания, брошюры, презентации' },
 	{ title: ['Information', 'Design'], text: 'инфографика, навигация, данные' },
 	{ title: ['Packaging &', 'Applied Branding'], text: 'упаковка, POS, брендированные материалы' },
 	{ title: ['Key', 'Visuals'], text: 'наружная реклама, афиши, постеры' },
 	{ title: ['DesignOps &', 'Pre-press'], text: 'AI, скрипты, подготовка к печати' },
+] : [
+	{ title: ['Editorial &', 'Layout'], text: 'publications, brochures, presentations' },
+	{ title: ['Information', 'Design'], text: 'infographics, wayfinding, data visualization' },
+	{ title: ['Packaging &', 'Applied Branding'], text: 'packaging, POS materials, branded collateral' },
+	{ title: ['Key', 'Visuals'], text: 'outdoor advertising, campaign graphics, posters' },
+	{ title: ['DesignOps &', 'Prepress'], text: 'AI, scripting, prepress' },
 ];
+const navigation = isRussian ? [
+	['Инфографика и вёрстка', '/projects/publications'], ['Презентации', '/projects/presentations'], ['Упаковка и брендинг материалы', '/projects/branding'], ['Product Design', '/projects/product-design/shelfr'], ['Личные проекты', '/projects/personal'], ['Вайбкодинг', '/projects/vibecoding'],
+] : [
+	['Infographics & Editorial Design', '/projects/publications'], ['Presentations', '/projects/presentations'], ['Packaging & Brand Materials', '/projects/branding'], ['Product Design', '/projects/product-design/shelfr'], ['Personal Projects', '/projects/personal'], ['Vibe Coding', '/projects/vibecoding'],
+];
+const copy = isRussian ? {
+	title: 'Федор Юрецкий, портфолио', description: 'Портфолио Федора Юрецкого: графический дизайн, многостраничная вёрстка, инфографика и презентации.', firstName: 'Федор', lastName: 'Юрецкий', markAlt: 'Монограмма Федора Юрецкого', profileLabel: 'Профиль и проекты', rolesLabel: 'Профессиональные роли', summary: 'Графический дизайнер-дженералист с сильной экспертизой в многостраничной вёрстке, инфографике и визуальной коммуникации. Работаю с презентациями, упаковкой, брендинговыми материалами и другими форматами — от концепции до готового макета.', location: 'Локация', locationValue: 'Астана, Казахстан', workMode: 'Офис · гибрид · ремоут · релокация', languages: 'Языки', languagesValue: 'Русский — родной', english: 'Английский — C2', skillsLabel: 'Ключевые компетенции', tools: 'Рабочие инструменты', toolsLabel: 'Программы и инструменты', workLabel: 'Направления портфолио', open: 'Открыть',
+} : {
+	title: 'Graphic Design Portfolio — Fedor Jurecki', description: 'Portfolio of Fedor Jurecki, a graphic designer specializing in editorial design, infographics, presentations, packaging, and product design.', firstName: 'Fedor', lastName: 'Jurecki', markAlt: 'Fedor Jurecki monogram', profileLabel: 'Profile and projects', rolesLabel: 'Professional roles', summary: 'Graphic designer and generalist with strong expertise in multi-page editorial design, infographics, and visual communication. I work across presentations, packaging, brand materials, and other formats, taking projects from concept through final artwork.', location: 'Location', locationValue: 'Astana, Kazakhstan', workMode: 'On-site · Hybrid · Remote · Relocation', languages: 'Languages', languagesValue: 'Russian — Native', english: 'English — C2', skillsLabel: 'Areas of expertise', tools: 'Tools', toolsLabel: 'Software and tools', workLabel: 'Portfolio sections', open: 'Open',
+};
 const tools = [
 	{ name: 'Adobe InDesign', src: indesignLogo },
 	{ name: 'Figma', src: figmaLogo },
@@ -45,68 +64,55 @@ const tools = [
 ---
 
 <BaseLayout
-	title="Федор Юрецкий, портфолио"
-	description="Портфолио Федора Юрецкого: арт-дирекшн, графический дизайн, многостраничная вёрстка, инфографика и презентации."
+	title={copy.title}
+	description={copy.description}
 >
 	<SiteHeader />
 	<main class="home">
-		<section class="hero-grid" aria-label="Профиль и проекты">
+		<section class="hero-grid" aria-label={copy.profileLabel}>
 			<div class="profile-pane" id="about">
 				<div class="profile-intro">
 					<div class="profile-heading">
-						<h1>Федор<br /><span>Юрецкий</span></h1>
-						<Image class="personal-mark" src={personalMark} alt="Монограмма Федора Юрецкого" width={64} height={64} loading="eager" />
+						<h1>{copy.firstName}<br /><span>{copy.lastName}</span></h1>
+						<Image class="personal-mark" src={personalMark} alt={copy.markAlt} width={64} height={64} loading="eager" />
 					</div>
 
-					<ul class="role-list" aria-label="Профессиональные роли">
+					<ul class="role-list" aria-label={copy.rolesLabel}>
 						{roles.map((role) => <li>{role}</li>)}
 					</ul>
 
 					<div class="profile-summary">
-						<p>Графический дизайнер-дженералист с сильной экспертизой в многостраничной вёрстке, инфографике и визуальной коммуникации. Работаю с презентациями, упаковкой, брендинговыми материалами и другими форматами — от концепции до готового макета.</p>
+						<p>{copy.summary}</p>
 					</div>
 				</div>
 
 				<div class="profile-details">
 					<div class="profile-meta">
-						<div><span>Локация</span><strong>Астана, Казахстан<br />Офис · гибрид · ремоут · релокация</strong></div>
-						<div><span>Языки</span><strong>Русский — родной<br />Английский — C2</strong></div>
+						<div><span>{copy.location}</span><strong>{copy.locationValue}<br />{copy.workMode}</strong></div>
+						<div><span>{copy.languages}</span><strong>{copy.languagesValue}<br />{copy.english}</strong></div>
 					</div>
 
-					<div class="capabilities" aria-label="Ключевые компетенции">
+					<div class="capabilities" aria-label={copy.skillsLabel}>
 						{capabilities.map((item) => (
 							<article><h2>{item.title[0]}<br />{item.title[1]}</h2><p>{item.text}</p></article>
 						))}
 					</div>
 
 					<div class="tools-panel">
-						<p>Рабочие инструменты</p>
-						<ul aria-label="Программы и инструменты">
+						<p>{copy.tools}</p>
+						<ul aria-label={copy.toolsLabel}>
 							{tools.map((tool) => <li title={tool.name}><img src={tool.src.src} alt={tool.name} width="38" height="38" loading="lazy" /></li>)}
 						</ul>
 					</div>
 				</div>
 			</div>
 
-			<section class="projects-grid" id="work" aria-label="Направления портфолио">
-				<a class="portfolio-index-item" href="/projects/publications" aria-label="Открыть инфографику и вёрстку">
-					<span class="portfolio-index-number">01</span><h2>Инфографика и вёрстка</h2><b aria-hidden="true">↗</b>
-				</a>
-				<a class="portfolio-index-item" href="/projects/presentations" aria-label="Открыть презентации">
-					<span class="portfolio-index-number">02</span><h2>Презентации</h2><b aria-hidden="true">↗</b>
-				</a>
-				<a class="portfolio-index-item" href="/projects/branding" aria-label="Открыть упаковку и брендинг материалы">
-					<span class="portfolio-index-number">03</span><h2>Упаковка и брендинг материалы</h2><b aria-hidden="true">↗</b>
-				</a>
-				<a class="portfolio-index-item" href="/projects/product-design/shelfr" aria-label="Открыть Product Design — Shelfr">
-					<span class="portfolio-index-number">04</span><h2>Product Design</h2><b aria-hidden="true">↗</b>
-				</a>
-				<a class="portfolio-index-item" href="/projects/personal" aria-label="Открыть личные проекты">
-					<span class="portfolio-index-number">05</span><h2>Личные проекты</h2><b aria-hidden="true">↗</b>
-				</a>
-				<a class="portfolio-index-item" href="/projects/vibecoding" aria-label="Открыть вайбкодинг">
-					<span class="portfolio-index-number">06</span><h2>Вайбкодинг</h2><b aria-hidden="true">↗</b>
-				</a>
+			<section class="projects-grid" id="work" aria-label={copy.workLabel}>
+				{navigation.map(([title, href], index) => (
+					<a class="portfolio-index-item" href={localizedPath(href, locale)} aria-label={`${copy.open}: ${title}`}>
+						<span class="portfolio-index-number">{String(index + 1).padStart(2, '0')}</span><h2>{title}</h2><b aria-hidden="true">↗</b>
+					</a>
+				))}
 			</section>
 		</section>
 	</main>

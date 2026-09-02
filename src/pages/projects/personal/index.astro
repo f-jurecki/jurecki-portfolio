@@ -1,28 +1,31 @@
 ---
 import SiteHeader from '../../../components/SiteHeader.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getLocale, localizedPath } from '../../../lib/i18n';
 
+const locale = getLocale(Astro.url.pathname);
+const isRussian = locale === 'ru';
 const projects = [
-	{ title: 'Колода карт Misprint', href: '/projects/personal/cards' },
-	{ title: 'Шрифт Republica', href: '/projects/personal/republica' },
-	{ title: 'Постеры', href: '/projects/personal/posters' },
+	{ title: isRussian ? 'Колода карт Misprint' : 'Misprint Playing Card Deck', href: '/projects/personal/cards' },
+	{ title: isRussian ? 'Шрифт Republica' : 'Republica Typeface', href: '/projects/personal/republica' },
+	{ title: isRussian ? 'Постеры' : 'Posters', href: '/projects/personal/posters' },
 	{ title: 'Digital Scrapbook', href: '/projects/personal/digital-scrapbook' },
 ];
 ---
 
 <BaseLayout
-	title="Личные проекты — Федор Юрецкий"
-	description="Колода карт Misprint, шрифт Republica, постеры и Digital Scrapbook — личные проекты Федора Юрецкого."
+	title={isRussian ? 'Личные проекты — Федор Юрецкий' : 'Personal Projects — Fedor Jurecki'}
+	description={isRussian ? 'Колода карт Misprint, шрифт Republica, постеры и Digital Scrapbook — личные проекты Федора Юрецкого.' : 'Misprint Playing Card Deck, Republica Typeface, posters, and Digital Scrapbook — personal projects by Fedor Jurecki.'}
 >
 	<SiteHeader />
 
 	<main class="personal-page">
 		<div class="personal-shell">
-			<header><h1>Личные проекты</h1></header>
+			<header><h1>{isRussian ? 'Личные проекты' : 'Personal Projects'}</h1></header>
 
-			<nav aria-label="Личные проекты">
+			<nav aria-label={isRussian ? 'Личные проекты' : 'Personal projects'}>
 				{projects.map((project, index) => (
-					<a href={project.href} aria-label={`Открыть проект: ${project.title}`}>
+					<a href={localizedPath(project.href, locale)} aria-label={`${isRussian ? 'Открыть проект' : 'Open project'}: ${project.title}`}>
 						<span>{String(index + 1).padStart(2, '0')}</span>
 						<h2>{project.title}</h2>
 						<b aria-hidden="true">↗</b>
