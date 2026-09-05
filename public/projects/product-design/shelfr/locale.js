@@ -71,6 +71,25 @@
 			'Информационная архитектура': 'Information architecture',
 			'Пользовательские сценарии': 'User flows',
 			'Вайрфреймы': 'Wireframes',
+			'Скетч на бумаге': 'Paper sketch',
+			'Вайрфрейм': 'Wireframe',
+			'Готовый экран': 'Final screen',
+			'этапы дизайна': 'design stages',
+			'Приложение': 'App',
+			'Основные цвета': 'Primary colors',
+			'Дополнительные цвета': 'Secondary colors',
+			'↑ Наверх': '↑ Back to top',
+			'Схемы пользовательских сценариев': 'User flow diagrams',
+			'Вариант цветового решения': 'Color variation',
+			'Увеличенное изображение': 'Enlarged image',
+			'29,2 процента неинтересно отслеживать прочитанное; 70,8 процента ещё не нашли подходящий трекер': '29.2 percent are not interested in tracking their reading; 70.8 percent have not found a suitable tracker yet',
+			'Storygraph — наиболее сильный продукт в выборке: быстрый поиск, добавление книги в одно действие, продуманные челленджи, статистика и точные рекомендации.': 'Storygraph — the strongest product in the sample: fast search, one-step book logging, thoughtful challenges, statistics, and accurate recommendations.',
+			'Turn — более восьми действий, чтобы добавить книгу в список.': 'Turn — adding a book to a list takes more than eight steps.',
+			'Bookshelf — раздел Explore не персонализируется и выглядит одинаково для всех пользователей.': 'Bookshelf — Explore is not personalized and looks the same for every user.',
+			'Bookmory — низкий контраст, неочевидные поля ввода и перегруженные текстом экраны. Избыточный набор функций усложняет навигацию.': 'Bookmory — low contrast, unclear input fields, and text-heavy screens. Too many features make navigation harder.',
+			'Goodreads — устаревший интерфейс. Домашняя страница почти полностью посвящена активности друзей.': 'Goodreads — an outdated interface. The home page focuses almost entirely on friends’ activity.',
+			'Модальное окно редактирования чужого списка было перегружено. Я упростил формулировки и иерархию.': 'The modal for editing another user’s list was overloaded. I simplified the copy and hierarchy.',
+			'В категоризации списка «Хочу прочитать» упростил формулировки, добавил пояснение принципа работы и отмену последнего действия.': 'I simplified the copy for categorizing the “Want to Read” list, explained how it works, and added an undo action.',
 			'Пользовательское тестирование': 'Usability testing',
 			'Итерации': 'Iterations',
 			'Финальный вид': 'Final design',
@@ -393,8 +412,8 @@
 				node.nodeValue = value;
 			}
 		};
-		const translateAttributes = () => document.querySelectorAll('[aria-label],[title],[alt],[data-caption]').forEach((element) => {
-			for (const attribute of ['aria-label', 'title', 'alt', 'data-caption']) {
+		const translateAttributes = () => document.querySelectorAll('[aria-label],[title],[alt],[data-caption],[data-label]').forEach((element) => {
+			for (const attribute of ['aria-label', 'title', 'alt', 'data-caption', 'data-label']) {
 				const original = element.getAttribute(attribute);
 				if (!original) continue;
 				let value = text.get(original) ?? original;

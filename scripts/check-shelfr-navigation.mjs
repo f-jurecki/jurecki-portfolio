@@ -15,6 +15,9 @@ try {
 		await page.waitForSelector('.portfolio-project-navigation');
 		const button = page.locator('.shelfr-mobile-scroll-top');
 		if (width <= 1024) {
+			const captions = await page.locator('.shelfr-mobile-case figcaption').allTextContents();
+			assert.ok(captions.includes('Paper sketch') && captions.includes('Wireframe') && captions.includes('Final screen'));
+			assert.ok(captions.every((caption) => !/[А-Яа-яЁё]/.test(caption)), 'English mobile captions contain no Russian text');
 			assert.equal(await button.isVisible(), false);
 			await page.evaluate(() => scrollTo({ top: innerHeight * 2, behavior: 'instant' }));
 			await button.waitFor({ state: 'visible' });
