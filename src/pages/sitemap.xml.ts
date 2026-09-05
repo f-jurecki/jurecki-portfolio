@@ -2,15 +2,16 @@ import type { APIRoute } from 'astro';
 
 const routes = [
 	'/',
+	'/privacy',
 	'/projects/branding',
 	'/projects/coming-soon',
 	'/projects/infographics',
 	'/projects/personal',
 	'/projects/personal/cards',
+	'/projects/personal/cards/solitaire',
 	'/projects/personal/digital-scrapbook',
 	'/projects/personal/posters',
 	'/projects/personal/republica',
-	'/projects/presentations',
 	'/projects/product-design/shelfr',
 	'/projects/vibecoding',
 	'/projects/vibecoding/adobe-scripts',

@@ -1,0 +1,114 @@
+---
+import { getImage } from 'astro:assets';
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { getLocale, localizedPath } from '../../../../lib/i18n';
+import { getPortfolioImage } from '../../../../lib/portfolio-images';
+import { cardFiles } from '../../../../lib/solitaire.mjs';
+
+const locale = getLocale(Astro.url.pathname);
+const ru = locale === 'ru';
+const images = await Promise.all([...cardFiles.flat(), 53].map(async (file) => {
+	const src = getPortfolioImage(`/portfolio/cards/card-${String(file).padStart(2, '0')}.webp`);
+	return (await getImage({ src, width: 373, format: 'webp' })).src;
+}));
+---
+
+<BaseLayout title={ru ? 'Косынка Misprint — Федор Юрецкий' : 'Misprint Solitaire — Fedor Jurecki'} description={ru ? 'Классическая косынка с авторской колодой Misprint.' : 'Classic Klondike solitaire with the original Misprint deck.'}>
+	<main class="solitaire" data-solitaire data-images={JSON.stringify(images)} data-locale={locale}>
+		<header class="game-header">
+			<a href={localizedPath('/projects/personal/cards/', locale)} class="back-link">← {ru ? 'Назад в кейс' : 'Back to case'}</a>
+			<span class="edition">MISPRINT / PLAYING CARDS</span>
+			<a href={localizedPath('/projects/personal/cards/solitaire/', ru ? 'en' : 'ru')} class="locale-link">{ru ? 'EN' : 'RU'}</a>
+		</header>
+		<section class="game-window" aria-labelledby="game-title">
+			<div class="title-bar">
+				<h1 id="game-title"><span aria-hidden="true">♠</span> {ru ? 'Косынка' : 'Solitaire'} <span class="title-deck">— Misprint</span></h1>
+				<div class="window-controls">
+					<a href={localizedPath('/projects/personal/cards/', locale)} aria-label={ru ? 'Свернуть игру и вернуться в кейс' : 'Minimize game and return to case'}>─</a>
+					<span aria-hidden="true">□</span>
+					<a href={localizedPath('/projects/personal/cards/', locale)} aria-label={ru ? 'Закрыть игру и вернуться в кейс' : 'Close game and return to case'}>×</a>
+				</div>
+			</div>
+			<div class="toolbar">
+				<button type="button" data-new>{ru ? 'Новая игра' : 'New game'}</button>
+				<button type="button" data-undo disabled>↶ {ru ? 'Отменить' : 'Undo'}</button>
+				<button type="button" data-hint title={ru ? 'Неограниченные подсказки' : 'Unlimited hints'}>{ru ? 'Подсказка' : 'Hint'}</button>
+				<button type="button" data-finish hidden>{ru ? 'Собрать всё' : 'Finish game'}</button>
+				<span class="move-count" data-moves></span>
+			</div>
+			<div class="table" data-table aria-label={ru ? 'Игровой стол' : 'Playing table'}></div>
+		</section>
+		<p class="game-status" data-status role="status" aria-live="polite"></p>
+		<dialog data-new-dialog aria-labelledby="new-title"><h2 id="new-title">{ru ? 'Начать новую партию?' : 'Start a new game?'}</h2><p>{ru ? 'Текущая раскладка будет заменена.' : 'This will replace your current game.'}</p><form method="dialog"><button value="cancel" autofocus>{ru ? 'Продолжить эту' : 'Keep playing'}</button><button value="new">{ru ? 'Новая игра' : 'New game'}</button></form></dialog>
+		<div class="win-message" data-win hidden><h2>{ru ? 'Пасьянс сошёлся!' : 'You won!'}</h2><div><button type="button" data-replay>{ru ? 'Ещё раз анимацию' : 'Replay animation'}</button><button type="button" data-win-new>{ru ? 'Новая игра' : 'New game'}</button></div></div>
+		<canvas data-celebration aria-hidden="true" hidden></canvas>
+		<noscript><p>{ru ? 'Для игры нужно включить JavaScript.' : 'Enable JavaScript to play.'}</p></noscript>
+	</main>
+</BaseLayout>
+
+<script>
+	import '../../../../scripts/solitaire.mjs';
+</script>
+
+<style is:global>
+	.solitaire { min-height: 100svh; padding: 0 clamp(8px, 3vw, 40px) 28px; --card-gap: clamp(5px, 1.7vw, 22px); }
+	.solitaire [hidden] { display: none !important; }
+	.game-header { max-width: 1100px; margin: auto; min-height: 86px; display: flex; align-items: center; gap: 24px; font-size: 13px; }
+	.back-link { text-decoration: none; }
+	.back-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+	.edition { margin: auto; color: #737373; font-size: 10px; letter-spacing: .16em; }
+	.locale-link { color: #999; font-size: 11px; text-decoration: none; }
+	.game-window { max-width: 1100px; margin: auto; border: 1px solid #494949; border-radius: 7px; overflow: hidden; background: #202020; box-shadow: 0 24px 80px #0006; }
+	.title-bar { padding: 12px 18px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #424242; background: #303030; }
+	.title-bar h1 { margin: 0; font: 600 14px Inter, sans-serif; }
+	.title-bar h1 > span:first-child { margin-right: 8px; }
+	.title-deck { color: #a7a7a7; font-weight: 400; }
+	.window-controls { display: flex; flex-shrink: 0; color: #8e8e8e; font: 16px monospace; margin-block: -8px; }
+	.window-controls > * { display: grid; place-items: center; width: 32px; height: 32px; }
+	.window-controls a { color: inherit; text-decoration: none; border-radius: 3px; }
+	.window-controls a:hover { color: #fff; background: #ffffff12; }
+	.toolbar { min-height: 62px; padding: 10px 18px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; border-bottom: 1px solid #343434; }
+	.solitaire button:not(.playing-card):not(.pile-slot) { padding: 9px 13px; min-height: 40px; border: 1px solid #515151; border-radius: 3px; background: #353535; color: #eee; font-size: 12px; cursor: pointer; box-shadow: inset 0 1px #ffffff0c; }
+	.solitaire button:not(.playing-card):not(.pile-slot):hover { background: #464646; }
+	.solitaire button:disabled { opacity: .35; cursor: default !important; }
+	.solitaire :is(button, a, summary):focus-visible { outline: 2px solid #f6e2a1; outline-offset: 3px; }
+	.move-count { margin-left: auto; color: #999; font-size: 11px; font-variant-numeric: tabular-nums; }
+	.table { padding: clamp(12px, 2.5vw, 32px); min-height: 550px; user-select: none; -webkit-user-select: none; }
+	.top-piles, .tableau { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: var(--card-gap); }
+	.tableau { align-items: start; }
+	.game-status { max-width: 1100px; margin: 0 auto; color: #aaa; font-size: 12px; line-height: 1.6; }
+	.game-status:not(:empty) { margin-top: 12px; }
+	.top-piles { margin-bottom: clamp(26px, 4vw, 48px); }
+	.pile { position: relative; min-width: 0; aspect-ratio: 373 / 521; }
+	.pile-slot, .playing-card { position: absolute; top: 0; left: 0; width: 100%; aspect-ratio: 373 / 521; padding: 0; border-radius: 4px; }
+	.pile-slot { border: 1px solid #ffffff20; color: #ffffff20; background: #191919; font-size: clamp(20px, 4vw, 46px); cursor: pointer; }
+	.pile-slot[data-zone="stock"] { font-size: clamp(22px, 4vw, 40px); color: #777; }
+	.playing-card { border: 0; background: #fff; box-shadow: 0 1px 3px #0009; cursor: grab; touch-action: none; }
+	.playing-card img { width: 100%; height: 100%; display: block; border-radius: inherit; pointer-events: none; }
+	.playing-card.selected { outline: 3px solid #f6e2a1; outline-offset: 1px; }
+	.playing-card.face-down { cursor: default; }
+	.pile.valid-target { outline: 2px dashed #b4aa88; outline-offset: 5px; border-radius: 4px; }
+	.pile.hint-target > :last-child { outline: 3px solid #f6e2a1; outline-offset: 3px; border-radius: 4px; }
+	.card-index { display: none; }
+	.drag-ghost { position: fixed; pointer-events: none; z-index: 100; transform: rotate(-2deg); }
+	.drag-ghost .playing-card { box-shadow: 0 8px 20px #0005; }
+	.solitaire dialog { max-width: calc(100% - 32px); padding: 28px; border: 1px solid #555; border-radius: 6px; background: #242424; color: #fff; }
+	.solitaire dialog::backdrop { background: #000b; }
+	.solitaire dialog h2 { font-size: 22px; margin-top: 0; }
+	.solitaire dialog p { color: #aaa; font-size: 14px; }
+	.solitaire dialog form { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+	.win-message { position: fixed; z-index: 21; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(430px, calc(100% - 32px)); padding: 32px; border: 1px solid #686868; border-radius: 6px; background: #1b1b1bf2; text-align: center; box-shadow: 0 30px 100px #0008; }
+	.win-message h2 { font-size: clamp(24px, 4vw, 34px); margin: 0 0 26px; }
+	.win-message > div { display: flex; justify-content: center; gap: 8px; }
+	[data-celebration] { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 20; }
+	@media (max-width: 600px) {
+		.game-header { min-height: 65px; gap: 12px; font-size: 12px; }
+		.edition { font-size: 8px; letter-spacing: .06em; }
+		.title-bar { padding: 10px 12px; }
+		.toolbar { padding: 8px; gap: 6px; }
+		.solitaire .toolbar button { padding: 7px 9px !important; font-size: 11px !important; }
+		.table { padding: 12px 8px 24px; min-height: 430px; }
+		.card-index { display: block; position: absolute; top: 0; left: 0; padding: 1px 2px; border-radius: 3px 0 2px 0; font: 700 11px/14px Arial, sans-serif; color: #141414; background: #fff; pointer-events: none; }
+		.card-index.red { color: #c81924; }
+	}
+</style>

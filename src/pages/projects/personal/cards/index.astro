@@ -6,15 +6,16 @@ import ResponsiveImage from '../../../../components/ResponsiveImage.astro';
 import SiteHeader from '../../../../components/SiteHeader.astro';
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import { getLocale, localizedPath } from '../../../../lib/i18n';
+import { cardFiles } from '../../../../lib/solitaire.mjs';
 
 const locale = getLocale(Astro.url.pathname);
 const isRu = locale === 'ru';
 const ranks = isRu ? ['Туз', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Валет', 'Дама', 'Король'] : ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King'];
 const suits = [
-	{ name: isRu ? 'Черви' : 'Hearts', files: [8, 4, 12, 16, 20, 24, 28, 32, 36, 40, 41, 43, 49] },
-	{ name: isRu ? 'Пики' : 'Spades', files: [7, 3, 11, 15, 19, 23, 27, 31, 35, 39, 42, 46, 50] },
-	{ name: isRu ? 'Трефы' : 'Clubs', files: [5, 1, 9, 13, 17, 21, 25, 29, 33, 37, 44, 47, 51] },
-	{ name: isRu ? 'Бубны' : 'Diamonds', files: [6, 2, 10, 14, 18, 22, 26, 30, 34, 38, 45, 48, 52] },
+	{ name: isRu ? 'Черви' : 'Hearts', files: cardFiles[0] },
+	{ name: isRu ? 'Пики' : 'Spades', files: cardFiles[1] },
+	{ name: isRu ? 'Трефы' : 'Clubs', files: cardFiles[2] },
+	{ name: isRu ? 'Бубны' : 'Diamonds', files: cardFiles[3] },
 ].map((suit) => ({
 	...suit,
 	cards: suit.files.map((file, index) => ({
@@ -35,6 +36,7 @@ const suits = [
 		<section class="cards-intro" aria-labelledby="cards-title">
 			<div class="cards-heading">
 				<h1 id="cards-title">{isRu ? <>Колода<br />карт<br />Misprint</> : <>Misprint<br />Playing Card<br />Deck</>}</h1>
+				<a class="play-solitaire" href={localizedPath('/projects/personal/cards/solitaire/', locale)}><span aria-hidden="true">♠</span> {isRu ? 'Сыграть в косынку' : 'Play solitaire'} <span aria-hidden="true">↗</span></a>
 				<button class="back-card" type="button" data-lightbox-target="cards-lightbox" data-caption={isRu ? 'Рубашка колоды' : 'Card back'} aria-label={isRu ? 'Увеличить рубашку колоды' : 'Enlarge card back'}>
 					<ResponsiveImage
 						src="/portfolio/cards/card-53.webp"
@@ -46,12 +48,12 @@ const suits = [
 				</button>
 			</div>
 
-			<section class="cards-process" aria-label={isRu ? 'Колода в движении' : 'The deck in motion'}>
-				<button class="process-button" type="button" data-lightbox-target="cards-lightbox" data-caption={isRu ? 'Колода Misprint в движении' : 'Misprint deck in motion'} aria-label={isRu ? 'Увеличить демонстрацию колоды' : 'Enlarge deck demonstration'}>
+			<section class="cards-process" aria-label={isRu ? 'Колода Misprint' : 'Misprint deck'}>
+				<button class="process-button" type="button" data-lightbox-target="cards-lightbox" data-caption={isRu ? 'Колода Misprint' : 'Misprint deck'} aria-label={isRu ? 'Увеличить демонстрацию колоды' : 'Enlarge deck demonstration'}>
 					<img src="/portfolio/cards/process-01.gif" alt={isRu ? 'Демонстрация колоды карт Misprint' : 'Misprint playing-card deck demonstration'} width="272" height="480" loading="eager" decoding="async" />
 				</button>
-				<button class="process-button" type="button" data-lightbox-target="cards-lightbox" data-caption={isRu ? 'Карты Misprint крупным планом' : 'Misprint cards close-up'} aria-label={isRu ? 'Увеличить демонстрацию карт крупным планом' : 'Enlarge close-up card demonstration'}>
-					<img src="/portfolio/cards/process-02.gif" alt={isRu ? 'Демонстрация карт Misprint крупным планом' : 'Close-up demonstration of Misprint playing cards'} width="272" height="480" loading="eager" decoding="async" />
+				<button class="process-button" type="button" data-lightbox-target="cards-lightbox" data-caption={isRu ? 'Карточный домик' : 'House of cards'} aria-label={isRu ? 'Увеличить карточный домик' : 'Enlarge house of cards'}>
+					<img src="/portfolio/cards/process-02.gif" alt={isRu ? 'Карточный домик' : 'House of cards'} width="272" height="480" loading="eager" decoding="async" />
 				</button>
 			</section>
 
@@ -132,6 +134,9 @@ const suits = [
 	}
 
 	.cards-copy { grid-area: copy; }
+	.play-solitaire { display: inline-flex; align-items: center; gap: .8rem; margin-top: 2rem; padding: .9rem 1.15rem; border: 1px solid #555; border-radius: 4px; background: #262626; color: #fff; font-size: .85rem; text-decoration: none; }
+	.play-solitaire:hover { background: #383838; border-color: #999; }
+	.play-solitaire:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
 
 	h1 {
 		margin: 0;

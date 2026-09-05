@@ -1,5 +1,24 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
+
+for (const file of (await readdir('dist', { recursive: true })).filter((file) => file.endsWith('.html'))) {
+	const html = await readFile(`dist/${file}`, 'utf8');
+	if (file.endsWith('projects/presentations/index.html')) {
+		assert.match(html, /name="robots" content="noindex, noimageindex, follow"/, `${file}: direct-link page must not be indexed`);
+		assert.equal((html.match(/class="case-gallery-item"/g) ?? []).length, 27, `${file}: direct-link gallery has 27 unique slides`);
+		assert.doesNotMatch(html, /alt="(?:Образовательная презентация: слайд|Educational Presentation: slide) (?:15|16|17|18|19|20)"/, `${file}: duplicate education slides must stay excluded`);
+		assert.match(html, /alt="(?:Образовательная презентация: слайд|Educational Presentation: slide) 21"/, `${file}: final unique slide must remain`);
+	} else {
+		assert.doesNotMatch(html, /href="[^"]*\/projects\/presentations(?:\/|"|\?)/, `${file}: public page links to presentations`);
+		const text = html.replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1>/gi, '').replace(/<[^>]*>/g, ' ');
+		assert.doesNotMatch(text, /\bpresentations?\b|(?<!ре)презентаци/iu, `${file}: public copy mentions presentations`);
+	}
+}
+assert.doesNotMatch(await readFile('dist/sitemap.xml', 'utf8'), /projects\/presentations/, 'Presentations must stay out of the sitemap');
+for (const path of ['dist/index.html', 'dist/ru/index.html']) {
+	const html = await readFile(path, 'utf8');
+	assert.equal((html.match(/class="portfolio-index-item"/g) ?? []).length, 5, `${path}: homepage must have five sections`);
+}
 
 const pages = {
 	home: await readFile('dist/index.html', 'utf8'),
@@ -56,6 +75,11 @@ assert.match(pages.iofs, /case-gallery-spread/);
 assert.match(pages.unesco, /case-gallery-spread/);
 assert.match(pages.kipd, /case-gallery-pages/);
 assert.match(pages.infographics, /case-gallery-numbered/);
+for (const locale of ['', 'ru/']) {
+	const html = await readFile(`dist/${locale}projects/infographics/index.html`, 'utf8');
+	assert.doesNotMatch(html, /graphic-10[2-9]/, 'Infographics: removed TOiR slides must not appear in the gallery or lightbox');
+	assert.equal((html.match(/class="case-gallery-item"/g) ?? []).length, 89, 'Infographics: only the eight requested slides should be removed');
+}
 assert.match(pages.iofs, /data-case-lightbox="spread"/);
 assert.match(pages.kipd, /data-case-lightbox="single"/);
 assert.match(pages.infographics, /data-case-lightbox="single"/);
@@ -70,7 +94,7 @@ assert.match(pages.presentations, /<h1\b[^>]*>Презентации<\/h1>/, 'Pr
 assert.match(pages.presentations, /понятную и выразительную инфографику/, 'Presentations: project introduction is missing');
 assert.match(pages.presentations, /href="\/(?:ru\/)?projects\/infographics"/, 'Presentations: infographics link is missing');
 assert.doesNotMatch(pages.presentations, /NDA|Конфиденциальн|Открытые примеры/, 'Presentations: removed NDA sections are still present');
-assert.equal((pages.presentations.match(/class="case-gallery-item"/g) ?? []).length, 33, 'Presentations: expected all 33 slides');
+assert.equal((pages.presentations.match(/class="case-gallery-item"/g) ?? []).length, 27, 'Presentations: expected 27 unique slides');
 assert.match(pages.presentations, /case-gallery-numbered/);
 assert.match(pages.presentations, /data-case-lightbox="single"/);
 

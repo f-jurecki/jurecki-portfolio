@@ -50,6 +50,12 @@ const origins = [
 			<ResponsiveImage src="/portfolio/republica/alphabet.webp" alt={isRu ? 'Полный латинский алфавит Republica' : 'Complete Republica Latin alphabet'} widths={[640, 960, 1200]} sizes="(max-width: 700px) 100vw, 94vw" loading="eager" />
 		</button>
 
+		<div class="type-tester" id="republica-tester" data-republica-tester>
+			<p class="type-label" id="republica-input-label">{isRu ? 'Попробуйте свой текст' : 'Try your own text'}</p>
+			<p class="type-help" id="republica-input-help">{isRu ? 'Латиница, цифры и знаки препинания · до 280 символов' : 'Latin letters, numbers and punctuation · up to 280 characters'}</p>
+			<div class="type-editor" id="republica-input" contenteditable="plaintext-only" role="textbox" aria-multiline="true" aria-labelledby="republica-input-label" aria-describedby="republica-input-help" spellcheck="false" autocapitalize="off" inputmode="text" dir="ltr">Letters from the streets of Astana.</div>
+		</div>
+
 		<section class="republica-section" aria-labelledby="applications-title">
 			<header class="section-heading"><h2 id="applications-title">{isRu ? 'Примеры использования' : 'Usage examples'}</h2></header>
 			<div class="application-grid">
@@ -120,7 +126,19 @@ const origins = [
 	<ProjectFooter />
 </BaseLayout>
 
+<script>
+	import '../../../../scripts/republica-tester.mjs';
+</script>
+
 <style>
+	@font-face { font-family: 'Republica'; src: url('/fonts/republica-regular-svg.otf') format('opentype'); font-style: normal; font-weight: 400; font-display: swap; }
+	.type-tester { margin-top: clamp(1.5rem, 3vw, 3rem); padding: clamp(1rem, 3vw, 3rem); border: 1px solid var(--color-border); background: var(--color-panel); }
+	.type-label { margin: 0; font-size: 1rem; font-weight: 600; }
+	.type-help { margin: .5rem 0 1.5rem; color: var(--color-muted); font-size: .75rem; line-height: 1.5; }
+	.type-editor { min-height: 2.8em; white-space: pre-wrap; overflow-wrap: anywhere; color: #f5f5f5; caret-color: #f5f5f5; font: 600 clamp(2.25rem, 5.5vw, 5.5rem)/1.4 'TikTok Sans', sans-serif; letter-spacing: -.025em; cursor: text; }
+	.type-editor:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: .5rem; }
+	.type-editor :global(.type-word) { display: inline-block; max-width: 100%; }
+	.type-editor :global(.republica-glyph) { display: inline-block; font-family: 'Republica', 'TikTok Sans', sans-serif; font-weight: 400; color: #000; filter: brightness(0) invert(1); }
 	.republica-page { width: min(100%, 100rem); margin-inline: auto; padding: clamp(3.5rem, 8vw, 8rem) clamp(.75rem, 3vw, 3rem) clamp(6rem, 11vw, 11rem); }
 	.republica-intro, .section-heading--split { display: grid; grid-template-columns: minmax(18rem, .82fr) minmax(28rem, 1.18fr); align-items: start; gap: clamp(3rem, 8vw, 9rem); }
 	h1, h2 { margin: 0; font-weight: 600; letter-spacing: var(--tracking-page-title); }

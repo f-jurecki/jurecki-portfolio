@@ -1,9 +1,11 @@
 ---
 import Home from '../index.astro';
+import Privacy from '../privacy.astro';
 import Branding from '../projects/branding/index.astro';
 import ComingSoon from '../projects/coming-soon.astro';
 import Infographics from '../projects/infographics/index.astro';
 import Cards from '../projects/personal/cards/index.astro';
+import Solitaire from '../projects/personal/cards/solitaire.astro';
 import DigitalScrapbook from '../projects/personal/digital-scrapbook/index.astro';
 import Personal from '../projects/personal/index.astro';
 import Posters from '../projects/personal/posters/index.astro';
@@ -20,10 +22,12 @@ import Sequence from '../projects/vibecoding/sequence/index.astro';
 
 const pages = {
 	home: Home,
+	privacy: Privacy,
 	branding: Branding,
 	'coming-soon': ComingSoon,
 	infographics: Infographics,
 	cards: Cards,
+	solitaire: Solitaire,
 	'digital-scrapbook': DigitalScrapbook,
 	personal: Personal,
 	posters: Posters,
@@ -42,11 +46,13 @@ const pages = {
 export function getStaticPaths() {
 	return [
 		[undefined, 'home'],
+		['privacy', 'privacy'],
 		['projects/branding', 'branding'],
 		['projects/coming-soon', 'coming-soon'],
 		['projects/infographics', 'infographics'],
 		['projects/personal', 'personal'],
 		['projects/personal/cards', 'cards'],
+		['projects/personal/cards/solitaire', 'solitaire'],
 		['projects/personal/digital-scrapbook', 'digital-scrapbook'],
 		['projects/personal/posters', 'posters'],
 		['projects/personal/republica', 'republica'],

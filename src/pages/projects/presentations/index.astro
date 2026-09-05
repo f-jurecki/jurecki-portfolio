@@ -16,7 +16,7 @@ const tools = ['PowerPoint', 'Google Slides', 'Keynote', 'Figma'];
 const groups = [
 	{ folder: 'business', count: 9, caption: isRu ? 'Бизнес-презентация' : 'Business Presentation' },
 	{ folder: 'infographics', slides: ['01', '02', '06'], caption: isRu ? 'Инфографика' : 'Infographics' },
-	{ folder: 'education', count: 21, caption: isRu ? 'Образовательная презентация' : 'Educational Presentation' },
+	{ folder: 'education', slides: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '21'], caption: isRu ? 'Образовательная презентация' : 'Educational Presentation' },
 ];
 
 const galleryItems = groups.flatMap((group) => {
@@ -32,6 +32,7 @@ const galleryItems = groups.flatMap((group) => {
 ---
 
 <BaseLayout
+	noindex
 	title={isRu ? 'Презентации — Федор Юрецкий' : 'Presentations — Fedor Jurecki'}
 	description={isRu ? 'Дизайн презентаций Федора Юрецкого: структура, визуальный язык, вёрстка и инфографика на казахском, русском и английском языках.' : 'Presentation design: structure, visual language, layout, and infographics in Kazakh, Russian, and English.'}
 >

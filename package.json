@@ -7,6 +7,7 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "check:solitaire": "node scripts/check-solitaire.mjs",
 		"build": "astro build",
 		"check:case-modules": "node scripts/check-case-modules.mjs",
 		"test:responsive": "npm run build && node scripts/check-responsive.mjs",

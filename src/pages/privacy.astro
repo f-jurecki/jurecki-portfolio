@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import { getLocale } from '../lib/i18n';
+const ru = getLocale(Astro.url.pathname) === 'ru';
+---
+
+<BaseLayout title={ru ? 'Приватность — Федор Юрецкий' : 'Privacy — Fedor Jurecki'} description={ru ? 'Как портфолио использует локальное сохранение и технические данные.' : 'How this portfolio uses browser storage and technical data.'}>
+	<SiteHeader />
+	<main class="privacy-page">
+		<h1>{ru ? 'Приватность' : 'Privacy'}</h1>
+		<p class="privacy-intro">{ru ? 'Это портфолио Федора Юрецкого, Астана, Казахстан. Здесь нет регистрации, рекламных трекеров и подключённых счётчиков посещений.' : 'This is the portfolio of Fedor Jurecki, based in Astana, Kazakhstan. There are no accounts, advertising trackers or visitor analytics scripts on this site.'}</p>
+		<section>
+			<h2>{ru ? 'Что сохраняется в браузере' : 'What stays in your browser'}</h2>
+			<p>{ru ? 'Сайт запоминает выбранный язык и партию в косынке, включая историю отмены ходов. Эти данные хранятся локально в вашем браузере и кодом сайта на сервер не отправляются. Они остаются до очистки данных сайта; новая партия заменяет предыдущую. При восстановлении повреждённого сохранения может оставаться его локальная резервная копия.' : 'The site remembers your language and solitaire game, including undo history. These stay in your browser and the site’s code does not send them to a server. They remain until you clear site data; a new game replaces the previous one. Recovery from a damaged save may leave a local backup.'}</p>
+			<p>{ru ? 'Выбранный постер и позиция прокрутки при смене языка сохраняются на время сеанса вкладки. Собственные cookies сайт не устанавливает. Очистить сохранения можно в настройках браузера — при этом партия и настройки будут потеряны.' : 'The selected poster and scroll position when switching languages are kept for the tab’s session. The site does not set its own cookies. You can clear saved data in your browser settings; doing so removes your saved game and preferences.'}</p>
+		</section>
+		<section>
+			<h2>{ru ? 'Хостинг и внешние ссылки' : 'Hosting and external links'}</h2>
+			<p>{ru ? <>Сайт размещён на Vercel. При открытии страниц хостинг получает технические данные запроса, в том числе IP-адрес, и может обрабатывать их для доставки страниц и обеспечения безопасности. Это отдельная обработка от локальных сохранений игры. Условия и сведения о международной передаче данных описаны в <a href="https://vercel.com/legal/privacy-notice">политике Vercel</a>.</> : <>The site is hosted by Vercel. When you open a page, the hosting provider receives technical request data, including your IP address, and may process it to deliver pages and maintain security. This is separate from your locally saved game. See <a href="https://vercel.com/legal/privacy-notice">Vercel’s privacy notice</a> for its terms and international data transfer information.</>}</p>
+			<p>{ru ? 'Шрифты и изображения загружаются с самого сайта. Ссылки на соцсети и другие сервисы открываются по вашему нажатию; на этих сайтах действуют их собственные правила приватности.' : 'Fonts and images are served by this site. Links to social networks and other services open when you follow them; their own privacy policies then apply.'}</p>
+		</section>
+		<section>
+			<h2>{ru ? 'Связаться со мной' : 'Contact me'}</h2>
+			<p>{ru ? <>Если вы напишете мне, я получу ваш адрес и содержание сообщения и буду использовать их для ответа и обсуждения вашего запроса. По вопросам приватности и применимым правам на доступ, исправление или удаление данных напишите на <a href="mailto:fedorjurecki@gmail.com">fedorjurecki@gmail.com</a>.</> : <>If you contact me, I receive your address and message and use them to reply and discuss your request. For privacy questions or applicable rights to access, correct or delete data, email <a href="mailto:fedorjurecki@gmail.com">fedorjurecki@gmail.com</a>.</>}</p>
+		</section>
+	</main>
+</BaseLayout>
+
+<style>
+	.privacy-page { max-width: 48rem; min-height: calc(100svh - 8.5rem); margin: auto; padding: clamp(3rem, 7vw, 6rem) 1.25rem; }
+	h1 { margin: 0 0 2rem; font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 600; letter-spacing: -.045em; line-height: 1; }
+	.privacy-intro { color: #f5f5f5; }
+	section { margin-top: 2.25rem; }
+	h2 { margin: 0 0 .8rem; font-size: 1.2rem; font-weight: 600; letter-spacing: -.02em; }
+	p { margin: 0 0 1rem; color: #aaa; font-size: .95rem; line-height: 1.65; }
+	a { color: #eee; text-underline-offset: .2em; overflow-wrap: anywhere; }
+	a:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+</style>

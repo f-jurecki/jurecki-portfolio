@@ -204,6 +204,18 @@
 	page.append(sections);
 	main.append(page, buildProjectNavigation());
 	addLightbox(page);
+	const backToTop = textElement('button', 'shelfr-mobile-scroll-top', '↑');
+	backToTop.type = 'button';
+	backToTop.setAttribute('aria-label', isRu ? 'Вернуться в начало страницы' : 'Back to top');
+	document.body.append(backToTop);
+	const updateBackToTop = () => { backToTop.hidden = scrollY <= innerHeight; };
+	updateBackToTop();
+	addEventListener('scroll', updateBackToTop, { passive: true });
+	addEventListener('resize', updateBackToTop);
+	addEventListener('pageshow', updateBackToTop);
+	backToTop.addEventListener('click', () => {
+		scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+	});
 
 	function buildSection(data, index) {
 		const source = root.querySelector(data.node || `#${data.id}`);

@@ -23,27 +23,27 @@ const locale = getLocale(Astro.url.pathname);
 const isRussian = locale === 'ru';
 const roles = isRussian ? ['Графический дизайнер', 'Верстальщик'] : ['Graphic Designer', 'Layout Designer'];
 const capabilities = isRussian ? [
-	{ title: ['Editorial &', 'Layout'], text: 'издания, брошюры, презентации' },
+	{ title: ['Editorial &', 'Layout'], text: 'издания, брошюры, отчёты' },
 	{ title: ['Information', 'Design'], text: 'инфографика, навигация, данные' },
 	{ title: ['Packaging &', 'Applied Branding'], text: 'упаковка, POS, брендированные материалы' },
 	{ title: ['Key', 'Visuals'], text: 'наружная реклама, афиши, постеры' },
 	{ title: ['DesignOps &', 'Pre-press'], text: 'AI, скрипты, подготовка к печати' },
 ] : [
-	{ title: ['Editorial &', 'Layout'], text: 'publications, brochures, presentations' },
+	{ title: ['Editorial &', 'Layout'], text: 'publications, brochures, reports' },
 	{ title: ['Information', 'Design'], text: 'infographics, wayfinding, data visualization' },
 	{ title: ['Packaging &', 'Applied Branding'], text: 'packaging, POS materials, branded collateral' },
 	{ title: ['Key', 'Visuals'], text: 'outdoor advertising, campaign graphics, posters' },
 	{ title: ['DesignOps &', 'Prepress'], text: 'AI, scripting, prepress' },
 ];
 const navigation = isRussian ? [
-	['Инфографика и вёрстка', '/projects/publications'], ['Презентации', '/projects/presentations'], ['Упаковка и брендинг материалы', '/projects/branding'], ['Product Design', '/projects/product-design/shelfr'], ['Личные проекты', '/projects/personal'], ['Вайбкодинг', '/projects/vibecoding'],
+	['Инфографика и вёрстка', '/projects/publications'], ['Упаковка и брендинг материалы', '/projects/branding'], ['Product Design', '/projects/product-design/shelfr'], ['Личные проекты', '/projects/personal'], ['Вайбкодинг', '/projects/vibecoding'],
 ] : [
-	['Infographics & Editorial Design', '/projects/publications'], ['Presentations', '/projects/presentations'], ['Packaging & Brand Materials', '/projects/branding'], ['Product Design', '/projects/product-design/shelfr'], ['Personal Projects', '/projects/personal'], ['Vibe Coding', '/projects/vibecoding'],
+	['Infographics & Editorial Design', '/projects/publications'], ['Packaging & Brand Materials', '/projects/branding'], ['Product Design', '/projects/product-design/shelfr'], ['Personal Projects', '/projects/personal'], ['Vibe Coding', '/projects/vibecoding'],
 ];
 const copy = isRussian ? {
-	title: 'Федор Юрецкий, портфолио', description: 'Портфолио Федора Юрецкого: графический дизайн, многостраничная вёрстка, инфографика и презентации.', firstName: 'Федор', lastName: 'Юрецкий', markAlt: 'Монограмма Федора Юрецкого', profileLabel: 'Профиль и проекты', rolesLabel: 'Профессиональные роли', summary: 'Графический дизайнер-дженералист с сильной экспертизой в многостраничной вёрстке, инфографике и визуальной коммуникации. Работаю с презентациями, упаковкой, брендинговыми материалами и другими форматами — от концепции до готового макета.', location: 'Локация', locationValue: 'Астана, Казахстан', workMode: 'Офис · гибрид · ремоут · релокация', languages: 'Языки', languagesValue: 'Русский — родной', english: 'Английский — C2', skillsLabel: 'Ключевые компетенции', tools: 'Рабочие инструменты', toolsLabel: 'Программы и инструменты', workLabel: 'Направления портфолио', open: 'Открыть',
+	title: 'Федор Юрецкий, портфолио', description: 'Портфолио Федора Юрецкого: графический дизайн, многостраничная вёрстка, инфографика и брендинг.', firstName: 'Федор', lastName: 'Юрецкий', markAlt: 'Монограмма Федора Юрецкого', profileLabel: 'Профиль и проекты', rolesLabel: 'Профессиональные роли', summary: 'Графический дизайнер-дженералист с сильной экспертизой в многостраничной вёрстке, инфографике и визуальной коммуникации. Работаю с изданиями, упаковкой, брендинговыми материалами и другими форматами — от концепции до готового макета.', location: 'Локация', locationValue: 'Астана, Казахстан', workMode: 'Офис · гибрид · ремоут · релокация', languages: 'Языки', languagesValue: 'Русский — родной', english: 'Английский — C2', skillsLabel: 'Ключевые компетенции', tools: 'Рабочие инструменты', toolsLabel: 'Программы и инструменты', workLabel: 'Направления портфолио', open: 'Открыть',
 } : {
-	title: 'Graphic Design Portfolio — Fedor Jurecki', description: 'Portfolio of Fedor Jurecki, a graphic designer specializing in editorial design, infographics, presentations, packaging, and product design.', firstName: 'Fedor', lastName: 'Jurecki', markAlt: 'Fedor Jurecki monogram', profileLabel: 'Profile and projects', rolesLabel: 'Professional roles', summary: 'Graphic designer and generalist with strong expertise in multi-page editorial design, infographics, and visual communication. I work across presentations, packaging, brand materials, and other formats, taking projects from concept through final artwork.', location: 'Location', locationValue: 'Astana, Kazakhstan', workMode: 'On-site · Hybrid · Remote · Relocation', languages: 'Languages', languagesValue: 'Russian — Native', english: 'English — C2', skillsLabel: 'Areas of expertise', tools: 'Tools', toolsLabel: 'Software and tools', workLabel: 'Portfolio sections', open: 'Open',
+	title: 'Graphic Design Portfolio — Fedor Jurecki', description: 'Portfolio of Fedor Jurecki, a graphic designer specializing in editorial design, infographics, packaging, and product design.', firstName: 'Fedor', lastName: 'Jurecki', markAlt: 'Fedor Jurecki monogram', profileLabel: 'Profile and projects', rolesLabel: 'Professional roles', summary: 'Graphic designer and generalist with strong expertise in multi-page editorial design, infographics, and visual communication. I work across publications, packaging, brand materials, and other formats, taking projects from concept through final artwork.', location: 'Location', locationValue: 'Astana, Kazakhstan', workMode: 'On-site · Hybrid · Remote · Relocation', languages: 'Languages', languagesValue: 'Russian — Native', english: 'English — C2', skillsLabel: 'Areas of expertise', tools: 'Tools', toolsLabel: 'Software and tools', workLabel: 'Portfolio sections', open: 'Open',
 };
 const tools = [
 	{ name: 'Adobe InDesign', src: indesignLogo },
@@ -89,7 +89,7 @@ const tools = [
 				<div class="profile-details">
 					<div class="profile-meta">
 						<div><span>{copy.location}</span><strong>{copy.locationValue}<br />{copy.workMode}</strong></div>
-						<div><span>{copy.languages}</span><strong>{copy.languagesValue}<br />{copy.english}</strong></div>
+						<div><span>{copy.languages}</span><strong>{isRussian ? copy.languagesValue : copy.english}<br />{isRussian ? copy.english : copy.languagesValue}</strong></div>
 					</div>
 
 					<div class="capabilities" aria-label={copy.skillsLabel}>
@@ -119,8 +119,8 @@ const tools = [
 </BaseLayout>
 
 <style>
-	.home { --home-padding-block: clamp(1rem,2vw,1.75rem); min-height: calc(100svh - 6rem); padding: var(--home-padding-block) clamp(1rem,3vw,3rem); }
-	.hero-grid { width: min(100%,96rem); min-height: calc(100svh - 6rem - var(--home-padding-block) - var(--home-padding-block)); margin-inline: auto; display: grid; grid-template-columns: minmax(34rem,1.02fr) minmax(34rem,.98fr); gap: .8rem; align-content: center; align-items: stretch; }
+	.home { --home-padding-block: clamp(1rem,2vw,1.75rem); min-height: calc(100svh - 8.5rem); padding: var(--home-padding-block) clamp(1rem,3vw,3rem); }
+	.hero-grid { width: min(100%,96rem); min-height: calc(100svh - 8.5rem - var(--home-padding-block) - var(--home-padding-block)); margin-inline: auto; display: grid; grid-template-columns: minmax(34rem,1.02fr) minmax(34rem,.98fr); gap: .8rem; align-content: center; align-items: stretch; }
 	.profile-pane { min-width: 0; padding: clamp(1.15rem,1.8vw,1.75rem); display: flex; flex-direction: column; position: relative; background: rgba(8,8,8,.88); border: 1px solid var(--color-border); overflow: hidden; }
 	.tools-panel > p { margin: 0; color: var(--color-muted); font-size: .62rem; font-weight: 700; line-height: 1.4; letter-spacing: .1em; text-transform: uppercase; }
 	.personal-mark { width: 2.9rem; height: auto; flex: 0 0 auto; margin-top: .25rem; image-rendering: pixelated; }
@@ -132,8 +132,7 @@ const tools = [
 	.profile-summary { margin-top: clamp(1.2rem,2.4vh,2rem); max-width: 38rem; }
 	.profile-summary p { margin: 0; color: #d4d4d4; font-size: var(--text-page-intro); font-weight: var(--weight-page-intro); line-height: var(--leading-page-intro); }
 	.profile-meta { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .8rem; margin-top: 1rem; }
-	.profile-meta div { padding-top: .65rem; border-top: 1px solid var(--color-border); }
-	.profile-meta div:first-child { border-top: 0; }
+	.profile-meta div { padding-top: .65rem; }
 	.profile-meta span { display: block; margin-bottom: .35rem; color: var(--color-muted); font-size: .5rem; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; }
 	.profile-meta strong { font-size: .72rem; font-weight: 500; line-height: 1.45; }
 	.capabilities { margin-top: 1rem; display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
@@ -147,7 +146,7 @@ const tools = [
 	.tools-panel li { min-width: 0; aspect-ratio: 1; display: grid; place-items: center; background: #111; border: 1px solid var(--color-border); }
 	.tools-panel img { width: 55%; height: 55%; object-fit: contain; }
 
-	.projects-grid { min-width: 0; display: grid; grid-template-columns: 1fr; grid-template-rows: repeat(6,minmax(0,1fr)); gap: .55rem; }
+	.projects-grid { min-width: 0; display: grid; grid-template-columns: 1fr; grid-template-rows: repeat(5,minmax(0,1fr)); gap: .55rem; }
 	.portfolio-index-item { min-width: 0; min-height: 0; padding: clamp(.8rem,1.2vw,1.05rem); display: grid; grid-template-columns: 2rem minmax(0,1fr) 2.35rem; align-items: center; gap: clamp(.75rem,1.5vw,1.25rem); color: #fff; background: var(--color-panel); border: 1px solid var(--color-border); text-decoration: none; transition: background-color .2s ease,border-color .2s ease; }
 	.portfolio-index-number { color: var(--color-muted); font-size: .56rem; font-weight: 720; letter-spacing: .09em; }
 	.portfolio-index-item h2 { margin: 0; font-size: clamp(1.2rem,1.65vw,1.7rem); font-weight: 650; line-height: .95; letter-spacing: -.045em; }
@@ -158,7 +157,7 @@ const tools = [
 	@media (max-width: 1180px) {
 		.hero-grid { grid-template-columns: 1fr; align-content: start; }
 		.profile-pane { min-height: 0; }
-		.projects-grid { grid-template-rows: repeat(6,minmax(4.75rem,auto)); }
+		.projects-grid { grid-template-rows: repeat(5,minmax(4.75rem,auto)); }
 	}
 	@media (max-width: 680px) {
 		.home { --home-padding-block: .75rem; padding: .75rem; }
@@ -169,11 +168,12 @@ const tools = [
 		.profile-details { order: 3; }
 		.profile-meta { margin-top: 0; }
 		.profile-meta { grid-template-columns: 1fr; }
+		.profile-meta div + div { border-top: 1px solid var(--color-border); }
 		.capabilities { grid-template-columns: 1fr; }
 		.capabilities article, .capabilities article:first-child, .capabilities article:nth-child(2n) { padding: .75rem 0; border-left: 0; border-right: 0; border-bottom: 1px solid var(--color-border); }
 		.capabilities article:last-child { border-bottom: 0; }
 		.tools-panel ul { grid-template-columns: repeat(7,minmax(0,1fr)); }
-		.projects-grid { grid-template-rows: repeat(6,minmax(4.5rem,auto)); gap: .5rem; }
+		.projects-grid { grid-template-rows: repeat(5,minmax(4.5rem,auto)); gap: .5rem; }
 		.portfolio-index-item { grid-template-columns: 1.6rem minmax(0,1fr) 2.35rem; padding: .8rem; }
 		.portfolio-index-item h2 { font-size: 1.2rem; }
 	}

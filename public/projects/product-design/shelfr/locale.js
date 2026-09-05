@@ -359,7 +359,7 @@
 			'Книги распределяются': 'Books are placed', 'по четырём категориям, чтобы упростить выбор,': 'into four categories to make it easier to choose', 'что читать дальше.': 'what to read next.',
 			'Уведомления напомнят о важных книгах или о пересортировке.': 'Notifications can remind users about important books or prompt them to re-sort the list.',
 			'Оригинальная': 'Original', '<— размер': '<— size', 'шрифта': 'typeface', 'главного': 'main', 'трекера': 'tracker',
-			'Выборка из 4 респондентов недостаточна.': 'A sample of four interview participants is too small.', 'Интервью необходимо продолжать,': 'Interviews should continue', 'пока новые ответы не перестанут дополнять результаты исследования.': 'until new answers stop adding meaningful new insights.',
+			'Выборка из 4 респондентов недостаточна.': 'A sample of four interview participants is too small.', 'Интервью необходимо продолжать, пока новые ответы не перестанут дополнять результаты исследования.': 'Interviews should continue until new answers stop adding meaningful new insights.',
 			'Вернуться на главную →': 'Return home →',
 			'Среди англоязычной аудитории лидирует Goodreads': 'Goodreads was the leading tracker among English-speaking respondents',
 			'тогда как русскоязычная аудитория чаще использует собственные системы учёта; второе место занимает LiveLib.': 'while Russian-speaking respondents more often used their own tracking systems; LiveLib ranked second.',
