@@ -150,7 +150,7 @@ function render(message = '') {
 	// A column can hold six face-down cards followed by a full king-to-ace sequence.
 	columns.style.minHeight = `${Math.ceil(cardWidth * 521 / 373 + 6 * closedStep + 12 * openStep)}px`;
 	state.tableau.forEach((cards, index) => {
-		const column = pile('tableau', index, t(`Столбец ${index + 1}`, `Column ${index + 1}`), 'K');
+		const column = pile('tableau', index, t(`Столбец ${index + 1}`, `Column ${index + 1}`), '');
 		let offset = 0;
 		renderCards(column, cards.map(({ id, up }, i) => {
 			const node = card(id, up, { zone: 'tableau', pile: index, index: i }, offset);
@@ -217,7 +217,7 @@ table.addEventListener('click', (event) => {
 	if (selected && commit(move(state, selected, from))) return;
 	if (commit(autoMove(state, from))) return;
 	if (selected && samePile(selected, from) && selected.index === from.index) { selected = null; render(); return; }
-	if (selected && !movable(state, from).length) { render(t('Сюда нельзя. На пустое место — только король.', 'That move is not allowed. Only kings can fill empty columns.')); return; }
+	if (selected && !movable(state, from).length) { render(t('Сюда нельзя переместить выбранные карты.', 'The selected cards cannot move here.')); return; }
 	select(from);
 	if (selected) render(t('Для этой карты пока нет подходящего места.', 'There is no legal move for this card yet.'));
 });

@@ -50,6 +50,20 @@ try {
 		await page.locator('[data-undo]').click();
 		await page.locator('[data-undo]').click();
 		assert.ok(await page.evaluate(() => window.originalCards.every((card) => card.isConnected)), 'Undo reuses the original card and image nodes, including the hidden card');
+		const queen = await page.getByRole('button', { name: 'Queen, hearts', exact: true }).boundingBox();
+		const emptyColumn = page.locator('.pile[data-zone="tableau"][data-pile="3"]');
+		const empty = await emptyColumn.boundingBox();
+		await page.mouse.move(queen.x + 5, queen.y + 5);
+		await page.mouse.down();
+		await page.mouse.move(empty.x + empty.width / 2, empty.y + 20, { steps: 10 });
+		await page.mouse.up();
+		assert.equal(await emptyColumn.locator('.playing-card').count(), 2, 'Dragging a non-king sequence into an empty column works');
+		assert.ok(await page.evaluate(() => JSON.parse(localStorage.getItem('misprint-solitaire-v1')).state.tableau[0][0].up), 'Moving the sequence reveals the hidden card');
+		await page.locator('[data-undo]').click();
+		await page.waitForTimeout(400); // The game suppresses the click following a drag.
+		await page.getByRole('button', { name: 'Jack, spades', exact: true }).click();
+		assert.equal(await emptyColumn.locator('.playing-card').getAttribute('aria-label'), 'Jack, spades', 'Clicking a non-king card finds an empty column');
+		await page.locator('[data-undo]').click();
 		await page.locator('.playing-card[data-zone="stock"]').click();
 		const saved = await page.evaluate(() => localStorage.getItem('misprint-solitaire-v1'));
 		for (const name of ['Minimize game and return to case', 'Close game and return to case']) {

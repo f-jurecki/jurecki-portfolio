@@ -49,7 +49,7 @@ export function canMove(state, from, to) {
 	if (to.zone === 'foundations') return cards.length === 1 && suit(id) === to.pile && rank(id) === state.foundations[to.pile]?.length + 1;
 	if (to.zone !== 'tableau' || !state.tableau[to.pile]) return false;
 	const top = state.tableau[to.pile].at(-1);
-	return top ? top.up && stacks(top.id, id) : rank(id) === 13;
+	return top ? top.up && stacks(top.id, id) : true;
 }
 
 export function move(state, from, to) {

@@ -28,14 +28,15 @@ assert.ok(canMove(state, from, to), 'Red queen + black jack can move onto black 
 assert.equal(move(state, from, to).tableau[1].length, 3);
 assert.equal(autoMove(state, from).tableau[1].length, 3, 'One click moves the entire valid stack');
 assert.ok(hints(state).some((hint) => hint.from?.pile === 0 && hint.from?.index === 0 && hint.to?.zone === 'tableau' && hint.to.pile === 1), 'Hints include moving a whole stack');
-assert.equal(move(state, from, { zone: 'tableau', pile: 2 }), null, 'Only kings fill empty columns');
+assert.deepEqual(move(state, from, { zone: 'tableau', pile: 2 }).tableau[2], state.tableau[0], 'A non-king sequence can fill an empty column');
 assert.equal(move(state, from, { zone: 'foundations', pile: 0 }), null, 'Cannot send a stack to a foundation');
 assert.equal(move(state, from, from), null);
 state.tableau[1][0].id = 12;
 assert.equal(move(state, from, to), null, 'Cannot stack the same color');
-assert.equal(autoMove(state, from), null, 'No legal destination leaves the game unchanged');
+assert.deepEqual(autoMove(state, from).tableau[2], state.tableau[0], 'One click moves a non-king sequence into an empty column');
 state.tableau[0][0].up = false;
 assert.equal(move(state, from, to), null, 'Cannot move hidden cards');
+assert.equal(move(state, from, { zone: 'tableau', pile: 2 }), null, 'Empty columns do not allow moving hidden cards');
 state.tableau = [[{ id: 4, up: false }, { id: 13, up: true }], [], [], [], [], [], []];
 state.foundations = [[], [], [], []];
 const revealed = move(state, { ...from, index: 1 }, { zone: 'foundations', pile: 1 });
@@ -83,8 +84,13 @@ stuck.stock = [4];
 assert.deepEqual(hints(stuck), [{ draw: true }], 'Suggest drawing when no card can move');
 stuck.stock = [];
 stuck.waste = [4];
-assert.deepEqual(hints(stuck), [{ draw: true }], 'Suggest recycling an exhausted stock');
+assert.ok(hints(stuck).some((hint) => hint.draw), 'Suggest recycling an exhausted stock');
+assert.equal(hints(stuck).filter((hint) => hint.to?.zone === 'tableau').length, 7, 'Hints include non-king waste cards filling empty columns');
 stuck.waste = [];
-stuck.tableau[0] = [{ id: 12, up: true }];
-assert.deepEqual(hints(stuck), [], 'Do not suggest shuffling a whole king column into an empty column');
+stuck.tableau[0] = [{ id: 4, up: true }];
+assert.deepEqual(hints(stuck), [], 'Do not suggest shuffling a whole column into an empty column');
+for (let id = 0; id < 52; id++) {
+	stuck.waste = [id];
+	assert.equal(move(stuck, { zone: 'waste', pile: 0, index: 0 }, { zone: 'tableau', pile: 1 }).tableau[1][0].id, id, 'Every rank and suit can fill an empty column');
+}
 console.log('Solitaire: deal, legal moves, reveal, recycling, save validation, autocomplete and victory OK');
